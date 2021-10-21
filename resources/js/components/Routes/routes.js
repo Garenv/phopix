@@ -6,11 +6,11 @@ const routes = [
         component: lazy(() => import('../HomePage/HomePage')),
         exact: true
     },
-    // {
-    //     path: 'users',
-    //     component: lazy(() => import('components/Users')),
-    //     exact: true
-    // }s
+    {
+        path: '/gallery',
+        component: lazy(() => import('../Gallery/Gallery')),
+        exact: true
+    }
 ];
 
 export default routes;

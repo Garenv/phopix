@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useState, useRef} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {login} from "../../actions/auth";
 
@@ -7,18 +7,18 @@ const LoginRegister = (props) => {
     const form = useRef();
     const checkBtn = useRef();
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const { isLoggedIn } = useSelector(state => state.auth);
-    const { message } = useSelector(state => state.message);
+    const {isLoggedIn} = useSelector(state => state.auth);
+    const {message} = useSelector(state => state.message);
 
     const dispatch = useDispatch();
 
-    const onChangeUsername = (e) => {
+    const onChangeEmail = (e) => {
         const username = e.target.value;
-        setUsername(username);
+        setEmail(username);
     };
 
     const onChangePassword = (e) => {
@@ -31,27 +31,27 @@ const LoginRegister = (props) => {
 
         setLoading(true);
 
-        form.current.validateAll();
+        JSON.stringify(email);
+        JSON.stringify(password);
 
-        if (checkBtn.current.context._errors.length === 0) {
-            dispatch(login(username, password))
+            console.log("inside if");
+            dispatch(login(email, password))
                 .then(() => {
-                    props.history.push("/profile");
+                    props.history.push("/gallery");
                     window.location.reload();
                 })
                 .catch(() => {
                     setLoading(false);
                 });
-        } else {
-            setLoading(false);
-        }
+            // setLoading(false);
     };
 
     if (isLoggedIn) {
-        return <Redirect to="/profile" />;
+        return <Redirect to="/gallery"/>;
     }
 
-    return(
+    return (
+        <form onSubmit={handleLogin} ref={checkBtn}>
         <div className="section">
             <div className="container">
                 <div className="row full-height justify-content-center">
@@ -62,32 +62,39 @@ const LoginRegister = (props) => {
                             <label htmlFor="reg-log"></label>
                             <div className="card-3d-wrap mx-auto">
                                 <div className="card-3d-wrapper">
-                                    <div className="card-front">
-                                        <div className="center-wrap">
-                                            <div className="section text-center">
-                                                <h4 className="mb-4 pb-3">Log In</h4>
-                                                <div className="form-group">
-                                                    <input type="email" name="logemail"
-                                                           className="form-style"
-                                                           placeholder="Your Email"
-                                                           id="logemail"
-                                                           autoComplete="none"/>
-                                                    <i className="input-icon uil uil-at"></i>
+                                        <div className="card-front">
+                                            <div className="center-wrap">
+                                                <div className="section text-center">
+                                                    <h4 className="mb-4 pb-3">Log In</h4>
+
+                                                    <div className="form-group">
+                                                        <input type="email" name="email"
+                                                               className="form-style"
+                                                               placeholder="Your Email"
+                                                               id="logemail"
+                                                               autoComplete="none"
+                                                               onChange={(e) => setEmail(e.target.value)}
+                                                        />
+                                                        <i className="input-icon uil uil-at"></i>
+                                                    </div>
+                                                    <div className="form-group mt-2">
+                                                        <input type="password" name="password"
+                                                               className="form-style"
+                                                               placeholder="Your Password"
+                                                               id="logpass"
+                                                               autoComplete="none"
+                                                               onChange={(e) => setPassword(e.target.value)}
+                                                        />
+                                                        <i className="input-icon uil uil-lock-alt"></i>
+                                                    </div>
+                                                    <button className="btn mt-4">Login</button>
+                                                    <p className="mb-0 mt-4 text-center">
+                                                        <a href="#0" className="link">Forgot your password?</a>
+                                                    </p>
                                                 </div>
-                                                <div className="form-group mt-2">
-                                                    <input type="password" name="logpass"
-                                                           className="form-style"
-                                                           placeholder="Your Password"
-                                                           id="logpass" autoComplete="none"/>
-                                                    <i className="input-icon uil uil-lock-alt"></i>
-                                                </div>
-                                                <a href="#" className="btn mt-4">submit</a>
-                                                <p className="mb-0 mt-4 text-center">
-                                                    <a href="#0" className="link">Forgot your password?</a>
-                                                </p>
                                             </div>
                                         </div>
-                                    </div>
+
                                     <div className="card-back">
                                         <div className="center-wrap">
                                             <div className="section text-center">
@@ -133,6 +140,7 @@ const LoginRegister = (props) => {
                 </div>
             </div>
         </div>
+        </form>
     );
 
 }

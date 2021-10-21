@@ -11,8 +11,11 @@ import HomePage from "./HomePage/HomePage";
 import '../../css/HomePage/homePage.scss';
 import {Provider} from "react-redux";
 import store from '../store';
+import PrivateRoute from "./Routes/PrivateRoute/PrivateRoute";
+// import Gallery from "./Gallery/Gallery";
 
 // const HomePage = lazy(() => import('./HomePage/HomePage'));
+const Gallery = lazy(() => import('./Gallery/Gallery'));
 
 function App() {
     const isAuthenticated = true;
@@ -27,6 +30,12 @@ function App() {
                     >
                         <HomePage/>
                     </PublicRoute>
+                    <PrivateRoute
+                        path="/gallery"
+                        isAuthenticated={isAuthenticated}
+                    >
+                        <Gallery/>
+                    </PrivateRoute>
                 </Switch>
             </Suspense>
         </Router>

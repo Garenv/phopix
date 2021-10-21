@@ -17,8 +17,8 @@ export const register = (username, email, password) => (dispatch) => {
             });
 
             dispatch({
-                type: SET_MESSAGE,
-                payload: response.data.message,
+                // type: SET_MESSAGE,
+                payload: response.data.message
             });
 
             return Promise.resolve();
@@ -36,8 +36,8 @@ export const register = (username, email, password) => (dispatch) => {
             });
 
             dispatch({
-                type: SET_MESSAGE,
-                payload: message,
+                // type: SET_MESSAGE,
+                payload: message
             });
 
             return Promise.reject();
@@ -45,8 +45,8 @@ export const register = (username, email, password) => (dispatch) => {
     );
 };
 
-export const login = (username, password) => (dispatch) => {
-    return AuthService.login(username, password).then(
+export const login = (email, password) => (dispatch) => {
+    return AuthService.login(email, password).then(
         (data) => {
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -68,8 +68,8 @@ export const login = (username, password) => (dispatch) => {
             });
 
             dispatch({
-                type: SET_MESSAGE,
-                payload: message,
+                // type: SET_MESSAGE,
+                payload: message
             });
 
             return Promise.reject();
