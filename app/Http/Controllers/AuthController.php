@@ -9,55 +9,78 @@ use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use function Symfony\Component\String\u;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
 
-    public function login(Request $request) {
+    /**
+     * return error response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendError($error, $errorMessages = [], $code = 401)
+    {
         $response = [
-            "status"    => false,
-            "message"   => "Login failed"
+            'success' => false,
+            'message' => $error,
         ];
 
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-
-
-        $credentials = $request->only('email', 'password');
-
-        if (!Auth::attempt($credentials)) {
-            return $response;
+        if(!empty($errorMessages)){
+            $response['data'] = $errorMessages;
         }
 
-        return [
-            "status"  => true,
-            "message" => "Logged in Successfully!"
-        ];
+        return response()->json($response, $code);
+    }
+
+    public function login(Request $request)
+    {
+
+        try {
+            $request->validate([
+                'email' => 'required',
+                'password' => 'required',
+            ]);
+
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                return response()->json([
+                    'status' => 'Successfully logged in!'
+                ]);
+
+            }
+
+            return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
+        } catch(\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
+        }
 
     }
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $request->validate([
-            'name'     => 'required',
-            'email'    => 'required|email|unique:users',
-            'age'      => 'required',
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'age' => 'required',
             'password' => 'required|min:6',
         ]);
 
-        $userId         = 'u-' . Str::uuid()->toString();
-        $data           = $request->all();
+        $userId = 'u-' . Str::uuid()->toString();
+        $data = $request->all();
         $data['UserID'] = $userId;
-        $age            = $data['age'];
+        $age = $data['age'];
 
         $this->create($data);
 
         return [
-            "status"  => true,
-            "UserID"  => $userId,
+            "status" => true,
+            "UserID" => $userId,
             "message" => "Registered Successfully!",
-            "age"     => $age
+            "age" => $age
         ];
     }
 
@@ -66,7 +89,8 @@ class AuthController extends Controller {
      *
      * @return response()
      */
-    public function create(array $data) {
+    public function create(array $data)
+    {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

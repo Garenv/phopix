@@ -46,12 +46,20 @@ export const register = (username, email, password) => (dispatch) => {
 };
 
 export const login = (email, password) => (dispatch) => {
+    console.log("inside login() auth.js");
     return AuthService.login(email, password).then(
         (data) => {
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: { user: data },
             });
+
+            console.log(data);
+
+
+
+            console.log(Promise.resolve());
+
 
             return Promise.resolve();
         },

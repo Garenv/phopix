@@ -13,6 +13,7 @@ const register = (username, email, password) => {
 };
 
 const login = (email, password) => {
+    console.log("inside login(); authService.js")
     return axios
         .post(LOGIN_API_URL, {
             email,
@@ -20,9 +21,10 @@ const login = (email, password) => {
         })
         .then((response) => {
             if (response.data) {
-                console.log(response);
                 localStorage.setItem("user", JSON.stringify(response.data));
             }
+
+            // console.log(response.data);
 
             return response.data;
         });

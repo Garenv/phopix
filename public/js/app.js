@@ -2097,6 +2097,7 @@ var register = function register(username, email, password) {
 };
 var login = function login(email, password) {
   return function (dispatch) {
+    console.log("inside login() auth.js");
     return _services_authService__WEBPACK_IMPORTED_MODULE_1__["default"].login(email, password).then(function (data) {
       dispatch({
         type: _types__WEBPACK_IMPORTED_MODULE_0__.LOGIN_SUCCESS,
@@ -2104,6 +2105,8 @@ var login = function login(email, password) {
           user: data
         }
       });
+      console.log(data);
+      console.log(Promise.resolve());
       return Promise.resolve();
     }, function (error) {
       var message = error.response && error.response.data && error.response.data.message || error.message || error.toString();
@@ -2402,13 +2405,15 @@ var LoginRegister = function LoginRegister(props) {
     setLoading(true);
     JSON.stringify(email);
     JSON.stringify(password);
-    console.log("inside if");
+    console.log("inside handleLogin(); LoginRegister.js");
     dispatch((0,_actions_auth__WEBPACK_IMPORTED_MODULE_2__.login)(email, password)).then(function () {
+      // console.log(email, password);
       props.history.push("/gallery");
       window.location.reload();
     })["catch"](function () {
       setLoading(false);
-    }); // setLoading(false);
+    });
+    setLoading(false);
   };
 
   if (isLoggedIn) {
@@ -2841,14 +2846,15 @@ var register = function register(username, email, password) {
 };
 
 var login = function login(email, password) {
+  console.log("inside login(); authService.js");
   return axios__WEBPACK_IMPORTED_MODULE_0___default().post(LOGIN_API_URL, {
     email: email,
     password: password
   }).then(function (response) {
     if (response.data) {
-      console.log(response);
       localStorage.setItem("user", JSON.stringify(response.data));
-    }
+    } // console.log(response.data);
+
 
     return response.data;
   });

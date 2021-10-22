@@ -34,16 +34,17 @@ const LoginRegister = (props) => {
         JSON.stringify(email);
         JSON.stringify(password);
 
-            console.log("inside if");
+            console.log("inside handleLogin(); LoginRegister.js");
             dispatch(login(email, password))
                 .then(() => {
+                    // console.log(email, password);
                     props.history.push("/gallery");
                     window.location.reload();
                 })
                 .catch(() => {
                     setLoading(false);
                 });
-            // setLoading(false);
+            setLoading(false);
     };
 
     if (isLoggedIn) {
