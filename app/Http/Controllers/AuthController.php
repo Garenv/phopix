@@ -45,9 +45,21 @@ class AuthController extends Controller
             ]);
 
             $credentials = $request->only('email', 'password');
+
+
             if (Auth::attempt($credentials)) {
+                $user   = Auth::user();
+                $name   = $user['name'];
+                $email  = $user['email'];
+                $userId = $user['UserID'];
+                $age    = $user['Age'];
+
                 return response()->json([
-                    'status' => 'Successfully logged in!'
+                    'status' => 'Successfully logged in!',
+                    'name'   => $name,
+                    'email'  => $email,
+                    'UserID' => $userId,
+                    'Age'    => $age
                 ]);
 
             }

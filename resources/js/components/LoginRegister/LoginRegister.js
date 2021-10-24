@@ -37,9 +37,9 @@ const LoginRegister = (props) => {
             console.log("inside handleLogin(); LoginRegister.js");
             dispatch(login(email, password))
                 .then(() => {
-                    // console.log(email, password);
+                    console.log(email, password);
                     props.history.push("/gallery");
-                    window.location.reload();
+                    // window.location.reload();
                 })
                 .catch(() => {
                     setLoading(false);

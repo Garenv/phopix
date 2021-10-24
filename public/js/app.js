@@ -2407,9 +2407,8 @@ var LoginRegister = function LoginRegister(props) {
     JSON.stringify(password);
     console.log("inside handleLogin(); LoginRegister.js");
     dispatch((0,_actions_auth__WEBPACK_IMPORTED_MODULE_2__.login)(email, password)).then(function () {
-      // console.log(email, password);
-      props.history.push("/gallery");
-      window.location.reload();
+      console.log(email, password);
+      props.history.push("/gallery"); // window.location.reload();
     })["catch"](function () {
       setLoading(false);
     });
@@ -2851,10 +2850,11 @@ var login = function login(email, password) {
     email: email,
     password: password
   }).then(function (response) {
+    console.log(response.data);
+
     if (response.data) {
       localStorage.setItem("user", JSON.stringify(response.data));
-    } // console.log(response.data);
-
+    }
 
     return response.data;
   });
