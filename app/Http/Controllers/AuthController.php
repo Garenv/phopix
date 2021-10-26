@@ -46,30 +46,43 @@ class AuthController extends Controller
 
             $credentials = $request->only('email', 'password');
 
-
-            if (Auth::attempt($credentials)) {
-                $user   = Auth::user();
-                $name   = $user['name'];
-                $email  = $user['email'];
-                $userId = $user['UserID'];
-                $age    = $user['Age'];
-
-                return response()->json([
-                    'status' => 'Successfully logged in!',
-                    'name'   => $name,
-                    'email'  => $email,
-                    'UserID' => $userId,
-                    'Age'    => $age
-                ]);
-
+            if (!Auth::attempt($credentials)) {
+                return response()->json(['message' => 'Unauthorized'], 401);
             }
 
-            return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
+            $user   = Auth::user();
+            $name   = $user['name'];
+            $email  = $user['email'];
+            $userId = $user['UserID'];
+            $age    = $user['Age'];
+
+            $modelUser = User::where('email', $email)->firstOrFail();
+            $createToken = $modelUser->createToken('auth_token')->plainTextToken;
+            $token = substr($createToken, 2);
+
+            return response()->json([
+                'status' => 'Successfully logged in!',
+                'token'  => $token,
+                'name'   => $name,
+                'email'  => $email,
+                'UserID' => $userId,
+                'Age'    => $age
+            ]);
+
         } catch(\Exception $e) {
             Log::error($e->getMessage());
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
 
+    }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+
+        return [
+            'message' => 'You have successfully logged out and the token was successfully deleted'
+        ];
     }
 
     public function register(Request $request)
