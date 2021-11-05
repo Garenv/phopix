@@ -1,58 +1,42 @@
 import React, {useState, useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Redirect} from "react-router-dom";
-import {login} from "../../actions/auth";
+import {useHistory} from 'react-router-dom';
+// import {useDispatch, useSelector} from "react-redux";
+// import {Redirect} from "react-router-dom";
+// import {login} from "../../actions/auth";
 
-const LoginRegister = (props) => {
-    const form = useRef();
-    const checkBtn = useRef();
-
+const LoginRegister = ({ setUserState }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-
-    const {isLoggedIn} = useSelector(state => state.auth);
-    const {message} = useSelector(state => state.message);
-
-    const dispatch = useDispatch();
-
-    const onChangeEmail = (e) => {
-        const username = e.target.value;
-        setEmail(username);
-    };
-
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
-    };
+    let history = useHistory();
 
     const handleLogin = (e) => {
         e.preventDefault();
+        let dataLogin = {
+            'email': email,
+            'password': password
+        };
 
-        setLoading(true);
+        JSON.stringify(dataLogin);
 
-        JSON.stringify(email);
-        JSON.stringify(password);
+        axios.post('http://phopix.test/api/login', dataLogin)
+            .then(resp => {
+                localStorage.setItem('token', resp.data.token);
+                // console.log(localStorage.getItem('name'));
+                // console.log(localStorage.getItem('email'));
+                // console.log(localStorage.getItem('UserID'));
+                console.log(resp);
+                // console.log(localStorage.getItem('token'));
+                history.push('/gallery');
+            }).catch(error => {
+            console.log(error);
+        });
 
-        console.log("inside handleLogin(); LoginRegister.js");
-        dispatch(login(email, password))
-            .then(() => {
-                console.log(email, password);
-                props.history.push("/gallery");
-                // window.location.reload();
-            })
-            .catch(() => {
-                setLoading(false);
-            });
-        setLoading(false);
+        // setUserState('myState');
+
     };
 
-    if (isLoggedIn) {
-        return <Redirect to="/gallery"/>;
-    }
-
     return (
-        <form onSubmit={handleLogin} ref={checkBtn}>
+        <>
             <div className="section">
                 <div className="container">
                     <div className="row full-height justify-content-center">
@@ -67,31 +51,32 @@ const LoginRegister = (props) => {
                                             <div className="center-wrap">
                                                 <div className="section text-center">
                                                     <h4 className="mb-4 pb-3">Log In</h4>
-
-                                                    <div className="form-group">
-                                                        <input type="email" name="email"
-                                                               className="form-style"
-                                                               placeholder="Your Email"
-                                                               id="logemail"
-                                                               autoComplete="none"
-                                                               onChange={(e) => setEmail(e.target.value)}
-                                                        />
-                                                        <i className="input-icon uil uil-at"></i>
-                                                    </div>
-                                                    <div className="form-group mt-2">
-                                                        <input type="password" name="password"
-                                                               className="form-style"
-                                                               placeholder="Your Password"
-                                                               id="logpass"
-                                                               autoComplete="none"
-                                                               onChange={(e) => setPassword(e.target.value)}
-                                                        />
-                                                        <i className="input-icon uil uil-lock-alt"></i>
-                                                    </div>
-                                                    <button className="btn mt-4">Login</button>
-                                                    <p className="mb-0 mt-4 text-center">
-                                                        <a href="#0" className="link">Forgot your password?</a>
-                                                    </p>
+                                                    <form onSubmit={handleLogin}>
+                                                        <div className="form-group">
+                                                            <input type="email" name="email"
+                                                                   className="form-style"
+                                                                   placeholder="Your Email"
+                                                                   id="logemail"
+                                                                   autoComplete="none"
+                                                                   onChange={(e) => setEmail(e.target.value)}
+                                                            />
+                                                            <i className="input-icon uil uil-at"></i>
+                                                        </div>
+                                                        <div className="form-group mt-2">
+                                                            <input type="password" name="password"
+                                                                   className="form-style"
+                                                                   placeholder="Your Password"
+                                                                   id="logpass"
+                                                                   autoComplete="none"
+                                                                   onChange={(e) => setPassword(e.target.value)}
+                                                            />
+                                                            <i className="input-icon uil uil-lock-alt"></i>
+                                                        </div>
+                                                        <button className="btn mt-4">Login</button>
+                                                        <p className="mb-0 mt-4 text-center">
+                                                            <a href="#0" className="link">Forgot your password?</a>
+                                                        </p>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,6 +85,7 @@ const LoginRegister = (props) => {
                                             <div className="center-wrap">
                                                 <div className="section text-center">
                                                     <h4 className="mb-4 pb-3">Sign Up</h4>
+                                                    <form>
                                                     <div className="form-group">
                                                         <input type="text" name="name"
                                                                className="form-style"
@@ -131,6 +117,7 @@ const LoginRegister = (props) => {
                                                         <i className="input-icon uil uil-lock-alt"></i>
                                                     </div>
                                                     <a href="#" className="btn mt-4">submit</a>
+                                            </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +128,7 @@ const LoginRegister = (props) => {
                     </div>
                 </div>
             </div>
-        </form>
+        </>
     );
 
 }

@@ -40,7 +40,7 @@ class AuthController extends Controller
 
         try {
             $request->validate([
-                'email' => 'required',
+                'email'    => 'required',
                 'password' => 'required',
             ]);
 
@@ -50,18 +50,18 @@ class AuthController extends Controller
                 return response()->json(['message' => 'Unauthorized'], 401);
             }
 
-            $user   = Auth::user();
-            $name   = $user['name'];
-            $email  = $user['email'];
-            $userId = $user['UserID'];
-            $age    = $user['Age'];
+            $user        = Auth::user();
+            $name        = $user['name'];
+            $email       = $user['email'];
+            $userId      = $user['UserID'];
+            $age         = $user['Age'];
 
-            $modelUser = User::where('email', $email)->firstOrFail();
+            $modelUser   = User::where('email', $email)->firstOrFail();
             $createToken = $modelUser->createToken('auth_token')->plainTextToken;
-            $token = substr($createToken, 2);
+            $token       = substr($createToken, 2);
 
             return response()->json([
-                'status' => 'Successfully logged in!',
+                'status' => true,
                 'token'  => $token,
                 'name'   => $name,
                 'email'  => $email,

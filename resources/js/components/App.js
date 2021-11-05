@@ -1,49 +1,42 @@
-import { lazy, Suspense } from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect
-} from 'react-router-dom';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import PublicRoute from "./Routes/PublicRoute/PublicRoute";
-import HomePage from "./HomePage/HomePage";
-import '../../css/HomePage/homePage.scss';
-import {Provider} from "react-redux";
-import store from '../store';
-import PrivateRoute from "./Routes/PrivateRoute/PrivateRoute";
-// import Gallery from "./Gallery/Gallery";
+// import HomePage from "./HomePage/HomePage";
+import '../../sass/HomePage/homePage.scss';
+// import PublicRoute from './Routes/PublicRoute';
+// import PrivateRoute from "./Routes/PrivateRoute";
+import LoginRegister from "./LoginRegister/LoginRegister";
+import Gallery from "./Gallery/Gallery";
 
-// const HomePage = lazy(() => import('./HomePage/HomePage'));
-const Gallery = lazy(() => import('./Gallery/Gallery'));
+// const gallery = lazy(() => import('../components/gallery/gallery'));
 
 function App() {
-    const isAuthenticated = true;
+    let history = useHistory();
+    const [userState, setUserState] = useState(localStorage.getItem("token"));
+
+    useEffect(() => {
+        let authToken = localStorage.getItem('token');
+        console.log(authToken);
+        if (authToken !== null) {
+            // console.log(authToken, "User's authenticated, returning to gallery view");
+            return history.push('/gallery');
+        }
+        console.log("User's NOT authenticated, returning to login view");
+        return history.push('/');
+    });
 
     return (
-        <Router>
-            <Suspense fallback={<>Loading...</>}>
-                <Switch>
-                    <PublicRoute
-                        path="/"
-                        isAuthenticated={isAuthenticated}
-                    >
-                        <HomePage/>
-                    </PublicRoute>
-                    <PrivateRoute
-                        path="/gallery"
-                        isAuthenticated={isAuthenticated}
-                    >
-                        <Gallery/>
-                    </PrivateRoute>
-                </Switch>
-            </Suspense>
-        </Router>
+        <>
+            <Switch>
+                <Route exact path="/" component={LoginRegister} />
+                <Route exact path="/gallery" component={Gallery}/>
+            </Switch>
+        </>
     );
 }
 
 export default App;
 
 if (document.getElementById('example')) {
-    ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('example'));
+    ReactDOM.render(<Router><App/></Router>, document.getElementById('example'));
 }
