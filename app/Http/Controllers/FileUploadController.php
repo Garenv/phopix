@@ -3,22 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class FileUploadController extends Controller
 {
-    public function fileUpload(Request $request) {
-        if($request->hasFile('userUpload')) {
+    public function fileUpload(Request $request)
+    {
+        try {
+            $path = "/assets/images/phopix/user/";
             $file = $request->file('userUpload');
-            $fileName = $file->getClientOriginalName();
-            $fileSize = $file->getSize()/1024/1024;
-            $filePath = "/assets/images/phopix/user/";
+            $imgName = $file->getClientOriginalName();
+
+            $file->storeAs(
+                $path, // Folder
+                $imgName, // Name of image
+                's3' // Disk Name
+            );
+
+            Storage::disk('s3')->temporaryUrl(
+                $path . "/" . $imgName,
+                now()->addMinutes(10)
+            );
 
 
-            Storage::disk('s3')->put($filePath, file_get_contents($file));
-            Storage::disk('s3')->url($filePath);
-
-            return "success";
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
+
     }
 }
