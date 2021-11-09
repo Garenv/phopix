@@ -2,35 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Upload;
+use App\Models\Uploads;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class FileUploadController extends Controller
 {
+
     public function fileUpload(Request $request)
     {
-        try {
-            $path = "/assets/images/phopix/user/";
-            $file = $request->file('userUpload');
-            $imgName = $file->getClientOriginalName();
 
-            $file->storeAs(
-                $path, // Folder
-                $imgName, // Name of image
-                's3' // Disk Name
-            );
+        $path = "/assets/images/phopix/user/";
+        $file = $request->file('userUpload');
+        $imgName = $file->getClientOriginalName();
+        $bucket = env('AWS_BUCKET');
+        $region = env('AWS_REGION');
+        $url = "https://{$bucket}.s3.{$region}.amazonaws.com{$path}{$imgName}";
+        $userId = Auth::user()['UserID'];
 
-            Storage::disk('s3')->temporaryUrl(
-                $path . "/" . $imgName,
-                now()->addMinutes(10)
-            );
+        $file->storeAs(
+            $path, // Folder
+            $imgName, // Name of image
+            's3' // Disk Name
+        );
 
+        $data = [
+            'url' => $url,
+            'UserID' => $userId,
+            'isUploaded' => true,
+            'timeStamp' => time(),
+            'updated_at' => time()
+        ];
 
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            throw new \Exception($e->getMessage(), $e->getCode(), $e);
-        }
+        Upload::create($data);
+
+        return $data;
 
     }
 }
