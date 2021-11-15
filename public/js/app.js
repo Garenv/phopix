@@ -2308,12 +2308,13 @@ var LoginRegister = function LoginRegister(_ref) {
 
   var handleLogin = function handleLogin(e) {
     e.preventDefault();
+    console.log("Click");
     var dataLogin = {
       'email': email,
       'password': password
     };
     JSON.stringify(dataLogin);
-    axios.post('http://phopix.test/api/login', dataLogin).then(function (resp) {
+    axios.post('http://localhost:8005/api/login', dataLogin).then(function (resp) {
       localStorage.setItem('token', resp.data.token); // console.log(localStorage.getItem('name'));
       // console.log(localStorage.getItem('email'));
       // console.log(localStorage.getItem('UserID'));

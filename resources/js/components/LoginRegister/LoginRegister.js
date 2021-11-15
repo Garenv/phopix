@@ -11,6 +11,7 @@ const LoginRegister = ({ setUserState }) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
+        console.log("Click");
         let dataLogin = {
             'email': email,
             'password': password
@@ -18,7 +19,7 @@ const LoginRegister = ({ setUserState }) => {
 
         JSON.stringify(dataLogin);
 
-        axios.post('http://phopix.test/api/login', dataLogin)
+        axios.post('http://localhost:8005/api/login', dataLogin)
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
                 // console.log(localStorage.getItem('name'));
