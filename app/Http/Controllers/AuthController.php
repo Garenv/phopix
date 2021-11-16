@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Stevebauman\Location\Facades\Location;
 use function Symfony\Component\String\u;
 
 class AuthController extends Controller
@@ -59,6 +60,7 @@ class AuthController extends Controller
             $modelUser   = User::where('email', $email)->firstOrFail();
             $createToken = $modelUser->createToken('auth_token')->plainTextToken;
 
+
             return response()->json([
                 'status' => true,
                 'token'  => $createToken,
@@ -75,36 +77,37 @@ class AuthController extends Controller
 
     }
 
-    public function logout()
-    {
-        auth()->user()->tokens()->delete();
-
-        return [
-            'message' => 'You have successfully logged out and the token was successfully deleted'
-        ];
-    }
-
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'age' => 'required',
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users',
+            'age'      => 'required',
             'password' => 'required|min:6',
         ]);
 
-        $userId = 'u-' . Str::uuid()->toString();
-        $data = $request->all();
+        $userId         = 'u-' . Str::uuid()->toString();
+        $data           = $request->all();
         $data['UserID'] = $userId;
-        $age = $data['age'];
+        $age            = $data['age'];
+
+        $locationData   = Location::get();
+
+        $data['ip']             = $locationData->ip;
+        $data['countryName']    = $locationData->countryName;
+        $data['countryCode']    = $locationData->countryCode;
+        $data['regionCode']     = $locationData->regionCode;
+        $data['regionName']     = $locationData->regionName;
+        $data['cityName']       = $locationData->cityName;
+        $data['zipCode']        = $locationData->zipCode;
 
         $this->create($data);
 
         return [
-            "status" => true,
-            "UserID" => $userId,
+            "status"  => true,
+            "UserID"  => $userId,
             "message" => "Registered Successfully!",
-            "age" => $age
+            "age"     => $age
         ];
     }
 
@@ -116,11 +119,28 @@ class AuthController extends Controller
     public function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'UserID' => $data['UserID'],
-            'age' => $data['age'],
-            'password' => Hash::make($data['password'])
+            'name'        => $data['name'],
+            'email'       => $data['email'],
+            'UserID'      => $data['UserID'],
+            'age'         => $data['age'],
+            'password'    => Hash::make($data['password']),
+            'ip'          => $data['ip'],
+            'countryName' => $data['countryName'],
+            'countryCode' => $data['countryCode'],
+            'regionCode'  => $data['regionCode'],
+            'regionName'  => $data['regionName'],
+            'cityName'    => $data['cityName'],
+            'zipCode'     => $data['zipCode']
         ]);
+    }
+
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+
+        return [
+            'message' => 'You have successfully logged out and the token was successfully deleted'
+        ];
     }
 }

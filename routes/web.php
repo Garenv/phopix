@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\ReactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::view('/{path?}', 'welcome');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+//Route::view('/{path?}', 'welcome');
+
+Route::get('/{path?}', [ReactController::class, 'show']);

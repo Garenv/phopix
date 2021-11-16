@@ -1,1 +1,3 @@
-artisan =docker-compose exec app php artisan
+alias artisan=docker-compose exec app php artisan
+
+
