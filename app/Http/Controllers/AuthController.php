@@ -55,11 +55,10 @@ class AuthController extends Controller
             $name        = $user['name'];
             $email       = $user['email'];
             $userId      = $user['UserID'];
-            $age         = $user['Age'];
+            $age         = $user['age'];
 
             $modelUser   = User::where('email', $email)->firstOrFail();
             $createToken = $modelUser->createToken('auth_token')->plainTextToken;
-
 
             return response()->json([
                 'status' => true,
@@ -67,7 +66,7 @@ class AuthController extends Controller
                 'name'   => $name,
                 'email'  => $email,
                 'UserID' => $userId,
-                'Age'    => $age
+                'age'    => $age
             ]);
 
         } catch(\Exception $e) {
