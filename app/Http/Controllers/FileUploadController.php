@@ -13,7 +13,7 @@ class FileUploadController extends Controller
     public function fileUpload(Request $request)
     {
 
-        $path = "/assets/images/phopix/user/";
+        $path = env('AWS_S3_PATH');
         $file = $request->file('userUpload');
         $imgName = $file->getClientOriginalName();
         $bucket = env('AWS_BUCKET');
