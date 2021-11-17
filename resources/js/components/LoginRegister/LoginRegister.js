@@ -4,14 +4,17 @@ import {useHistory} from 'react-router-dom';
 // import {Redirect} from "react-router-dom";
 // import {login} from "../../actions/auth";
 
-const LoginRegister = ({ setUserState }) => {
+const LoginRegister = () => {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [age, setAge] = useState("");
     const [password, setPassword] = useState("");
+
     let history = useHistory();
 
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log("Click");
+        console.log("Click Login");
         let dataLogin = {
             'email': email,
             'password': password
@@ -36,6 +39,31 @@ const LoginRegister = ({ setUserState }) => {
 
     };
 
+    const handleRegister = (e) => {
+        e.preventDefault();
+        console.log("Click Register");
+        let dataRegister = {
+            'name': name,
+            'email': email,
+            'age': age,
+            'password': password
+        };
+
+        const headers = {
+            "Accept" : "application/json"
+        }
+
+        axios.post('http://localhost:8005/api/register', dataRegister, {headers})
+            .then(resp => {
+                console.log(resp);
+                history.push('/gallery');
+            }).catch(error => {
+                console.log(error);
+        });
+    };
+
+
+
     return (
         <>
             <div className="section">
@@ -54,7 +82,8 @@ const LoginRegister = ({ setUserState }) => {
                                                     <h4 className="mb-4 pb-3">Log In</h4>
                                                     <form onSubmit={handleLogin}>
                                                         <div className="form-group">
-                                                            <input type="email" name="email"
+                                                            <input type="email"
+                                                                   name="email"
                                                                    className="form-style"
                                                                    placeholder="Your Email"
                                                                    id="logemail"
@@ -64,7 +93,8 @@ const LoginRegister = ({ setUserState }) => {
                                                             <i className="input-icon uil uil-at"></i>
                                                         </div>
                                                         <div className="form-group mt-2">
-                                                            <input type="password" name="password"
+                                                            <input type="password"
+                                                                   name="password"
                                                                    className="form-style"
                                                                    placeholder="Your Password"
                                                                    id="logpass"
@@ -86,38 +116,52 @@ const LoginRegister = ({ setUserState }) => {
                                             <div className="center-wrap">
                                                 <div className="section text-center">
                                                     <h4 className="mb-4 pb-3">Sign Up</h4>
-                                                    <form>
+                                                    <form onSubmit={handleRegister}>
                                                     <div className="form-group">
-                                                        <input type="text" name="name"
+                                                        <input type="text"
+                                                               name="name"
                                                                className="form-style"
                                                                placeholder="Your Full Name"
                                                                id="logname"
-                                                               autoComplete="none"/>
+                                                               autoComplete="none"
+                                                               onChange={(e) => setName(e.target.value)}
+                                                        />
                                                         <i className="input-icon uil uil-user"></i>
                                                     </div>
                                                     <div className="form-group mt-2">
-                                                        <input type="email" name="email"
+                                                        <input type="email"
+                                                               name="email"
                                                                className="form-style"
                                                                placeholder="Your Email"
-                                                               id="logemail" autoComplete="none"/>
+                                                               id="logemail"
+                                                               autoComplete="none"
+                                                               onChange={(e) => setEmail(e.target.value)}
+                                                        />
                                                         <i className="input-icon uil uil-at"></i>
                                                     </div>
                                                     <div className="form-group mt-2">
-                                                        <input type="number" name="age"
+                                                        <input type="number"
+                                                               name="age"
                                                                className="form-style"
                                                                placeholder="Your Age"
-                                                               id="logemail" autoComplete="none"/>
+                                                               id="logemail"
+                                                               autoComplete="none"
+                                                               onChange={(e) => setAge(e.target.value)}
+                                                        />
                                                         <i className="input-icon uil uil-at"></i>
                                                     </div>
                                                     <div className="form-group mt-2">
-                                                        <input type="password" name="password"
+                                                        <input type="password"
+                                                               name="password"
                                                                className="form-style"
                                                                placeholder="Your Password"
                                                                id="logpass"
-                                                               autoComplete="none"/>
+                                                               autoComplete="none"
+                                                               onChange={(e) => setPassword(e.target.value)}
+                                                        />
                                                         <i className="input-icon uil uil-lock-alt"></i>
                                                     </div>
-                                                    <a href="#" className="btn mt-4">submit</a>
+                                                        <button className="btn mt-4">Submit</button>
                                             </form>
                                                 </div>
                                             </div>
