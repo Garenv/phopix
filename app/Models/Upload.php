@@ -11,18 +11,18 @@ class Upload extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const CREATED_AT = null;
+    const UPDATED_AT = null;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'id',
-        'url',
         'UserID',
+        'url',
         'isUploaded',
-        'timeStamp',
-        'updated_at',
-        'created_at'
+        'timeStamp'
     ];
 }
