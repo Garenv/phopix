@@ -13,7 +13,7 @@ class UploadsRepository extends BaseRepository implements IUploadsRepository
      */
     public function getUploads(): string
     {
-        return "test";
+        return "lflmkslmk";
     }
 
     /**
