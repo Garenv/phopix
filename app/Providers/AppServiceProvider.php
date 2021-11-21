@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Dal\Interfaces\IUploadsRepository;
+use App\Dal\Repositories\UploadsRepository;
 use Illuminate\Support\ServiceProvider;
+use Prettus\Repository\Providers\RepositoryServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
+            $this->app->bind(IUploadsRepository::class,UploadsRepository::class);
         }
     }
 

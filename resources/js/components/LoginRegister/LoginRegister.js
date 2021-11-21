@@ -1,5 +1,6 @@
-import React, {useState, useRef} from "react";
-import {useHistory} from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie';
 // import {useDispatch, useSelector} from "react-redux";
 // import {Redirect} from "react-router-dom";
 // import {login} from "../../actions/auth";
@@ -24,7 +25,7 @@ const LoginRegister = () => {
 
         axios.post('http://localhost:8005/api/login', dataLogin)
             .then(resp => {
-                localStorage.setItem('token', resp.data.token);
+                Cookies.set('token', resp.data.token);
                 // console.log(localStorage.getItem('name'));
                 // console.log(localStorage.getItem('email'));
                 // console.log(localStorage.getItem('UserID'));
