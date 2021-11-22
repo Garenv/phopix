@@ -2,25 +2,19 @@
 
 namespace App\Dal\Repositories;
 
-use App\Dal\Entities\Uploads;
 use App\Dal\Interfaces\IUploadsRepository;
-use Prettus\Repository\Eloquent\BaseRepository;
+use Illuminate\Support\Facades\DB;
 
-class UploadsRepository extends BaseRepository implements IUploadsRepository
+class UploadsRepository implements IUploadsRepository
 {
     /**
      * @return string
      */
-    public function getUploads(): string
+    public function getUploads()
     {
-        return "lflmkslmk";
-    }
-
-    /**
-     * @return string
-     */
-    public function model()
-    {
-        return Uploads::class;
+        return DB::table('uploads')
+            ->select('uploads.url', 'users.name')
+            ->join('users', 'users.UserID', '=', 'uploads.UserID')
+            ->get();
     }
 }

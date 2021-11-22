@@ -1,30 +1,43 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, useHistory} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import '../../sass/HomePage/homePage.scss';
 import LoginRegister from "./LoginRegister/LoginRegister";
 import Gallery from "./Gallery/Gallery";
 import Cookies from 'js-cookie';
 
-// import PublicRoute from './Routes/PublicRoute';
-// import PrivateRoute from "./Routes/PrivateRoute";
-
-// const gallery = lazy(() => import('../components/gallery/gallery'));
-
-function App() {
+const App = () => {
+    const [token, setToken] = useState("");
+    const [uploadsData, setUploadsData] = useState([]);
     let history = useHistory();
-    // const [userState, setUserState] = useState(localStorage.getItem("token"));
 
     useEffect(() => {
         let authToken = Cookies.get('token');
-        console.log(authToken);
+        setToken(authToken);
+
         if (authToken !== null) {
-            // console.log(authToken, "User's authenticated, returning to gallery view");
+            getUploads(authToken);
             return history.push('/gallery');
         }
         console.log("User's NOT authenticated, returning to login view");
         return history.push('/');
     });
+
+    const getUploads = () => {
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${token}`
+        }
+
+        axios.get('http://localhost:8005/api/get-uploads', {headers})
+            .then(resp => {
+                console.log(resp);
+
+                // setUploadsData([resp]);
+            }).catch(error => {
+            console.log(error);
+        });
+    };
 
     return (
         <>

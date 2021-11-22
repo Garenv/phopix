@@ -29,7 +29,7 @@ const LoginRegister = () => {
                 // console.log(localStorage.getItem('name'));
                 // console.log(localStorage.getItem('email'));
                 // console.log(localStorage.getItem('UserID'));
-                console.log(resp);
+                // console.log(resp);
                 // console.log(localStorage.getItem('token'));
                 history.push('/gallery');
             }).catch(error => {

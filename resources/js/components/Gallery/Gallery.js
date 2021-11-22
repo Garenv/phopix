@@ -2,29 +2,44 @@ import React, {useEffect, useState} from 'react';
 import '../../../sass/gallery/gallery.scss';
 import Grid from "../Grid/Grid";
 import {Button, Image, Modal} from "react-bootstrap";
-import { CookiesProvider } from "react-cookie";
+// import { CookiesProvider } from "react-cookie";
 import Cookies from 'js-cookie';
 
 
 const Gallery = () => {
     // Preview modal
     const [show, setShow] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    useEffect(() => {
-        console.log(Cookies.get('token'));
-    });
-
-    // const uploadFile = () => {
-    //     axios.post('http://localhost:8005/api/login', data, {headers})
-    //         .then(resp => {
-    //             console.log(resp);
+    // useEffect(() => {
+    //     let userToken = Cookies.get('token');
+    //     setToken(userToken);
+    //     // getUploads();
+    // });
     //
+    // const getUploads = () => {
+    //     const headers = {
+    //         "Accept": 'application/json',
+    //         "Authorization": `Bearer ${token}`
+    //     }
+    //
+    //     console.log(token);
+    //
+    //     axios.get('http://localhost:8005/api/get-uploads', {headers})
+    //         .then(resp => {
+    //             // console.log(resp);
+    //             setUploadsData([resp]);
+    //             console.log(uploadsData)
     //         }).catch(error => {
     //         console.log(error);
     //     });
+    //
+    //     // return <Grid/>;
     // };
+
+    // getUploads();
 
     return (
         <>
@@ -48,7 +63,7 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            <Grid/>
+            {/*{getUploads()}*/}
         </>
     );
 }
