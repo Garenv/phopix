@@ -9,37 +9,24 @@ import Cookies from 'js-cookie';
 const Gallery = () => {
     // Preview modal
     const [show, setShow] = useState(false);
-
+    let authToken = Cookies.get('token');
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // useEffect(() => {
-    //     let userToken = Cookies.get('token');
-    //     setToken(userToken);
-    //     // getUploads();
-    // });
-    //
-    // const getUploads = () => {
-    //     const headers = {
-    //         "Accept": 'application/json',
-    //         "Authorization": `Bearer ${token}`
-    //     }
-    //
-    //     console.log(token);
-    //
-    //     axios.get('http://localhost:8005/api/get-uploads', {headers})
-    //         .then(resp => {
-    //             // console.log(resp);
-    //             setUploadsData([resp]);
-    //             console.log(uploadsData)
-    //         }).catch(error => {
-    //         console.log(error);
-    //     });
-    //
-    //     // return <Grid/>;
-    // };
+    const logout = () => {
+        console.log(authToken);
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${authToken}`
+        }
 
-    // getUploads();
+        axios.post('http://localhost:8005/api/logout', {headers})
+            .then(resp => {
+                console.log(resp);
+            }).catch(err => {
+                console.log(err);
+        });
+    };
 
     return (
         <>
@@ -48,6 +35,10 @@ const Gallery = () => {
                 {/*<button onClick={() => uploadFile(selectedFile)}>Upload to S3</button>*/}
                 <Button variant="primary" onClick={handleShow}>
                     Launch demo modal
+                </Button>
+
+                <Button variant="primary" onClick={logout}>
+                    Logout
                 </Button>
             </div>
 

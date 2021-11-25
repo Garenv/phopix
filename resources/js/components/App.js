@@ -7,37 +7,38 @@ import Gallery from "./Gallery/Gallery";
 import Cookies from 'js-cookie';
 
 const App = () => {
-    const [token, setToken] = useState("");
     const [uploadsData, setUploadsData] = useState([]);
-    let history = useHistory();
-
+    let { push } = useHistory();
+    let authToken = Cookies.get('token');
+    console.log(authToken);
     useEffect(() => {
-        let authToken = Cookies.get('token');
-        setToken(authToken);
+        const getUploads = () => {
+            const headers = {
+                "Accept": 'application/json',
+                "Authorization": `Bearer ${authToken}`
+            }
 
+            console.log(authToken);
+
+            axios.get('http://localhost:8005/api/get-uploads', {headers})
+                .then(resp => {
+                    console.log(resp);
+                    setUploadsData([resp]);
+                    console.log(uploadsData)
+                }).catch(error => {
+                console.log(error);
+            }).then(() => {
+                console.log("yo");
+            });
+        };
         if (authToken !== null) {
-            getUploads(authToken);
-            return history.push('/gallery');
+            getUploads();
+            push('/gallery');
+        } else {
+            console.log("User's NOT authenticated, returning to login view");
+            push('/');
         }
-        console.log("User's NOT authenticated, returning to login view");
-        return history.push('/');
-    });
-
-    const getUploads = () => {
-        const headers = {
-            "Accept": 'application/json',
-            "Authorization": `Bearer ${token}`
-        }
-
-        axios.get('http://localhost:8005/api/get-uploads', {headers})
-            .then(resp => {
-                console.log(resp);
-
-                // setUploadsData([resp]);
-            }).catch(error => {
-            console.log(error);
-        });
-    };
+    }, [push, authToken]);
 
     return (
         <>
