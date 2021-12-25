@@ -25,7 +25,7 @@ const LoginRegister = () => {
 
         axios.post('http://localhost:8005/api/login', dataLogin)
             .then(resp => {
-                Cookies.set('token', resp.data.token);
+                localStorage.setItem('token', resp.data.token);
                 // console.log(localStorage.getItem('name'));
                 // console.log(localStorage.getItem('email'));
                 // console.log(localStorage.getItem('UserID'));

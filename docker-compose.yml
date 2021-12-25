@@ -11,7 +11,7 @@ services:
         environment:
             - COMPOSER_MEMORY_LIMIT=-1
         depends_on:
-            - db
+            - phopix
         volumes:
             - ./:/var/www
         networks:
@@ -42,7 +42,7 @@ services:
         ports:
             - 8005:80
         depends_on:
-            - db
+            - phopix
             - app
         volumes:
             - ./:/var/www
