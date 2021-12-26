@@ -20,7 +20,7 @@ const Gallery = () => {
 
         await axios.get('http://localhost:8005/api/get-uploads', {headers})
             .then(resp => {
-                console.log(resp);
+                // console.log(resp);
                 setUploadsData([resp.data]);
             }).catch(error => {
             console.log(error);
@@ -42,7 +42,7 @@ const Gallery = () => {
 
 
     const logout = () => {
-        console.log(authToken);
+        // console.log(authToken);
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
@@ -82,7 +82,13 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            <Grid/>
+            {
+                uploadsData.map((photos, index) => {
+                    console.log(photos);
+                    return <Grid src={photos[index].url} key={index}/>
+                })
+            }
+
         </>
     );
 }
