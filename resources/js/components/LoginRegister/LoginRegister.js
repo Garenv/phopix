@@ -26,6 +26,7 @@ const LoginRegister = () => {
         axios.post('http://localhost:8005/api/login', dataLogin)
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
+                localStorage.setItem('UserID', resp.data.UserID);
                 // console.log(localStorage.getItem('name'));
                 // console.log(localStorage.getItem('email'));
                 // console.log(localStorage.getItem('UserID'));

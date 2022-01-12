@@ -9,8 +9,8 @@ const Grid = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log("Inside Grid.js second useEffect()");
-        console.log(userPhoto.src);
+        // console.log("Inside Grid.js second useEffect()");
+        // console.log(userPhoto.src);
         setUserPhoto(props);
     }, [userPhoto]);
 
