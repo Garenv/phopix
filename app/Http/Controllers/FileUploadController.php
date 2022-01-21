@@ -24,12 +24,9 @@ class FileUploadController extends Controller
     public function fileUpload(Request $request)
     {
 
-        dd($request->all());
         $path = env('AWS_S3_PATH');
-        $file = $request->file('userUpload');
-
+        $file = $request->file('image');
         $imgName = $file->getClientOriginalName();
-//        dd($imgName);
         $bucket = env('AWS_BUCKET');
         $region = env('AWS_REGION');
         $url = "https://{$bucket}.s3.{$region}.amazonaws.com{$path}{$imgName}";

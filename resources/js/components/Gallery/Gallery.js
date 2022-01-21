@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import '../../../sass/gallery/gallery.scss';
-import Grid from "../Grid/Grid";
 import {Button, Image, Modal} from "react-bootstrap";
 
 const Gallery = () => {
@@ -44,45 +43,19 @@ const Gallery = () => {
         });
     };
 
-    const submitPhoto = (e) => {
-        e.preventDefault()
-        fileUpload(selectedFile);
-    }
-
-    const createImage = (file) => {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            setSelectedFile(e.target.result);
-        };
-        console.log(reader)
-        reader.readAsDataURL(file);
-    }
-
-    const onChange = (e) => {
-        let files = e.target.files || e.dataTransfer.files;
-        if (!files.length) {
-            return;
-        }
-        createImage(files[0]);
-    }
-
-    const fileUpload = (selectedFile) => {
+    const fileUpload = () => {
         const url = 'http://localhost:8005/api/file-upload';
-        const formData = {userUpload : selectedFile}
+
+        var formData = new FormData();
+        var imagefile = document.querySelector('#file');
+        formData.append("image", imagefile.files[0]);
 
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
         }
 
-        console.log(authToken);
-        console.log(formData);
-        console.log(headers);
-
-        // JSON.stringify(formData);
-        axios.post(url, formData, {
-            headers: headers
-        })
+        axios.post(url, formData, {headers})
             .then(resp => {
                 console.log(resp);
             }).catch(error => {
@@ -91,9 +64,9 @@ const Gallery = () => {
     }
 
     return (
-        <form encType="multipart/form-data" >
+        <form encType="multipart/form-data" method="POST">
             <div className="fileUpload text-center">
-                <input type="file" onChange={onChange} name="userUpload" required/>
+                <input type="file" id="file" name="userUpload" required/>
                 {/*<button onClick={() => uploadFile(selectedFile)}>Upload to S3</button>*/}
                 <Button variant="primary" onClick={handleShow}>
                     Launch demo modal
@@ -112,7 +85,7 @@ const Gallery = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    <Button variant="primary" onClick={submitPhoto}>Upload!</Button>
+                    <Button variant="primary" onClick={fileUpload}>Upload!</Button>
                 </Modal.Footer>
             </Modal>
 
