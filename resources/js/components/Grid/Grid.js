@@ -1,28 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import '../../../sass/gallery/gallery.scss';
 
 const Grid = (props) => {
-    const [userPhoto, setUserPhoto] = useState([]);
-
     useEffect(() => {
         createUserPhotoNodes();
     }, []);
 
-    useEffect(() => {
-        // console.log("Inside Grid.js second useEffect()");
-        // console.log(userPhoto.src);
-        setUserPhoto(props);
-    }, [userPhoto]);
+    const generateImgTag = () => {
+        return (
+            <img src={props.src} alt="Photo" className="gallery-img" />
+        );
+    };
 
     const createUserPhotoNodes = () => {
         return (
             <div className="container">
                 <div className="img-container">
-                    <img src={props.src} alt="Photo" className={props.className} />
+                    <img src={props.src} alt="Photo" className="gallery-img" />
+                    {/*<img src={props.src} alt="Photo" className="gallery-img" />*/}
                 </div>
             </div>
         );
-    }
+    };
 
     return (
         <>

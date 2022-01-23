@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '../../../sass/gallery/gallery.scss';
-import {Button, Image, Modal} from "react-bootstrap";
+import { Button, Image, Modal } from "react-bootstrap";
+import Grid from "../Grid/Grid";
+
 
 const Gallery = () => {
     // Preview modal
@@ -27,17 +29,21 @@ const Gallery = () => {
         // console.log(uploadsData);
     }, [uploadsData]);
 
+    const getBlobUrl = (e) => {
+        setFilePreview(URL.createObjectURL(e.target.files[0]));
+        setSelectedFile(e.target.files[0]);
+    }
 
-    const getUploads = async () => {
+    const getUploads = () => {
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
         }
 
-        await axios.get('http://localhost:8005/api/get-uploads', {headers})
+        axios.get('http://localhost:8005/api/get-uploads', {headers})
             .then(resp => {
-                // console.log(resp);
-                setUploadsData([resp.data]);
+                console.log(resp.data);
+                setUploadsData(resp.data);
             }).catch(error => {
             console.log(error);
         });
@@ -57,7 +63,7 @@ const Gallery = () => {
 
         axios.post(url, formData, {headers})
             .then(resp => {
-                console.log(resp);
+                console.log(resp.data);
             }).catch(error => {
                 console.log(error);
             });
@@ -66,22 +72,15 @@ const Gallery = () => {
     return (
         <form encType="multipart/form-data" method="POST">
             <div className="fileUpload text-center">
-                <input type="file" id="file" name="userUpload" required/>
-                {/*<button onClick={() => uploadFile(selectedFile)}>Upload to S3</button>*/}
-                <Button variant="primary" onClick={handleShow}>
-                    Launch demo modal
-                </Button>
-
-                {/*<Button variant="primary" onClick={logout}>*/}
-                {/*    Logout*/}
-                {/*</Button>*/}
+                <input type="file" id="file" onChange={getBlobUrl} required/>
+                <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
             </div>
 
             <Modal show={show} onHide={handleClose}>
                 <h1>Would you like to upload this photo?</h1>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    <Image fluid src={filePreview}/>
+                    <Image fluid src={filePreview} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
@@ -89,12 +88,12 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            {/*{*/}
-            {/*    uploadsData.map((photos, index) => {*/}
-            {/*        console.log(photos);*/}
-            {/*        return <Grid src={photos[index].url} key={index}/>*/}
-            {/*    })*/}
-            {/*}*/}
+            {
+                uploadsData.map((photos, index) => {
+                    // console.log(photos, index);
+                    return <Grid src={photos.url} key={index}/>
+                })
+            }
 
         </form>
     );
