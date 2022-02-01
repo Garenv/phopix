@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUploadsRepository;
 use App\Models\Upload;
-use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class FileUploadController extends Controller
 {
@@ -24,35 +25,42 @@ class FileUploadController extends Controller
     public function fileUpload(Request $request)
     {
 
-        $path = env('AWS_S3_PATH');
-        $file = $request->file('image');
-        $imgName = $file->getClientOriginalName();
-        $bucket = env('AWS_BUCKET');
-        $region = env('AWS_REGION');
-        $url = "https://{$bucket}.s3.{$region}.amazonaws.com{$path}{$imgName}";
-        $userId = Auth::user()['UserID'];
+        try {
+            $path             = env('AWS_S3_PATH');
+            $file             = $request->file('image');
+            $imgName          = $file->getClientOriginalName();
+            $bucket           = env('AWS_BUCKET');
+            $region           = env('AWS_REGION');
+            $url              = "https://{$bucket}.s3.{$region}.amazonaws.com{$path}{$imgName}";
+            $userId           = Auth::user()['UserID'];
+            $time             = Carbon::now();
+            $timeStamp        = $time->toDateTimeString();
 
-        $file->storeAs(
-            $path, // Folder
-            $imgName, // Name of image
-            's3' // Disk Name
-        );
+            $file->storeAs(
+                $path, // Folder
+                $imgName, // Name of image
+                's3' // Disk Name
+            );
 
-        $data = [
-            'url' => $url,
-            'UserID' => $userId,
-            'isUploaded' => true,
-            'timeStamp' => time(),
-            'updated_at' => time()
-        ];
+            $data = [
+                'url'         => $url,
+                'UserID'      => $userId,
+                'isUploaded'  => true,
+                'timeStamp'   => $timeStamp
+            ];
 
-        Upload::create($data);
+            Upload::create($data);
 
-        return $data;
+            return $data;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
+        }
 
     }
 
-    public function getUploads() {
+    public function getUploads()
+    {
         return $this->__uploadsRepository->getUploads();
     }
 }
