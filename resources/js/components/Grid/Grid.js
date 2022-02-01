@@ -6,18 +6,11 @@ const Grid = (props) => {
         createUserPhotoNodes();
     }, []);
 
-    const generateImgTag = () => {
-        return (
-            <img src={props.src} alt="Photo" className="gallery-img" />
-        );
-    };
-
     const createUserPhotoNodes = () => {
         return (
             <div className="container">
                 <div className="img-container">
                     <img src={props.src} alt="Photo" className="gallery-img" />
-                    {/*<img src={props.src} alt="Photo" className="gallery-img" />*/}
                 </div>
             </div>
         );

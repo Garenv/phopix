@@ -2543,6 +2543,16 @@ var Gallery = function Gallery() {
     });
   };
 
+  var displayImages = function displayImages() {
+    console.log(uploadsData);
+    return uploadsData.map(function (photos) {
+      // console.log(photos, index);
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Grid_Grid__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        src: photos.url
+      }, photos.url);
+    });
+  };
+
   var fileUpload = function fileUpload() {
     var url = 'http://localhost:8005/api/file-upload';
     var formData = new FormData();
@@ -2599,12 +2609,7 @@ var Gallery = function Gallery() {
           children: "Upload!"
         })]
       })]
-    }), uploadsData.map(function (photos, index) {
-      // console.log(photos, index);
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Grid_Grid__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        src: photos.url
-      }, index);
-    })]
+    }), displayImages()]
   });
 };
 
@@ -2635,14 +2640,6 @@ var Grid = function Grid(props) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     createUserPhotoNodes();
   }, []);
-
-  var generateImgTag = function generateImgTag() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-      src: props.src,
-      alt: "Photo",
-      className: "gallery-img"
-    });
-  };
 
   var createUserPhotoNodes = function createUserPhotoNodes() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {

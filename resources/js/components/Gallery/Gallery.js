@@ -49,11 +49,21 @@ const Gallery = () => {
         });
     };
 
+    const displayImages = () => {
+        console.log(uploadsData)
+        return(
+            uploadsData.map((photos) => {
+                // console.log(photos, index);
+                return <Grid src={photos.url} key={photos.url}/>
+            })
+        );
+    }
+
     const fileUpload = () => {
         const url = 'http://localhost:8005/api/file-upload';
 
-        var formData = new FormData();
-        var imagefile = document.querySelector('#file');
+        let formData = new FormData();
+        let imagefile = document.querySelector('#file');
         formData.append("image", imagefile.files[0]);
 
         const headers = {
@@ -88,12 +98,7 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            {
-                uploadsData.map((photos, index) => {
-                    // console.log(photos, index);
-                    return <Grid src={photos.url} key={index}/>
-                })
-            }
+            {displayImages()}
 
         </form>
     );
