@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class UploadsRepository implements IUploadsRepository
 {
     /**
-     * @return string
+     * @return \Illuminate\Support\Collection
      */
     public function getUploads()
     {

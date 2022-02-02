@@ -52,6 +52,7 @@ class FileUploadController extends Controller
             Upload::create($data);
 
             return $data;
+
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new \Exception($e->getMessage(), $e->getCode(), $e);

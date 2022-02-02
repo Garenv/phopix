@@ -54,7 +54,7 @@ const Gallery = () => {
         return(
             uploadsData.map((photos) => {
                 // console.log(photos, index);
-                return <Grid src={photos.url} key={photos.url}/>
+                return <Grid src={photos.url} key={photos.url} userName={photos.name}/>
             })
         );
     }
