@@ -80,7 +80,7 @@ const Gallery = () => {
     }
 
     return (
-        <form encType="multipart/form-data" method="POST">
+        <>
             <div className="fileUpload text-center">
                 <input type="file" id="file" onChange={getBlobUrl} required/>
                 <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
@@ -99,8 +99,8 @@ const Gallery = () => {
             </Modal>
 
             {displayImages()}
+        </>
 
-        </form>
     );
 }
 

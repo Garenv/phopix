@@ -29,5 +29,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('file-upload',          [FileUploadController::class, 'fileUpload']);
     Route::post('logout',               [AuthController::class,       'logout']);
     Route::post('post-user-like',       [UsersController::class,      'postUserLike']);
-
 });

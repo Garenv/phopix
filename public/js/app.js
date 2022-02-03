@@ -2480,6 +2480,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var Gallery = function Gallery() {
   // Preview modal
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
@@ -2572,9 +2573,7 @@ var Gallery = function Gallery() {
     });
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
-    encType: "multipart/form-data",
-    method: "POST",
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       className: "fileUpload text-center",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
@@ -2651,7 +2650,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Grid = function Grid(props) {
-  // const [userName, setUserName] = useState(props);
+  var authToken = localStorage.getItem('token');
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
       _useState2 = _slicedToArray(_useState, 2),
       like = _useState2[0],
@@ -2659,36 +2659,68 @@ var Grid = function Grid(props) {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     createUserPhotoNodes();
-  }, []);
+  });
+
+  var likesAmount = function likesAmount() {
+    if (like !== 1) {
+      setLike(like + 1);
+    }
+
+    setLike(like - 1);
+  };
+
+  var sendUserLikePost = function sendUserLikePost() {
+    var url = 'http://localhost:8005/api/post-user-like';
+    var headers = {
+      "Accept": 'application/json',
+      "Authorization": "Bearer ".concat(authToken)
+    };
+    var data = {
+      'like': like
+    };
+    console.log(data);
+    axios.post(url, data, {
+      headers: headers
+    }).then(function (resp) {
+      console.log(resp.data);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
 
   var createUserPhotoNodes = function createUserPhotoNodes() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "container",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "img-container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-          src: props.src,
-          alt: "Photo",
-          className: "gallery-img",
-          onDoubleClick: function onDoubleClick() {
-            return setLike(like + 1);
-          }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-          className: "userName",
-          children: props.userName
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
-          className: "likes",
-          children: ["Likes ", like]
-        })]
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
+      className: "gallery",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "container",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("form", {
+          method: "POST",
+          name: "likes",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "img-container",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              onDoubleClick: likesAmount,
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                src: props.src,
+                alt: "Photo",
+                className: "gallery-img"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+              className: "userName",
+              children: props.userName
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+              className: "likes",
+              children: ["Likes ", like]
+            })]
+          })
+        })
       })
     });
   };
 
+  sendUserLikePost();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
-      className: "gallery",
-      children: createUserPhotoNodes()
-    })
+    children: createUserPhotoNodes()
   });
 };
 
