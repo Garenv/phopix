@@ -22,14 +22,10 @@ class UsersController extends Controller
 
     public function postUserLike(Request $request)
     {
-        $response = [
-            'status' => 'failed',
-            'message' => 'something went wrong!'
-        ];
+        $user            = Auth::user();
+        $userId          = $user['UserID'];
 
         try {
-            $user            = Auth::user();
-            $userId          = $user['UserID'];
             $params          = $request->all();
             $like            = $params['like'];
 
@@ -38,7 +34,7 @@ class UsersController extends Controller
             ]);
 
             $checkValidation = $validation->fails();
-            $updateUserLikes = $this->__usersRepository->postUserLike($userId, $like);
+            $updateUserLikes = $this->__usersRepository->insertUserLike($userId, $like);
 
             if(!$checkValidation && $updateUserLikes) {
                 return [
@@ -57,7 +53,37 @@ class UsersController extends Controller
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
 
+    }
 
+    public function getUserLikes() {
+        $user            = Auth::user();
+        $userId          = $user['UserID'];
 
+        try {
+            $updateUserLikes = $this->__usersRepository->getUserLikes($userId);
+
+            if(!empty($updateUserLikes)) {
+                $totalLikes = [];
+
+                collect($updateUserLikes)->each(function ($item) use (&$totalLikes) {
+                    $totalLikes[] = (object) $item;
+                });
+
+                return [
+                    'status'          => 'success',
+                    'UserID'          => $userId,
+                    'totalLikes'      => $totalLikes
+                ];
+            }
+
+            return [
+                'status'     => 'failed',
+                'message'    => 'something went wrong!'
+            ];
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
+        }
     }
 }

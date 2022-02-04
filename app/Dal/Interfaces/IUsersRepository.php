@@ -4,5 +4,6 @@ namespace App\Dal\Interfaces;
 
 interface IUsersRepository
 {
-    public function postUserLike($userId, $like);
+    public function insertUserLike($userId, $like);
+    public function getUserLikes($userId);
 }

@@ -7,15 +7,20 @@ const Grid = (props) => {
 
     useEffect(() => {
         createUserPhotoNodes();
-    });
+    },[]);
 
     const likesAmount = () => {
         if(like !== 1) {
             setLike(like + 1);
+            sendUserLikePost();
         }
 
-        setLike(like - 1);
-    }
+        if(like >= 1) {
+            setLike(like - 1);
+            sendUserLikePost();
+        }
+
+    };
 
     const sendUserLikePost = () => {
         const url = 'http://localhost:8005/api/post-user-like';
@@ -37,7 +42,23 @@ const Grid = (props) => {
             }).catch(error => {
             console.log(error);
         });
-    }
+    };
+
+    const getUserLikes = () => {
+        const url = 'http://localhost:8005/api/get-user-like';
+
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${authToken}`
+        };
+
+        axios.post(url, {headers})
+            .then(resp => {
+                console.log(resp.data);
+            }).catch(error => {
+            console.log(error);
+        });
+    };
 
     const createUserPhotoNodes = () => {
         return (
@@ -57,7 +78,6 @@ const Grid = (props) => {
         );
     };
 
-    sendUserLikePost();
 
     return (
         <>

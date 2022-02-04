@@ -2659,14 +2659,18 @@ var Grid = function Grid(props) {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     createUserPhotoNodes();
-  });
+  }, []);
 
   var likesAmount = function likesAmount() {
     if (like !== 1) {
       setLike(like + 1);
+      sendUserLikePost();
     }
 
-    setLike(like - 1);
+    if (like >= 1) {
+      setLike(like - 1);
+      sendUserLikePost();
+    }
   };
 
   var sendUserLikePost = function sendUserLikePost() {
@@ -2680,6 +2684,21 @@ var Grid = function Grid(props) {
     };
     console.log(data);
     axios.post(url, data, {
+      headers: headers
+    }).then(function (resp) {
+      console.log(resp.data);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
+
+  var getUserLikes = function getUserLikes() {
+    var url = 'http://localhost:8005/api/get-user-like';
+    var headers = {
+      "Accept": 'application/json',
+      "Authorization": "Bearer ".concat(authToken)
+    };
+    axios.post(url, {
       headers: headers
     }).then(function (resp) {
       console.log(resp.data);
@@ -2718,7 +2737,6 @@ var Grid = function Grid(props) {
     });
   };
 
-  sendUserLikePost();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: createUserPhotoNodes()
   });
