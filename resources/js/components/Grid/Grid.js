@@ -5,10 +5,6 @@ const Grid = (props) => {
     let authToken = localStorage.getItem('token');
     const [like, setLike] = useState(0);
 
-    useEffect(() => {
-        createUserPhotoNodes();
-    },[]);
-
     const likesAmount = () => {
         if(like !== 1) {
             setLike(like + 1);
@@ -44,22 +40,6 @@ const Grid = (props) => {
         });
     };
 
-    const getUserLikes = () => {
-        const url = 'http://localhost:8005/api/get-user-like';
-
-        const headers = {
-            "Accept": 'application/json',
-            "Authorization": `Bearer ${authToken}`
-        };
-
-        axios.post(url, {headers})
-            .then(resp => {
-                console.log(resp.data);
-            }).catch(error => {
-            console.log(error);
-        });
-    };
-
     const createUserPhotoNodes = () => {
         return (
             <section className="gallery">
@@ -70,7 +50,7 @@ const Grid = (props) => {
                                 <img src={props.src} alt="Photo" className="gallery-img" />
                             </span>
                             <h2 className="userName">{props.userName}</h2>
-                            <h2 className="likes">Likes {like}</h2>
+                            <h2 className="likes">Likes {props.likes}</h2>
                         </div>
                     </form>
                 </div>
@@ -81,6 +61,7 @@ const Grid = (props) => {
 
     return (
         <>
+            {/*{getUserLikes()}*/}
             {createUserPhotoNodes()}
         </>
     );

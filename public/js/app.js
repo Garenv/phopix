@@ -2511,12 +2511,18 @@ var Gallery = function Gallery() {
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState8 = _slicedToArray(_useState7, 2),
       selectedFile = _useState8[0],
-      setSelectedFile = _useState8[1]; // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
+      setSelectedFile = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState10 = _slicedToArray(_useState9, 2),
+      totalLikes = _useState10[0],
+      setTotalLikes = _useState10[1]; // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
   // Run the code in a separate useEffect hook.
   // In this way, the getUploads function is called only once and it outputs correct uploadData to the browser console.
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    getUserLikes();
     getUploads();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {// logs empty array in the console if dependency array is empty
@@ -2544,12 +2550,29 @@ var Gallery = function Gallery() {
     });
   };
 
+  var getUserLikes = function getUserLikes() {
+    var url = 'http://localhost:8005/api/get-user-like';
+    var headers = {
+      "Accept": 'application/json',
+      "Authorization": "Bearer ".concat(authToken)
+    };
+    axios.get(url, {
+      headers: headers
+    }).then(function (resp) {
+      console.log("here");
+      setTotalLikes(resp.data);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
+
   var displayImages = function displayImages() {
     console.log(uploadsData);
     return uploadsData.map(function (photos) {
       // console.log(photos, index);
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Grid_Grid__WEBPACK_IMPORTED_MODULE_2__["default"], {
         src: photos.url,
+        likes: "",
         userName: photos.name
       }, photos.url);
     });
@@ -2657,10 +2680,6 @@ var Grid = function Grid(props) {
       like = _useState2[0],
       setLike = _useState2[1];
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    createUserPhotoNodes();
-  }, []);
-
   var likesAmount = function likesAmount() {
     if (like !== 1) {
       setLike(like + 1);
@@ -2692,21 +2711,6 @@ var Grid = function Grid(props) {
     });
   };
 
-  var getUserLikes = function getUserLikes() {
-    var url = 'http://localhost:8005/api/get-user-like';
-    var headers = {
-      "Accept": 'application/json',
-      "Authorization": "Bearer ".concat(authToken)
-    };
-    axios.post(url, {
-      headers: headers
-    }).then(function (resp) {
-      console.log(resp.data);
-    })["catch"](function (error) {
-      console.log(error);
-    });
-  };
-
   var createUserPhotoNodes = function createUserPhotoNodes() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
       className: "gallery",
@@ -2729,7 +2733,7 @@ var Grid = function Grid(props) {
               children: props.userName
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
               className: "likes",
-              children: ["Likes ", like]
+              children: ["Likes ", props.likes]
             })]
           })
         })
