@@ -22,8 +22,7 @@ class UsersController extends Controller
 
     public function postUserLike(Request $request)
     {
-        $user                = Auth::user();
-        $userId              = $user['UserID'];
+        $userId              = $request->get('UserID');
 
         try {
             $params          = $request->all();
@@ -36,7 +35,8 @@ class UsersController extends Controller
             $checkValidation = $validation->fails();
             $updateUserLikes = $this->__usersRepository->insertUserLike($userId, $like);
 
-            if(!$checkValidation && $updateUserLikes) {
+
+            if(!$checkValidation && !is_null($updateUserLikes)) {
                 return [
                     'status' => "successful",
                     'UserID' => $userId,

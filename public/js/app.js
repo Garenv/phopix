@@ -2554,10 +2554,14 @@ var Gallery = function Gallery() {
     });
   };
 
-  var photoUserId = function photoUserId(e) {
+  var handleLikesBasedOnUserId = function handleLikesBasedOnUserId(e) {
     console.log(e);
     setLikedPhotoUsedId(e);
-    sendUserLikePost();
+
+    if (like >= 0) {
+      setLike(like + 1);
+      sendUserLikePost();
+    }
   };
 
   var sendUserLikePost = function sendUserLikePost() {
@@ -2586,7 +2590,7 @@ var Gallery = function Gallery() {
         src: photos.url,
         likes: photos.likes,
         userName: photos.name,
-        doubleClick: photoUserId,
+        doubleClick: handleLikesBasedOnUserId,
         value: photos.UserID
       }, index);
     });

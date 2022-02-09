@@ -31,7 +31,6 @@ const Gallery = () => {
         // console.log(uploadsData);
     }, [uploadsData]);
 
-
     const getcreatedPhotoUrl = (e) => {
         setFilePreview(URL.createObjectURL(e.target.files[0]));
         setSelectedFile(e.target.files[0]);
@@ -52,10 +51,13 @@ const Gallery = () => {
         });
     };
 
-    const photoUserId = (e) => {
+    const handleLikesBasedOnUserId = (e) => {
         console.log(e);
         setLikedPhotoUsedId(e);
-        sendUserLikePost();
+        if(like >= 0) {
+            setLike(like + 1);
+            sendUserLikePost();
+        }
     };
 
     const sendUserLikePost = () => {
@@ -89,7 +91,7 @@ const Gallery = () => {
                     likes={photos.likes}
                     userName={photos.name}
                     key={index}
-                    doubleClick={photoUserId}
+                    doubleClick={handleLikesBasedOnUserId}
                     value={photos.UserID}
                 />
             })
