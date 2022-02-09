@@ -17,6 +17,14 @@ class UsersRepository implements IUsersRepository
         return DB::table('uploads')->select('likes')->get();
     }
 
+    public function getUploads()
+    {
+        return DB::table('uploads')
+            ->select('uploads.url', 'uploads.likes', 'users.UserID', 'users.name')
+            ->join('users', 'users.UserID', '=', 'uploads.UserID')
+            ->get();
+    }
+
 
 }
 

@@ -7,14 +7,5 @@ use Illuminate\Support\Facades\DB;
 
 class UploadsRepository implements IUploadsRepository
 {
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getUploads()
-    {
-        return DB::table('uploads')
-            ->select('uploads.url', 'users.name')
-            ->join('users', 'users.UserID', '=', 'uploads.UserID')
-            ->get();
-    }
+
 }

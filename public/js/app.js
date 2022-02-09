@@ -2508,21 +2508,25 @@ var Gallery = function Gallery() {
       filePreview = _useState6[0],
       setFilePreview = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState8 = _slicedToArray(_useState7, 2),
-      selectedFile = _useState8[0],
-      setSelectedFile = _useState8[1];
+      likedPhotoUserId = _useState8[0],
+      setLikedPhotoUsedId = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
       _useState10 = _slicedToArray(_useState9, 2),
-      totalLikes = _useState10[0],
-      setTotalLikes = _useState10[1]; // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
+      like = _useState10[0],
+      setLike = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState12 = _slicedToArray(_useState11, 2),
+      selectedFile = _useState12[0],
+      setSelectedFile = _useState12[1]; // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
   // Run the code in a separate useEffect hook.
   // In this way, the getUploads function is called only once and it outputs correct uploadData to the browser console.
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    getUserLikes();
     getUploads();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {// logs empty array in the console if dependency array is empty
@@ -2530,7 +2534,7 @@ var Gallery = function Gallery() {
     // console.log(uploadsData);
   }, [uploadsData]);
 
-  var getBlobUrl = function getBlobUrl(e) {
+  var getcreatedPhotoUrl = function getcreatedPhotoUrl(e) {
     setFilePreview(URL.createObjectURL(e.target.files[0]));
     setSelectedFile(e.target.files[0]);
   };
@@ -2540,7 +2544,7 @@ var Gallery = function Gallery() {
       "Accept": 'application/json',
       "Authorization": "Bearer ".concat(authToken)
     };
-    axios.get('http://localhost:8005/api/get-uploads', {
+    axios.get('http://localhost:8005/api/get-user-uploads-data', {
       headers: headers
     }).then(function (resp) {
       console.log(resp.data);
@@ -2550,31 +2554,41 @@ var Gallery = function Gallery() {
     });
   };
 
-  var getUserLikes = function getUserLikes() {
-    var url = 'http://localhost:8005/api/get-user-like';
+  var photoUserId = function photoUserId(e) {
+    console.log(e);
+    setLikedPhotoUsedId(e);
+    sendUserLikePost();
+  };
+
+  var sendUserLikePost = function sendUserLikePost() {
+    var url = 'http://localhost:8005/api/post-user-like';
     var headers = {
       "Accept": 'application/json',
       "Authorization": "Bearer ".concat(authToken)
     };
-    axios.get(url, {
+    var data = {
+      'like': like,
+      'UserID': likedPhotoUserId
+    };
+    console.log(data);
+    axios.post(url, data, {
       headers: headers
     }).then(function (resp) {
-      console.log("here");
-      setTotalLikes(resp.data);
+      console.log(resp.data);
     })["catch"](function (error) {
       console.log(error);
     });
   };
 
-  var displayImages = function displayImages() {
-    console.log(uploadsData);
-    return uploadsData.map(function (photos) {
-      // console.log(photos, index);
+  var displayUploadsData = function displayUploadsData() {
+    return uploadsData.map(function (photos, index) {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Grid_Grid__WEBPACK_IMPORTED_MODULE_2__["default"], {
         src: photos.url,
-        likes: "",
-        userName: photos.name
-      }, photos.url);
+        likes: photos.likes,
+        userName: photos.name,
+        doubleClick: photoUserId,
+        value: photos.UserID
+      }, index);
     });
   };
 
@@ -2602,7 +2616,7 @@ var Gallery = function Gallery() {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
         type: "file",
         id: "file",
-        onChange: getBlobUrl,
+        onChange: getcreatedPhotoUrl,
         required: true
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         variant: "primary",
@@ -2632,7 +2646,7 @@ var Gallery = function Gallery() {
           children: "Upload!"
         })]
       })]
-    }), displayImages()]
+    }), displayUploadsData()]
   });
 };
 
@@ -2654,18 +2668,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _sass_gallery_gallery_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../sass/gallery/gallery.scss */ "./resources/sass/gallery/gallery.scss");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -2673,44 +2675,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Grid = function Grid(props) {
-  var authToken = localStorage.getItem('token');
-
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-      _useState2 = _slicedToArray(_useState, 2),
-      like = _useState2[0],
-      setLike = _useState2[1];
-
-  var likesAmount = function likesAmount() {
-    if (like !== 1) {
-      setLike(like + 1);
-      sendUserLikePost();
-    }
-
-    if (like >= 1) {
-      setLike(like - 1);
-      sendUserLikePost();
-    }
-  };
-
-  var sendUserLikePost = function sendUserLikePost() {
-    var url = 'http://localhost:8005/api/post-user-like';
-    var headers = {
-      "Accept": 'application/json',
-      "Authorization": "Bearer ".concat(authToken)
-    };
-    var data = {
-      'like': like
-    };
-    console.log(data);
-    axios.post(url, data, {
-      headers: headers
-    }).then(function (resp) {
-      console.log(resp.data);
-    })["catch"](function (error) {
-      console.log(error);
-    });
-  };
-
   var createUserPhotoNodes = function createUserPhotoNodes() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
       className: "gallery",
@@ -2721,18 +2685,19 @@ var Grid = function Grid(props) {
           name: "likes",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "img-container",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              onDoubleClick: likesAmount,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                src: props.src,
-                alt: "Photo",
-                className: "gallery-img"
-              })
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+              src: props.src,
+              alt: "Photo",
+              className: "gallery-img",
+              onDoubleClick: function onDoubleClick() {
+                return props.doubleClick(props.value);
+              }
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
               className: "userName",
               children: props.userName
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
               className: "likes",
+              onChange: props.onChange,
               children: ["Likes ", props.likes]
             })]
           })

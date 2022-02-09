@@ -13,16 +13,15 @@ const Gallery = () => {
 
     const [uploadsData, setUploadsData] = useState([]);
     const [filePreview, setFilePreview] = useState(null);
+    const [likedPhotoUserId, setLikedPhotoUsedId] = useState('');
+    const [like, setLike] = useState(0);
 
     const [selectedFile, setSelectedFile] = useState(null);
-
-    const [totalLikes, setTotalLikes] = useState([]);
 
     // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
     // Run the code in a separate useEffect hook.
     // In this way, the getUploads function is called only once and it outputs correct uploadData to the browser console.
     useEffect(() => {
-        getUserLikes();
         getUploads();
     }, []);
 
@@ -33,7 +32,7 @@ const Gallery = () => {
     }, [uploadsData]);
 
 
-    const getBlobUrl = (e) => {
+    const getcreatedPhotoUrl = (e) => {
         setFilePreview(URL.createObjectURL(e.target.files[0]));
         setSelectedFile(e.target.files[0]);
     }
@@ -44,7 +43,7 @@ const Gallery = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        axios.get('http://localhost:8005/api/get-uploads', {headers})
+        axios.get('http://localhost:8005/api/get-user-uploads-data', {headers})
             .then(resp => {
                 console.log(resp.data);
                 setUploadsData(resp.data);
@@ -53,29 +52,46 @@ const Gallery = () => {
         });
     };
 
-    const getUserLikes = () => {
-        const url = 'http://localhost:8005/api/get-user-like';
+    const photoUserId = (e) => {
+        console.log(e);
+        setLikedPhotoUsedId(e);
+        sendUserLikePost();
+    };
+
+    const sendUserLikePost = () => {
+        const url = 'http://localhost:8005/api/post-user-like';
 
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
         };
 
-        axios.get(url, {headers})
+        let data = {
+            'like': like,
+            'UserID': likedPhotoUserId
+        };
+
+        console.log(data);
+
+        axios.post(url, data, {headers})
             .then(resp => {
-                console.log("here");
-                setTotalLikes(resp.data);
+                console.log(resp.data);
             }).catch(error => {
             console.log(error);
         });
     };
 
-    const displayImages = () => {
-        console.log(uploadsData)
+    const displayUploadsData = () => {
         return (
-            uploadsData.map((photos) => {
-                // console.log(photos, index);
-                return <Grid src={photos.url} key={photos.url} likes="" userName={photos.name}/>
+            uploadsData.map((photos, index) => {
+                return <Grid
+                    src={photos.url}
+                    likes={photos.likes}
+                    userName={photos.name}
+                    key={index}
+                    doubleClick={photoUserId}
+                    value={photos.UserID}
+                />
             })
         );
     };
@@ -103,7 +119,7 @@ const Gallery = () => {
     return (
         <>
             <div className="fileUpload text-center">
-                <input type="file" id="file" onChange={getBlobUrl} required/>
+                <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>
                 <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
             </div>
 
@@ -119,7 +135,7 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            {displayImages()}
+            {displayUploadsData()}
         </>
 
     );

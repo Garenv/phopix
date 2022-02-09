@@ -62,6 +62,5 @@ class FileUploadController extends Controller
 
     public function getUploads()
     {
-        return $this->__uploadsRepository->getUploads();
     }
 }

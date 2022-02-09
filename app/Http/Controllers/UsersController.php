@@ -22,8 +22,8 @@ class UsersController extends Controller
 
     public function postUserLike(Request $request)
     {
-        $user            = Auth::user();
-        $userId          = $user['UserID'];
+        $user                = Auth::user();
+        $userId              = $user['UserID'];
 
         try {
             $params          = $request->all();
@@ -55,35 +55,8 @@ class UsersController extends Controller
 
     }
 
-    public function getUserLikes() {
-        $user            = Auth::user();
-        $userId          = $user['UserID'];
-
-        try {
-            $updateUserLikes = $this->__usersRepository->getUserLikes($userId);
-
-            if(!empty($updateUserLikes)) {
-                $totalLikes = [];
-
-                collect($updateUserLikes)->each(function ($item) use (&$totalLikes) {
-                    $totalLikes[] = (object) $item;
-                });
-
-                return [
-                    'status'          => 'success',
-                    'UserID'          => $userId,
-                    'totalLikes'      => $totalLikes
-                ];
-            }
-
-            return [
-                'status'     => 'failed',
-                'message'    => 'something went wrong!'
-            ];
-
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            throw new \Exception($e->getMessage(), $e->getCode(), $e);
-        }
+    public function getUserUploadsData() {
+        return $this->__usersRepository->getUploads();
     }
+
 }
