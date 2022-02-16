@@ -2518,10 +2518,15 @@ var Gallery = function Gallery() {
       like = _useState10[0],
       setLike = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState12 = _slicedToArray(_useState11, 2),
-      selectedFile = _useState12[0],
-      setSelectedFile = _useState12[1]; // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
+      post = _useState12[0],
+      postSent = _useState12[1];
+
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState14 = _slicedToArray(_useState13, 2),
+      selectedFile = _useState14[0],
+      setSelectedFile = _useState14[1]; // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
   // Run the code in a separate useEffect hook.
   // In this way, the getUploads function is called only once and it outputs correct uploadData to the browser console.
 
@@ -2555,13 +2560,9 @@ var Gallery = function Gallery() {
   };
 
   var handleLikesBasedOnUserId = function handleLikesBasedOnUserId(e) {
-    console.log(e);
+    // setMovies(prevMovies => ([...prevMovies, ...result]));
     setLikedPhotoUsedId(e);
-
-    if (like >= 0) {
-      setLike(like + 1);
-      sendUserLikePost();
-    }
+    sendUserLikePost();
   };
 
   var sendUserLikePost = function sendUserLikePost() {
@@ -2581,7 +2582,7 @@ var Gallery = function Gallery() {
       console.log(resp.data);
     })["catch"](function (error) {
       console.log(error);
-    });
+    }); // setLikedPhotoUsedId('');
   };
 
   var displayUploadsData = function displayUploadsData() {

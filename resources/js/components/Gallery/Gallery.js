@@ -3,7 +3,6 @@ import '../../../sass/gallery/gallery.scss';
 import {Button, Image, Modal} from "react-bootstrap";
 import Grid from "../Grid/Grid";
 
-
 const Gallery = () => {
     // Preview modal
     const [show, setShow] = useState(false);
@@ -15,6 +14,7 @@ const Gallery = () => {
     const [filePreview, setFilePreview] = useState(null);
     const [likedPhotoUserId, setLikedPhotoUsedId] = useState('');
     const [like, setLike] = useState(0);
+    const [post, postSent] = useState(false);
 
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -52,12 +52,9 @@ const Gallery = () => {
     };
 
     const handleLikesBasedOnUserId = (e) => {
-        console.log(e);
+        // setMovies(prevMovies => ([...prevMovies, ...result]));
         setLikedPhotoUsedId(e);
-        if(like >= 0) {
-            setLike(like + 1);
-            sendUserLikePost();
-        }
+        sendUserLikePost();
     };
 
     const sendUserLikePost = () => {
@@ -81,6 +78,8 @@ const Gallery = () => {
             }).catch(error => {
             console.log(error);
         });
+
+        // setLikedPhotoUsedId('');
     };
 
     const displayUploadsData = () => {

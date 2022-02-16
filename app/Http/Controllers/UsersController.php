@@ -22,25 +22,26 @@ class UsersController extends Controller
 
     public function postUserLike(Request $request)
     {
-        $userId              = $request->get('UserID');
 
+        $userId              = $request->get('UserID');
         try {
             $params          = $request->all();
-            $like            = $params['like'];
 
             $validation      = Validator::make($params , [
                 'like'       => 'required|integer'
             ]);
 
             $checkValidation = $validation->fails();
-            $updateUserLikes = $this->__usersRepository->insertUserLike($userId, $like);
+            $getUserLikes = $this->__usersRepository->getUserLikes($userId);
+            $userLikes = $getUserLikes[0]->likes;
 
+            $updateUserLikes = $this->__usersRepository->updateUserLikes($userId, $userLikes);
 
             if(!$checkValidation && !is_null($updateUserLikes)) {
                 return [
                     'status' => "successful",
                     'UserID' => $userId,
-                    'likes'  => $like
+                    'likeUpdated'  => $updateUserLikes
                 ];
             }
 

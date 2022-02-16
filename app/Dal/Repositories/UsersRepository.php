@@ -8,13 +8,20 @@ use Illuminate\Support\Facades\DB;
 
 class UsersRepository implements IUsersRepository
 {
-    public function insertUserLike($userId, $like) {
-        $data = ['likes' => $like];
-        return DB::table('uploads')->where('UserID', $userId)->update($data);
+    public function updateUserLikes($userId, $userLikes)
+    {
+        $data = ['likes' => $userLikes + 1];
+        return DB::table('uploads')
+            ->where('UserID', $userId)
+            ->update($data);
     }
 
-    public function getUserLikes($userId) {
-        return DB::table('uploads')->select('likes')->get();
+    public function getUserLikes($userId)
+    {
+        return DB::table('uploads')
+            ->select('likes')
+            ->where('UserID', $userId)
+            ->get();
     }
 
     public function getUploads()
