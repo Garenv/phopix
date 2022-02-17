@@ -12,11 +12,7 @@ const Gallery = () => {
 
     const [uploadsData, setUploadsData] = useState([]);
     const [filePreview, setFilePreview] = useState(null);
-    const [likedPhotoUserId, setLikedPhotoUsedId] = useState('');
     const [like, setLike] = useState(0);
-    const [post, postSent] = useState(false);
-
-    const [selectedFile, setSelectedFile] = useState(null);
 
     // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
     // Run the code in a separate useEffect hook.
@@ -33,7 +29,6 @@ const Gallery = () => {
 
     const getcreatedPhotoUrl = (e) => {
         setFilePreview(URL.createObjectURL(e.target.files[0]));
-        setSelectedFile(e.target.files[0]);
     }
 
     const getUploads = () => {
@@ -52,12 +47,10 @@ const Gallery = () => {
     };
 
     const handleLikesBasedOnUserId = (e) => {
-        // setMovies(prevMovies => ([...prevMovies, ...result]));
-        setLikedPhotoUsedId(e);
-        sendUserLikePost();
+        sendUserLikePost(e);
     };
 
-    const sendUserLikePost = () => {
+    const sendUserLikePost = (likedPhotoUserId) => {
         const url = 'http://localhost:8005/api/post-user-like';
 
         const headers = {
