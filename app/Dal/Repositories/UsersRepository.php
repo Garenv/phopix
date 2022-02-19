@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class UsersRepository implements IUsersRepository
 {
-    public function updateUserLikes($userId, $userLikes)
+    public function incrementDecrementLike($userId, $userLikes, $likeCount)
     {
-        $data = ['likes' => $userLikes + 1];
+        $data = ['likes' => $likeCount > 1 ? $userLikes - 1 : $userLikes + 1];
         return DB::table('uploads')
             ->where('UserID', $userId)
             ->update($data);

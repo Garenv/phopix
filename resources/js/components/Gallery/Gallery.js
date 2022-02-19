@@ -4,15 +4,20 @@ import {Button, Image, Modal} from "react-bootstrap";
 import Grid from "../Grid/Grid";
 
 const Gallery = () => {
+
+    let authToken                       = localStorage.getItem('token');
+
     // Preview modal
-    const [show, setShow] = useState(false);
-    let authToken = localStorage.getItem('token');
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [show, setShow]               = useState(false);
+    const handleClose                   = () => setShow(false);
+    const handleShow                    = () => setShow(true);
 
     const [uploadsData, setUploadsData] = useState([]);
     const [filePreview, setFilePreview] = useState(null);
-    const [like, setLike] = useState(0);
+    const [like, setLike]               = useState(0);
+    // const [likeCount, setLikeCount]               = useState(null);
+    let likeCount = 0;
+
 
     // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
     // Run the code in a separate useEffect hook.
@@ -47,10 +52,11 @@ const Gallery = () => {
     };
 
     const handleLikesBasedOnUserId = (e) => {
-        sendUserLikePost(e);
+        likeCount++;
+        incrementDecrementLike(e);
     };
 
-    const sendUserLikePost = (likedPhotoUserId) => {
+    const incrementDecrementLike = (likedPhotoUserId) => {
         const url = 'http://localhost:8005/api/post-user-like';
 
         const headers = {
@@ -60,7 +66,8 @@ const Gallery = () => {
 
         let data = {
             'like': like,
-            'UserID': likedPhotoUserId
+            'UserID': likedPhotoUserId,
+            'likeCount': likeCount
         };
 
         console.log(data);
@@ -72,7 +79,6 @@ const Gallery = () => {
             console.log(error);
         });
 
-        // setLikedPhotoUsedId('');
     };
 
     const displayUploadsData = () => {

@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie';
-// import {useDispatch, useSelector} from "react-redux";
-// import {Redirect} from "react-router-dom";
-// import {login} from "../../actions/auth";
 
 const LoginRegister = () => {
     const [name, setName] = useState("");
@@ -15,7 +11,9 @@ const LoginRegister = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log("Click Login");
+
+        console.log("Clicked Login");
+
         let dataLogin = {
             'email': email,
             'password': password
@@ -37,13 +35,13 @@ const LoginRegister = () => {
             console.log(error);
         });
 
-        // setUserState('myState');
-
     };
 
     const handleRegister = (e) => {
         e.preventDefault();
-        console.log("Click Register");
+
+        console.log("Clicked Register");
+
         let dataRegister = {
             'name': name,
             'email': email,
@@ -63,8 +61,6 @@ const LoginRegister = () => {
                 console.log(error);
         });
     };
-
-
 
     return (
         <>

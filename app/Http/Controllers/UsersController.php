@@ -20,34 +20,30 @@ class UsersController extends Controller
         $this->__usersRepository = $usersRepository;
     }
 
-    public function postUserLike(Request $request)
+    public function incrementDecrementLike(Request $request)
     {
 
-        $userId              = $request->get('UserID');
+        $userId                        = $request->get('UserID');
         try {
-            $params          = $request->all();
+            $params                    = $request->all();
+            $likeCount                 = $params['likeCount'];
 
-            $validation      = Validator::make($params , [
-                'like'       => 'required|integer'
-            ]);
+            $getUserLikes              = $this->__usersRepository->getUserLikes($userId);
+            $userLikes                 = $getUserLikes[0]->likes;
 
-            $checkValidation = $validation->fails();
-            $getUserLikes = $this->__usersRepository->getUserLikes($userId);
-            $userLikes = $getUserLikes[0]->likes;
+            $incrementDecrementLike    = $this->__usersRepository->incrementDecrementLike($userId, $userLikes, $likeCount);
 
-            $updateUserLikes = $this->__usersRepository->updateUserLikes($userId, $userLikes);
-
-            if(!$checkValidation && !is_null($updateUserLikes)) {
+            if(!$incrementDecrementLike) {
                 return [
-                    'status' => "successful",
-                    'UserID' => $userId,
-                    'likeUpdated'  => $updateUserLikes
+                    'status'           => 'failed',
+                    'message'          => 'something went wrong!'
                 ];
             }
 
             return [
-                'status'     => 'failed',
-                'message'    => 'something went wrong!'
+                'status'               => "successful",
+                'UserID'               => $userId,
+                'likeUpdated'          => $incrementDecrementLike
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());

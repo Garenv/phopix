@@ -4,6 +4,6 @@ namespace App\Dal\Interfaces;
 
 interface IUsersRepository
 {
-    public function updateUserLikes($userId, $userLikes);
+    public function incrementDecrementLike($userId, $userLikes, $likeCount);
     public function getUserLikes($userId);
 }
