@@ -11,9 +11,10 @@ class UsersRepository implements IUsersRepository
     public function incrementDecrementLike($userId, $userLikes, $likeCount)
     {
         $data = ['likes' => $likeCount > 1 ? $userLikes - 1 : $userLikes + 1];
-        return DB::table('uploads')
+        DB::table('uploads')
             ->where('UserID', $userId)
             ->update($data);
+        return $data['likes'];
     }
 
     public function getUserLikes($userId)

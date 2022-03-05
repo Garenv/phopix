@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUsersRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
@@ -22,15 +20,18 @@ class UsersController extends Controller
 
     public function incrementDecrementLike(Request $request)
     {
-
-        $userId                        = $request->get('UserID');
         try {
-            $params                    = $request->all();
-            $likeCount                 = $params['likeCount'];
-
+            $userId                    = $request->get('UserID');
+            $likeCount                 = $request->get('likeCount');
             $getUserLikes              = $this->__usersRepository->getUserLikes($userId);
             $userLikes                 = $getUserLikes[0]->likes;
 
+            if($userLikes >= 1) {
+                $userLikes--;
+                $this->__usersRepository->incrementDecrementLike($userId, $userLikes, $likeCount);
+            }
+
+            $userLikes++;
             $incrementDecrementLike    = $this->__usersRepository->incrementDecrementLike($userId, $userLikes, $likeCount);
 
             if(!$incrementDecrementLike) {
@@ -43,7 +44,7 @@ class UsersController extends Controller
             return [
                 'status'               => "successful",
                 'UserID'               => $userId,
-                'likeUpdated'          => $incrementDecrementLike
+                'incrementDecrementLikes'            => $incrementDecrementLike,
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -52,8 +53,8 @@ class UsersController extends Controller
 
     }
 
-    public function getUserUploadsData() {
-        return $this->__usersRepository->getUploads();
+    public function getUserLikes($userId) {
+        $this->__usersRepository->getUserLikes($userId);
     }
 
 }

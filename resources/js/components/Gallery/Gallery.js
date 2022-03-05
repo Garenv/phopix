@@ -14,10 +14,7 @@ const Gallery = () => {
 
     const [uploadsData, setUploadsData] = useState([]);
     const [filePreview, setFilePreview] = useState(null);
-    const [like, setLike]               = useState(0);
-    // const [likeCount, setLikeCount]               = useState(null);
-    let likeCount = 0;
-
+    const [currentUserClicks, setCurrentUserClicks]               = useState(1);
 
     // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
     // Run the code in a separate useEffect hook.
@@ -30,7 +27,7 @@ const Gallery = () => {
         // logs empty array in the console if dependency array is empty
         // logs correct data when dependency array isn't empty - i.e. [uploadsData]
         // console.log(uploadsData);
-    }, [uploadsData]);
+    }, [uploadsData, currentUserClicks]);
 
     const getcreatedPhotoUrl = (e) => {
         setFilePreview(URL.createObjectURL(e.target.files[0]));
@@ -44,16 +41,20 @@ const Gallery = () => {
 
         axios.get('http://localhost:8005/api/get-user-uploads-data', {headers})
             .then(resp => {
-                console.log(resp.data);
                 setUploadsData(resp.data);
             }).catch(error => {
             console.log(error);
         });
     };
 
-    const handleLikesBasedOnUserId = (e) => {
-        likeCount++;
-        incrementDecrementLike(e);
+    const handleLikesBasedOnUserId = (likedPhotoUserId) => {
+        if(currentUserClicks > 1) {
+            setCurrentUserClicks(currentUserClicks - 1);
+            incrementDecrementLike(likedPhotoUserId);
+        } else {
+            setCurrentUserClicks(currentUserClicks + 1);
+            incrementDecrementLike(likedPhotoUserId);
+        }
     };
 
     const incrementDecrementLike = (likedPhotoUserId) => {
@@ -65,19 +66,11 @@ const Gallery = () => {
         };
 
         let data = {
-            'like': like,
             'UserID': likedPhotoUserId,
-            'likeCount': likeCount
+            'likeCount': currentUserClicks
         };
 
-        console.log(data);
-
-        axios.post(url, data, {headers})
-            .then(resp => {
-                console.log(resp.data);
-            }).catch(error => {
-            console.log(error);
-        });
+        axios.post(url, data, {headers});
 
     };
 
@@ -87,6 +80,7 @@ const Gallery = () => {
                 return <Grid
                     src={photos.url}
                     likes={photos.likes}
+                    currentUserClicks={currentUserClicks}
                     userName={photos.name}
                     key={index}
                     doubleClick={handleLikesBasedOnUserId}
