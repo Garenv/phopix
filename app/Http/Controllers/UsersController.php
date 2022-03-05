@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUsersRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
@@ -53,12 +54,32 @@ class UsersController extends Controller
 
     }
 
-    public function getUserUploadsData() {
+    public function getUserUploadsData()
+    {
         return $this->__usersRepository->getUploads();
     }
 
-    public function getUserLikes($userId) {
+    public function getUserLikes($userId)
+    {
         $this->__usersRepository->getUserLikes($userId);
+    }
+
+    public function deleteUserUpload(Request $request)
+    {
+        try {
+            $userId              = $request->get('UserID');
+            $deleteUserUpload    = $this->__usersRepository->deleteUserUpload($userId);
+
+            if(!$deleteUserUpload) {
+                return response()->json(["status" => "Failed to delete!", 'UserID' => $userId]);
+            }
+
+            return response()->json(["status" => "Successfully deleted!", 'UserID' => $userId]);
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
 }

@@ -3,7 +3,7 @@ import '../../../sass/gallery/gallery.scss';
 import {Button, Image, Modal} from "react-bootstrap";
 import Grid from "../Grid/Grid";
 
-const Gallery = () => {
+const Gallery = (url, config) => {
 
     let authToken                       = localStorage.getItem('token');
 
@@ -74,6 +74,22 @@ const Gallery = () => {
 
     };
 
+    const deleteUserUpload = (likedPhotoUserId) => {
+        const url = `http://localhost:8005/api/delete-user-upload?UserID=${likedPhotoUserId}`;
+
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${authToken}`
+        };
+
+        axios.delete(url,{headers})
+            .then(resp => {
+                console.log(resp);
+            }).catch(error => {
+            console.log(error);
+        });
+    }
+
     const displayUploadsData = () => {
         return (
             uploadsData.map((photos, index) => {
@@ -84,6 +100,7 @@ const Gallery = () => {
                     userName={photos.name}
                     key={index}
                     doubleClick={handleLikesBasedOnUserId}
+                    userDelete={deleteUserUpload}
                     value={photos.UserID}
                 />
             })

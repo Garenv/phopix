@@ -2481,7 +2481,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var Gallery = function Gallery() {
+var Gallery = function Gallery(url, config) {
   var authToken = localStorage.getItem('token'); // Preview modal
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
@@ -2566,6 +2566,21 @@ var Gallery = function Gallery() {
     });
   };
 
+  var deleteUserUpload = function deleteUserUpload(likedPhotoUserId) {
+    var url = "http://localhost:8005/api/delete-user-upload?UserID=".concat(likedPhotoUserId);
+    var headers = {
+      "Accept": 'application/json',
+      "Authorization": "Bearer ".concat(authToken)
+    };
+    axios["delete"](url, {
+      headers: headers
+    }).then(function (resp) {
+      console.log(resp);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
+
   var displayUploadsData = function displayUploadsData() {
     return uploadsData.map(function (photos, index) {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Grid_Grid__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -2574,6 +2589,7 @@ var Gallery = function Gallery() {
         currentUserClicks: currentUserClicks,
         userName: photos.name,
         doubleClick: handleLikesBasedOnUserId,
+        userDelete: deleteUserUpload,
         value: photos.UserID
       }, index);
     });
@@ -2677,7 +2693,8 @@ var Grid = function Grid(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(props.likes),
       _useState2 = _slicedToArray(_useState, 2),
       likes = _useState2[0],
-      setLikes = _useState2[1];
+      setLikes = _useState2[1]; // Note: props.value contains the photo's UserID
+
 
   var createUserPhotoNodes = function createUserPhotoNodes() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
@@ -2689,26 +2706,27 @@ var Grid = function Grid(props) {
             display: 'none'
           },
           children: props.currentUserClicks
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("form", {
-          method: "POST",
-          name: "likes",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "img-container",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: props.src,
-              alt: "Photo",
-              className: "gallery-img",
-              onDoubleClick: function onDoubleClick() {
-                return props.doubleClick(props.value, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-              className: "userName",
-              children: props.userName
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
-              className: "likes",
-              children: ["Likes ", likes]
-            })]
-          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "img-container",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            src: props.src,
+            alt: "Photo",
+            className: "gallery-img",
+            onDoubleClick: function onDoubleClick() {
+              return props.doubleClick(props.value, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
+            }
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "userName",
+            children: props.userName
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+            className: "likes",
+            children: ["Likes ", likes]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+            onClick: function onClick() {
+              return props.userDelete(props.value);
+            },
+            children: "delete"
+          })]
         })]
       })
     });
