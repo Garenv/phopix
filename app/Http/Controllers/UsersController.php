@@ -53,6 +53,10 @@ class UsersController extends Controller
 
     }
 
+    public function getUserUploadsData() {
+        return $this->__usersRepository->getUploads();
+    }
+
     public function getUserLikes($userId) {
         $this->__usersRepository->getUserLikes($userId);
     }
