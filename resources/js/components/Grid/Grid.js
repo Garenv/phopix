@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../sass/gallery/gallery.scss';
 
 const Grid = (props) => {
     const [likes, setLikes] = useState(props.likes);
 
+
+    // useEffect(() => {
+    //
+    // });
+
+    console.log(localStorage.getItem('UserID'));
     // Note: props.value contains the photo's UserID
     const createUserPhotoNodes = () => {
         return (
@@ -14,7 +20,7 @@ const Grid = (props) => {
                         <img src={props.src} alt="Photo" className="gallery-img" onDoubleClick={() => props.doubleClick(props.value, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1))}/>
                         <h2 className="userName">{props.userName}</h2>
                         <h2 className="likes">Likes {likes}</h2>
-                        <button onClick={() => props.userDelete(props.value)}>delete</button>
+                        {localStorage.getItem('UserID') ? <button onClick={() => props.userDelete(props.value)}>delete</button> : null}
                     </div>
                 </div>
             </section>

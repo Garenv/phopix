@@ -2481,7 +2481,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var Gallery = function Gallery(url, config) {
+var Gallery = function Gallery() {
   var authToken = localStorage.getItem('token'); // Preview modal
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
@@ -2693,8 +2693,12 @@ var Grid = function Grid(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(props.likes),
       _useState2 = _slicedToArray(_useState, 2),
       likes = _useState2[0],
-      setLikes = _useState2[1]; // Note: props.value contains the photo's UserID
+      setLikes = _useState2[1]; // useEffect(() => {
+  //
+  // });
 
+
+  console.log(localStorage.getItem('UserID')); // Note: props.value contains the photo's UserID
 
   var createUserPhotoNodes = function createUserPhotoNodes() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
@@ -2721,12 +2725,12 @@ var Grid = function Grid(props) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
             className: "likes",
             children: ["Likes ", likes]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          }), localStorage.getItem('UserID') ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
             onClick: function onClick() {
               return props.userDelete(props.value);
             },
             children: "delete"
-          })]
+          }) : null]
         })]
       })
     });

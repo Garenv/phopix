@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import '../../../sass/gallery/gallery.scss';
-import {Button, Image, Modal} from "react-bootstrap";
+import { Button, Image, Modal } from "react-bootstrap";
 import Grid from "../Grid/Grid";
 
-const Gallery = (url, config) => {
+const Gallery = () => {
 
-    let authToken                       = localStorage.getItem('token');
+    let authToken                                                 = localStorage.getItem('token');
 
     // Preview modal
-    const [show, setShow]               = useState(false);
-    const handleClose                   = () => setShow(false);
-    const handleShow                    = () => setShow(true);
+    const [show, setShow]                                         = useState(false);
+    const handleClose                                             = () => setShow(false);
+    const handleShow                                              = () => setShow(true);
 
-    const [uploadsData, setUploadsData] = useState([]);
-    const [filePreview, setFilePreview] = useState(null);
+    const [uploadsData, setUploadsData]                           = useState([]);
+    const [filePreview, setFilePreview]                           = useState(null);
     const [currentUserClicks, setCurrentUserClicks]               = useState(1);
 
     // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
