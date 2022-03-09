@@ -99,7 +99,7 @@ const Gallery = () => {
                     currentUserClicks={currentUserClicks}
                     userName={photos.name}
                     key={index}
-                    doubleClick={handleLikesBasedOnUserId}
+                    onClick={handleLikesBasedOnUserId}
                     userDelete={deleteUserUpload}
                     value={photos.UserID}
                 />

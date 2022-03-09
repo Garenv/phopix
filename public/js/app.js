@@ -2588,7 +2588,7 @@ var Gallery = function Gallery() {
         likes: photos.likes,
         currentUserClicks: currentUserClicks,
         userName: photos.name,
-        doubleClick: handleLikesBasedOnUserId,
+        onClick: handleLikesBasedOnUserId,
         userDelete: deleteUserUpload,
         value: photos.UserID
       }, index);
@@ -2693,12 +2693,8 @@ var Grid = function Grid(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(props.likes),
       _useState2 = _slicedToArray(_useState, 2),
       likes = _useState2[0],
-      setLikes = _useState2[1]; // useEffect(() => {
-  //
-  // });
+      setLikes = _useState2[1]; // Note: props.value contains the photo's UserID
 
-
-  console.log(localStorage.getItem('UserID')); // Note: props.value contains the photo's UserID
 
   var createUserPhotoNodes = function createUserPhotoNodes() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
@@ -2716,8 +2712,8 @@ var Grid = function Grid(props) {
             src: props.src,
             alt: "Photo",
             className: "gallery-img",
-            onDoubleClick: function onDoubleClick() {
-              return props.doubleClick(props.value, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
+            onClick: function onClick() {
+              return props.onClick(props.value, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
             }
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
             className: "userName",
@@ -2725,7 +2721,7 @@ var Grid = function Grid(props) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
             className: "likes",
             children: ["Likes ", likes]
-          }), localStorage.getItem('UserID') ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          }), localStorage.getItem('UserID') === props.value ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
             onClick: function onClick() {
               return props.userDelete(props.value);
             },
