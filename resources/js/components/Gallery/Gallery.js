@@ -20,6 +20,7 @@ const Gallery = () => {
     // Run the code in a separate useEffect hook.
     // In this way, the getUploads function is called only once and it outputs correct uploadData to the browser console.
     useEffect(() => {
+        console.log(authToken);
         getUploads();
     }, []);
 

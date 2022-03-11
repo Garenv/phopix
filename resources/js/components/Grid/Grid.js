@@ -4,7 +4,7 @@ import '../../../sass/gallery/gallery.scss';
 const Grid = (props) => {
     const [likes, setLikes] = useState(props.likes);
     // Note: props.value contains the photo's UserID
-
+    console.log(localStorage.getItem('UserID'));
     const createUserPhotoNodes = () => {
         return (
             <section className="gallery">

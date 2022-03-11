@@ -2516,6 +2516,7 @@ var Gallery = function Gallery() {
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    console.log(authToken);
     getUploads();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {// logs empty array in the console if dependency array is empty
@@ -2696,6 +2697,8 @@ var Grid = function Grid(props) {
       setLikes = _useState2[1]; // Note: props.value contains the photo's UserID
 
 
+  console.log(localStorage.getItem('UserID'));
+
   var createUserPhotoNodes = function createUserPhotoNodes() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
       className: "gallery",
@@ -2806,12 +2809,7 @@ var LoginRegister = function LoginRegister() {
     JSON.stringify(dataLogin);
     axios.post('http://localhost:8005/api/login', dataLogin).then(function (resp) {
       localStorage.setItem('token', resp.data.token);
-      localStorage.setItem('UserID', resp.data.UserID); // console.log(localStorage.getItem('name'));
-      // console.log(localStorage.getItem('email'));
-      // console.log(localStorage.getItem('UserID'));
-      // console.log(resp);
-      // console.log(localStorage.getItem('token'));
-
+      localStorage.setItem('UserID', resp.data.UserID);
       history.push('/gallery');
     })["catch"](function (error) {
       console.log(error);
@@ -2827,13 +2825,11 @@ var LoginRegister = function LoginRegister() {
       'age': age,
       'password': password
     };
-    var headers = {
-      "Accept": "application/json"
-    };
-    axios.post('http://localhost:8005/api/register', dataRegister, {
-      headers: headers
-    }).then(function (resp) {
-      console.log(resp);
+    JSON.stringify(dataRegister);
+    axios.post('http://localhost:8005/api/register', dataRegister).then(function (resp) {
+      console.log(dataRegister);
+      localStorage.setItem('token', resp.data.token);
+      localStorage.setItem('UserID', resp.data.UserID);
       history.push('/gallery');
     })["catch"](function (error) {
       console.log(error);

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Dotenv\Validator;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Stevebauman\Location\Facades\Location;
-use function Symfony\Component\String\u;
 
 class AuthController extends Controller
 {
@@ -36,6 +33,11 @@ class AuthController extends Controller
         return response()->json($response, $code);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function login(Request $request)
     {
 
@@ -78,36 +80,43 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
-            'name'     => 'required',
-            'email'    => 'required|email|unique:users',
-            'age'      => 'required',
-            'password' => 'required|min:6',
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users',
+                'age' => 'required',
+                'password' => 'required|min:6',
+            ]);
 
-        $userId         = 'u-' . Str::uuid()->toString();
-        $data           = $request->all();
-        $data['UserID'] = $userId;
-        $age            = $data['age'];
+            $userId = 'u-' . Str::uuid()->toString();
+            $data = $request->all();
+            $data['UserID'] = $userId;
+            $age = $data['age'];
 
-        $locationData   = Location::get();
+            $locationData = Location::get();
 
-        $data['ip']             = $locationData->ip;
-        $data['countryName']    = $locationData->countryName;
-        $data['countryCode']    = $locationData->countryCode;
-        $data['regionCode']     = $locationData->regionCode;
-        $data['regionName']     = $locationData->regionName;
-        $data['cityName']       = $locationData->cityName;
-        $data['zipCode']        = $locationData->zipCode;
+            $data['ip'] = $locationData->ip;
+            $data['countryName'] = $locationData->countryName;
+            $data['countryCode'] = $locationData->countryCode;
+            $data['regionCode'] = $locationData->regionCode;
+            $data['regionName'] = $locationData->regionName;
+            $data['cityName'] = $locationData->cityName;
+            $data['zipCode'] = $locationData->zipCode;
 
-        $this->create($data);
+            $user = $this->create($data);
 
-        return [
-            "status"  => true,
-            "UserID"  => $userId,
-            "message" => "Registered Successfully!",
-            "age"     => $age
-        ];
+            return response()->json([
+                "status" => true,
+                "UserID" => $userId,
+                "message" => "Registered Successfully!",
+                "age" => $age,
+                'token' => $user->createToken('tokens')->plainTextToken
+            ]);
+        } catch(\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
+        }
+
     }
 
     /**

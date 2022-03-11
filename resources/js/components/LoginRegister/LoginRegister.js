@@ -25,11 +25,6 @@ const LoginRegister = () => {
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
-                // console.log(localStorage.getItem('name'));
-                // console.log(localStorage.getItem('email'));
-                // console.log(localStorage.getItem('UserID'));
-                // console.log(resp);
-                // console.log(localStorage.getItem('token'));
                 history.push('/gallery');
             }).catch(error => {
             console.log(error);
@@ -49,13 +44,13 @@ const LoginRegister = () => {
             'password': password
         };
 
-        const headers = {
-            "Accept" : "application/json"
-        }
+        JSON.stringify(dataRegister);
 
-        axios.post('http://localhost:8005/api/register', dataRegister, {headers})
+        axios.post('http://localhost:8005/api/register', dataRegister)
             .then(resp => {
-                console.log(resp);
+                console.log(dataRegister);
+                localStorage.setItem('token', resp.data.token);
+                localStorage.setItem('UserID', resp.data.UserID);
                 history.push('/gallery');
             }).catch(error => {
                 console.log(error);
