@@ -2591,7 +2591,7 @@ var Gallery = function Gallery() {
         userName: photos.name,
         onClick: handleLikesBasedOnUserId,
         userDelete: deleteUserUpload,
-        value: photos.UserID
+        userId: photos.UserID
       }, index);
     });
   };
@@ -2650,7 +2650,13 @@ var Gallery = function Gallery() {
           children: "Upload!"
         })]
       })]
-    }), displayUploadsData()]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("section", {
+      className: "gallery",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "container",
+        children: displayUploadsData()
+      })
+    })]
   });
 };
 
@@ -2694,43 +2700,36 @@ var Grid = function Grid(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(props.likes),
       _useState2 = _slicedToArray(_useState, 2),
       likes = _useState2[0],
-      setLikes = _useState2[1]; // Note: props.value contains the photo's UserID
-
-
-  console.log(localStorage.getItem('UserID'));
+      setLikes = _useState2[1];
 
   var createUserPhotoNodes = function createUserPhotoNodes() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
-      className: "gallery",
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "container",
+        className: "img-container",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
           style: {
             display: 'none'
           },
           children: props.currentUserClicks
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "img-container",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-            src: props.src,
-            alt: "Photo",
-            className: "gallery-img",
-            onClick: function onClick() {
-              return props.onClick(props.value, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
-            }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-            className: "userName",
-            children: props.userName
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
-            className: "likes",
-            children: ["Likes ", likes]
-          }), localStorage.getItem('UserID') === props.value ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-            onClick: function onClick() {
-              return props.userDelete(props.value);
-            },
-            children: "delete"
-          }) : null]
-        })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+          src: props.src,
+          alt: "Photo",
+          className: "gallery-img",
+          onClick: function onClick() {
+            return props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
+          }
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+          className: "userName",
+          children: props.userName
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+          className: "likes",
+          children: ["Likes ", likes]
+        }), localStorage.getItem('UserID') === props.userId ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          onClick: function onClick() {
+            return props.userDelete(props.userId);
+          },
+          children: "delete"
+        }) : null]
       })
     });
   };

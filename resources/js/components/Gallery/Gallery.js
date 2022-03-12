@@ -102,7 +102,7 @@ const Gallery = () => {
                     key={index}
                     onClick={handleLikesBasedOnUserId}
                     userDelete={deleteUserUpload}
-                    value={photos.UserID}
+                    userId={photos.UserID}
                 />
             })
         );
@@ -147,7 +147,11 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            {displayUploadsData()}
+            <section className="gallery">
+                <div className="container">
+                    {displayUploadsData()}
+                </div>
+            </section>
         </>
 
     );
