@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import '../../sass/HomePage/homePage.scss';
 import LoginRegister from "./LoginRegister/LoginRegister";
 import Gallery from "./Gallery/Gallery";
+import Navbar from '../Navbar/Navbar';
 
 const App = () => {
     let { push } = useHistory();
@@ -21,6 +22,8 @@ const App = () => {
 
     return (
         <>
+
+            <Navbar/>
             <Switch>
                 <Route exact path="/" component={LoginRegister} />
                 <Route exact path="/gallery" component={Gallery} />

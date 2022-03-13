@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import '../../../sass/gallery/gallery.scss';
 import { Button, Image, Modal } from "react-bootstrap";
+import '../../../sass/gallery/gallery.scss';
 import Grid from "../Grid/Grid";
 
 const Gallery = () => {
