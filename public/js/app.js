@@ -2809,12 +2809,7 @@ var LoginRegister = function LoginRegister() {
       'password': password
     };
     JSON.stringify(dataLogin);
-    var headers = {
-      "Access-Control-Allow-Origin": "http://localhost:8005/"
-    };
-    axios.post('http://localhost:8005/api/login', dataLogin, {
-      headers: headers
-    }).then(function (resp) {
+    axios.post('http://localhost:8005/api/login', dataLogin).then(function (resp) {
       localStorage.setItem('token', resp.data.token);
       localStorage.setItem('UserID', resp.data.UserID);
       history.push('/gallery');
