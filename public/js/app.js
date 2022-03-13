@@ -2654,7 +2654,10 @@ var Gallery = function Gallery() {
       className: "gallery",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "container",
-        children: displayUploadsData()
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "img-container",
+          children: displayUploadsData()
+        })
       })
     })]
   });
@@ -2703,24 +2706,24 @@ var Grid = function Grid(props) {
       setLikes = _useState2[1];
 
   var createUserPhotoNodes = function createUserPhotoNodes() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "img-container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+        src: props.src,
+        alt: "Photo",
+        className: "gallery-img",
+        onClick: function onClick() {
+          return props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
+        }
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "userData",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+          className: "userName",
+          children: props.userName
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
           style: {
             display: 'none'
           },
           children: props.currentUserClicks
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-          src: props.src,
-          alt: "Photo",
-          className: "gallery-img",
-          onClick: function onClick() {
-            return props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
-          }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-          className: "userName",
-          children: props.userName
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
           className: "likes",
           children: ["Likes ", likes]
@@ -2730,7 +2733,7 @@ var Grid = function Grid(props) {
           },
           children: "delete"
         }) : null]
-      })
+      })]
     });
   };
 
@@ -2806,7 +2809,12 @@ var LoginRegister = function LoginRegister() {
       'password': password
     };
     JSON.stringify(dataLogin);
-    axios.post('http://localhost:8005/api/login', dataLogin).then(function (resp) {
+    var headers = {
+      "Access-Control-Allow-Origin": "http://localhost:8005/"
+    };
+    axios.post('http://localhost:8005/api/login', dataLogin, {
+      headers: headers
+    }).then(function (resp) {
       localStorage.setItem('token', resp.data.token);
       localStorage.setItem('UserID', resp.data.UserID);
       history.push('/gallery');
@@ -7562,7 +7570,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nh1 {\n  font-family: \"Franklin Gothic Medium\", \"Arial Narrow\", Arial, sans-serif;\n  font-size: 55px;\n  text-align: center;\n  margin: 30px 0 40px;\n  color: #454545;\n}\n\n.container {\n  max-width: 1440px;\n  width: 95%;\n  margin: 0 auto;\n}\n\n.img-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n  grid-gap: 20px;\n}\n\n.gallery-img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n  transition: all 0.3s;\n  border-radius: 5px;\n}\n\n.img-container:hover .gallery-img {\n  filter: blur(3px);\n  transform: scale(0.95);\n}\n\n.img-container .gallery-img:hover {\n  filter: blur(0);\n  transform: scale(1);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nh1 {\n  font-family: \"Franklin Gothic Medium\", \"Arial Narrow\", Arial, sans-serif;\n  font-size: 55px;\n  text-align: center;\n  margin: 30px 0 40px;\n  color: #454545;\n}\n\n.container {\n  max-width: 1440px;\n  width: 95%;\n  margin: 0 auto;\n}\n\n.img-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n  grid-gap: 20px;\n}\n\n.gallery-img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n  transition: all 0.3s;\n  border-radius: 5px;\n}\n\n.img-container:hover .gallery-img {\n  filter: blur(3px);\n  transform: scale(0.95);\n}\n\n.img-container .gallery-img:hover {\n  filter: blur(0);\n  transform: scale(1);\n}\n\n.userData {\n  padding-top: 1rem;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

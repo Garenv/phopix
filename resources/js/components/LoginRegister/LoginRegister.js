@@ -21,7 +21,11 @@ const LoginRegister = () => {
 
         JSON.stringify(dataLogin);
 
-        axios.post('http://localhost:8005/api/login', dataLogin)
+        let headers =  {
+            "Access-Control-Allow-Origin": "http://localhost:8005/"
+        }
+
+        axios.post('http://localhost:8005/api/login', dataLogin, {headers})
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);

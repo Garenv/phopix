@@ -149,7 +149,9 @@ const Gallery = () => {
 
             <section className="gallery">
                 <div className="container">
-                    {displayUploadsData()}
+                    <div className="img-container">
+                        {displayUploadsData()}
+                    </div>
                 </div>
             </section>
         </>
