@@ -227,16 +227,63 @@ h6 span{
     color:#12f8ad;
     box-shadow: 0 8px 24px 0 rgba(255,255,255,.2);
 }
+//.logo {
+//    position: absolute;
+//    top: 30px;
+//    right: 30px;
+//    display: block;
+//    z-index: 100;
+//    transition: all 250ms linear;
+//}
+//.logo img {
+//    height: 26px;
+//    width: auto;
+//    display: block;
+//}
+
 .logo {
+    font-family: 'Lobster', cursive;
     position: absolute;
-    top: 30px;
-    right: 30px;
-    display: block;
-    z-index: 100;
-    transition: all 250ms linear;
+    font-size: 50px;
+    top: 300px;
+    left: 400px;
+    color: white;
+    text-shadow: rgb(2, 0, 2) 0.0118614px 0.0118614px 0px, rgb(2, 0, 2) 1.01186px 1.01186px 0px, rgb(2, 0, 2) 2.01186px 2.01186px 0px, rgb(2, 0, 2) 3.01186px 3.01186px 0px, rgb(2, 0, 2) 4.01186px 4.01186px 0px, rgb(2, 0, 2) 5.01186px 5.01186px 0px, rgb(2, 0, 2) 6.01186px 6.01186px 0px, rgb(2, 0, 2) 7.01186px 7.01186px 0px, rgb(2, 0, 2) 8.01186px 8.01186px 0px, rgb(10, 1, 8) 9.01186px 9.01186px 0px, rgb(18, 3, 15) 10.0119px 10.0119px 0px, rgb(26, 4, 22) 11.0119px 11.0119px 0px, rgb(34, 6, 29) 12.0119px 12.0119px 0px, rgb(42, 7, 36) 13.0119px 13.0119px 0px, rgb(50, 9, 43) 14.0119px 14.0119px 0px, rgb(58, 10, 50) 15.0119px 15.0119px 0px, rgb(66, 12, 57) 16.0119px 16.0119px 0px, rgb(74, 13, 64) 17.0119px 17.0119px 0px, rgb(82, 15, 70) 18.0119px 18.0119px 0px, rgb(90, 16, 77) 19.0119px 19.0119px 0px, rgb(98, 18, 84) 20.0119px 20.0119px 0px, rgb(106, 19, 91) 21.0119px 21.0119px 0px, rgb(114, 21, 98) 22.0119px 22.0119px 0px, rgb(122, 22, 105) 23.0119px 23.0119px 0px, rgb(130, 24, 112) 24.0119px 24.0119px 0px, rgb(138, 25, 119) 25.0119px 25.0119px 0px, rgb(147, 27, 126) 26.0119px 26.0119px 0px;
 }
-.logo img {
-    height: 26px;
-    width: auto;
-    display: block;
+
+.logo * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.1s;
+    transition: all 0.3s
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+}
+
+.logo a:hover {
+    color: #FFC721;
+}
+
+@media only screen and (max-width: 767px) {
+    .logo {
+        font-size: 20px;
+        position: absolute;
+        margin: -20px 15px;
+        left: 190px;
+    }
+}
+
+@media only screen and (max-width: 1180px) {
+    .logo {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 150px) {
+    .logo {
+        font-size: 8px;
+    }
 }

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Button, Image, Modal } from "react-bootstrap";
 import '../../../sass/gallery/gallery.scss';
 import Grid from "../Grid/Grid";
+import Navbar from "../../Navbar/Navbar";
 
 const Gallery = () => {
 
@@ -40,7 +41,7 @@ const Gallery = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        axios.get('http://localhost:8005/api/get-user-uploads-data', {headers})
+        axios.get('http://localhost/api/get-user-uploads-data', {headers})
             .then(resp => {
                 setUploadsData(resp.data);
             }).catch(error => {
@@ -59,7 +60,7 @@ const Gallery = () => {
     };
 
     const incrementDecrementLike = (likedPhotoUserId) => {
-        const url = 'http://localhost:8005/api/post-user-like';
+        const url = 'http://localhost/api/post-user-like';
 
         const headers = {
             "Accept": 'application/json',
@@ -76,7 +77,7 @@ const Gallery = () => {
     };
 
     const deleteUserUpload = (likedPhotoUserId) => {
-        const url = `http://localhost:8005/api/delete-user-upload?UserID=${likedPhotoUserId}`;
+        const url = `http://localhost/api/delete-user-upload?UserID=${likedPhotoUserId}`;
 
         const headers = {
             "Accept": 'application/json',
@@ -109,7 +110,7 @@ const Gallery = () => {
     };
 
     const fileUpload = () => {
-        const url = 'http://localhost:8005/api/file-upload';
+        const url = 'http://localhost/api/file-upload';
 
         let formData = new FormData();
         let imagefile = document.querySelector('#file');
@@ -130,6 +131,7 @@ const Gallery = () => {
 
     return (
         <>
+            <Navbar/>
             <div className="fileUpload text-center">
                 <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>
                 <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
