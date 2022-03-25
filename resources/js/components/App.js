@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom';
 import '../../sass/HomePage/homePage.scss';
 import LoginRegister from "./LoginRegister/LoginRegister";
 import Gallery from "./Gallery/Gallery";
-import Navbar from '../Navbar/Navbar';
+import {QueryClient, QueryClientProvider, useQuery} from "react-query";
 
 const App = () => {
     let { push } = useHistory();
     let authToken = localStorage.getItem('token');
+    const queryClient = new QueryClient();
 
     useEffect(() => {
         if (authToken !== null) {
@@ -20,10 +21,12 @@ const App = () => {
 
     return (
         <>
-            <Switch>
-                <Route exact path="/" component={LoginRegister} />
-                <Route exact path="/gallery" component={Gallery} />
-            </Switch>
+            <QueryClientProvider client={queryClient}>
+                <Switch>
+                    <Route exact path="/" component={LoginRegister} />
+                    <Route exact path="/gallery" component={Gallery} />
+                </Switch>
+            </QueryClientProvider>
         </>
     );
 }

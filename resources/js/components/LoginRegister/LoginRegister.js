@@ -26,6 +26,7 @@ const LoginRegister = () => {
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
+                localStorage.setItem('name', resp.data.name);
                 history.push('/gallery');
             }).catch(error => {
             console.log(error);
@@ -52,6 +53,7 @@ const LoginRegister = () => {
                 console.log(dataRegister);
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
+                localStorage.setItem('name', resp.data.name);
                 history.push('/gallery');
             }).catch(error => {
                 console.log(error);

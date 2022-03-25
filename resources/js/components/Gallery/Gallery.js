@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Image, Modal } from "react-bootstrap";
+import { useQuery } from 'react-query';
 import '../../../sass/gallery/gallery.scss';
 import Grid from "../Grid/Grid";
 import Navbar from "../../Navbar/Navbar";
@@ -13,41 +14,18 @@ const Gallery = () => {
     const handleClose                                             = () => setShow(false);
     const handleShow                                              = () => setShow(true);
 
-    const [uploadsData, setUploadsData]                           = useState([]);
     const [filePreview, setFilePreview]                           = useState(null);
     const [currentUserClicks, setCurrentUserClicks]               = useState(1);
 
-    // Referring the uploadsData inside the useEffect hook's callback and in order to get correct console log,
-    // Run the code in a separate useEffect hook.
-    // In this way, the getUploads function is called only once and it outputs correct uploadData to the browser console.
-    useEffect(() => {
-        console.log(authToken);
-        getUploads();
-    }, []);
-
-    useEffect(() => {
-        // logs empty array in the console if dependency array is empty
-        // logs correct data when dependency array isn't empty - i.e. [uploadsData]
-        // console.log(uploadsData);
-    }, [uploadsData, currentUserClicks]);
-
-    const getcreatedPhotoUrl = (e) => {
-        setFilePreview(URL.createObjectURL(e.target.files[0]));
-    }
-
-    const getUploads = () => {
+    async function fetchUploads(){
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
         };
 
-        axios.get('http://localhost/api/get-user-uploads-data', {headers})
-            .then(resp => {
-                setUploadsData(resp.data);
-            }).catch(error => {
-            console.log(error);
-        });
-    };
+        const {data} = await axios.get('http://localhost/api/get-user-uploads-data', {headers});
+        return data
+    }
 
     const handleLikesBasedOnUserId = (likedPhotoUserId) => {
         if(currentUserClicks > 1) {
@@ -92,22 +70,9 @@ const Gallery = () => {
         });
     }
 
-    const displayUploadsData = () => {
-        return (
-            uploadsData.map((photos, index) => {
-                return <Grid
-                    src={photos.url}
-                    likes={photos.likes}
-                    currentUserClicks={currentUserClicks}
-                    userName={photos.name}
-                    key={index}
-                    onClick={handleLikesBasedOnUserId}
-                    userDelete={deleteUserUpload}
-                    userId={photos.UserID}
-                />
-            })
-        );
-    };
+    const getcreatedPhotoUrl = (e) => {
+        setFilePreview(URL.createObjectURL(e.target.files[0]));
+    }
 
     const fileUpload = () => {
         const url = 'http://localhost/api/file-upload';
@@ -129,9 +94,19 @@ const Gallery = () => {
         });
     };
 
+    const {data, error, isError, isLoading } = useQuery('uploads', fetchUploads)
+    // first argument is a string to cache and track the query result
+    if(isLoading){
+        return <div>Loading...</div>
+    }
+    if(isError){
+        return <div>Error! {error.message}</div>
+    }
+
     return (
         <>
             {location.pathname === '/gallery' ? <Navbar/> : null }
+
             <div className="fileUpload text-center">
                 <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>
                 <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
@@ -152,7 +127,20 @@ const Gallery = () => {
             <section className="gallery">
                 <div className="container">
                     <div className="img-container">
-                        {displayUploadsData()}
+                        {
+                            data.map((photos, index) => {
+                                return <Grid
+                                    src={photos.url}
+                                    likes={photos.likes}
+                                    currentUserClicks={currentUserClicks}
+                                    userName={photos.name}
+                                    key={index}
+                                    onClick={handleLikesBasedOnUserId}
+                                    userDelete={deleteUserUpload}
+                                    userId={photos.UserID}
+                                />
+                            })
+                        }
                     </div>
                 </div>
             </section>
