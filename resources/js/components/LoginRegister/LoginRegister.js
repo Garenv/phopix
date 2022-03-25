@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import Navbar from "../../Navbar/Navbar";
 
 const LoginRegister = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [age, setAge] = useState("");
+    const [name, setName]         = useState("");
+    const [email, setEmail]       = useState("");
+    const [age, setAge]           = useState("");
     const [password, setPassword] = useState("");
 
     let history = useHistory();

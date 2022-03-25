@@ -7,12 +7,12 @@ import Gallery from "./Gallery/Gallery";
 import {QueryClient, QueryClientProvider, useQuery} from "react-query";
 
 const App = () => {
-    let { push } = useHistory();
-    let authToken = localStorage.getItem('token');
+    let { push }      = useHistory();
+    let authToken     = localStorage.getItem('token');
     const queryClient = new QueryClient();
 
     useEffect(() => {
-        if (authToken !== null) {
+        if(authToken !== null) {
             push('/gallery');
         } else {
             push('/');

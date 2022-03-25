@@ -105,7 +105,7 @@ const Gallery = () => {
 
     return (
         <>
-            {location.pathname === '/gallery' ? <Navbar/> : null }
+            {location.pathname === '/gallery' ? <Navbar data={data}/> : null }
 
             <div className="fileUpload text-center">
                 <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>

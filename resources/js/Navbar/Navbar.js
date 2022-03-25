@@ -1,16 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../../sass/navbar/navbar.scss';
-import {useQuery} from "react-query";
 
 const Navbar = () => {
-    const data = useQuery('uploads');
-    // const {data, error, isError, isLoading } = useQuery('uploads', fetchUploads)
-
-    // console.log(data);
-
-    useEffect(() => {
-        console.log(data);
-    })
+    let name = localStorage.getItem('name');
 
     return(
         <div className="phopixNavbar">
@@ -24,7 +16,7 @@ const Navbar = () => {
                     <ul>
                         <li><a href="">Home</a></li>
                         <li><a href="">How To Win</a></li>
-                        <li><a href="">{localStorage.getItem('UserID')}</a></li>
+                        <li style={{color: "#000000"}}>Welcome, {name}!</li>
                     </ul>
                 </nav>
             </div>
