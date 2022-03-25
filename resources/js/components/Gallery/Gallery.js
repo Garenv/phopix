@@ -131,7 +131,7 @@ const Gallery = () => {
 
     return (
         <>
-            <Navbar/>
+            {location.pathname === '/gallery' ? <Navbar/> : null }
             <div className="fileUpload text-center">
                 <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>
                 <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>

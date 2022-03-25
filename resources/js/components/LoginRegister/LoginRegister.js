@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
+import Navbar from "../../Navbar/Navbar";
 
 const LoginRegister = () => {
     const [name, setName] = useState("");
@@ -21,7 +22,7 @@ const LoginRegister = () => {
 
         JSON.stringify(dataLogin);
 
-        axios.post('http://localhost:8005/api/login', dataLogin)
+        axios.post('http://localhost/api/login', dataLogin)
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
@@ -46,7 +47,7 @@ const LoginRegister = () => {
 
         JSON.stringify(dataRegister);
 
-        axios.post('http://localhost:8005/api/register', dataRegister)
+        axios.post('http://localhost/api/register', dataRegister)
             .then(resp => {
                 console.log(dataRegister);
                 localStorage.setItem('token', resp.data.token);

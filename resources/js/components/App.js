@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import '../../sass/HomePage/homePage.scss';
 import LoginRegister from "./LoginRegister/LoginRegister";
 import Gallery from "./Gallery/Gallery";
+import Navbar from '../Navbar/Navbar';
 
 const App = () => {
     let { push } = useHistory();
@@ -11,10 +12,8 @@ const App = () => {
 
     useEffect(() => {
         if (authToken !== null) {
-            // getUploads();
             push('/gallery');
         } else {
-            console.log("User's NOT authenticated, returning to login view");
             push('/');
         }
     }, [push, authToken]);
