@@ -2332,14 +2332,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _sass_navbar_navbar_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sass/navbar/navbar.scss */ "./resources/sass/navbar/navbar.scss");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
 
 
+
 var Navbar = function Navbar() {
+  var authToken = localStorage.getItem('token');
   var name = localStorage.getItem('name');
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useHistory)();
+
+  var logout = function logout() {
+    var headers = {
+      "Accept": 'application/json',
+      "Authorization": "Bearer ".concat(authToken)
+    };
+    var data = "";
+    axios.post('http://localhost/api/logout', data, {
+      headers: headers
+    }).then(function (resp) {
+      localStorage.removeItem('token');
+      history.push('/');
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
     className: "phopixNavbar",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -2361,16 +2382,18 @@ var Navbar = function Navbar() {
               href: "",
               children: "Home"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-              href: "",
-              children: "How To Win"
-            })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
             style: {
               color: "#000000"
             },
             children: ["Welcome, ", name, "!"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+              href: "#",
+              className: "myButton",
+              onClick: logout,
+              children: "Logout"
+            })
           })]
         })
       })]
@@ -2535,10 +2558,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_query__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-query */ "./node_modules/react-query/es/index.js");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Image.js");
-/* harmony import */ var react_query__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-query */ "./node_modules/react-query/es/index.js");
 /* harmony import */ var _sass_gallery_gallery_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../sass/gallery/gallery.scss */ "./resources/sass/gallery/gallery.scss");
 /* harmony import */ var _Grid_Grid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Grid/Grid */ "./resources/js/components/Grid/Grid.js");
 /* harmony import */ var _Navbar_Navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Navbar/Navbar */ "./resources/js/Navbar/Navbar.js");
@@ -7702,8 +7725,9 @@ __webpack_require__.r(__webpack_exports__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\n  margin: 0;\n  font-family: \"Montserrat\", sans-serif;\n}\n\n.phopixNavbar {\n  padding: 20px 0;\n  background: repeating-linear-gradient(45deg, #f0f2ed, #f0f2ed 20px, #f8f4eb 20px, #f8f4eb 40px);\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);\n}\n\n.container {\n  padding: 0 20px;\n  max-width: 963px;\n  margin: 0 auto;\n}\n\n.phopixLogo {\n  width: 6rem;\n}\n\n.logo-box {\n  float: left;\n  margin-right: 20px;\n}\n\n.logo-box a {\n  outline: none;\n  display: block;\n}\n\n.logo-box img {\n  display: block;\n}\n\nnav {\n  overflow: hidden;\n}\n\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  float: right;\n}\n\nnav li {\n  display: inline-block;\n  margin-left: 25px;\n  height: 70px;\n  line-height: 70px;\n  transition: 0.5s linear;\n}\n\nnav a {\n  text-decoration: none;\n  display: block;\n  position: relative;\n  color: #868686;\n  text-transform: uppercase;\n}\n\nnav a:after {\n  content: \"\";\n  width: 0;\n  height: 2px;\n  position: absolute;\n  left: 0;\n  bottom: 15px;\n  background: #868686;\n  transition: width 0.5s linear;\n}\n\nnav a:hover:after {\n  width: 100%;\n}\n\n@media screen and (max-width: 660px) {\n  .phopixNavbar {\n    text-align: center;\n  }\n\n  .logo-box {\n    float: none;\n    display: inline-block;\n    margin: 0 0 16px 0;\n  }\n\n  ul {\n    float: none;\n  }\n\n  nav li:first-of-type {\n    margin-left: 0;\n  }\n}\n@media screen and (max-width: 550px) {\n  nav {\n    overflow: visible;\n  }\n\n  nav li {\n    display: block;\n    margin: 0;\n    height: 40px;\n    line-height: 40px;\n  }\n\n  nav li:hover {\n    background: rgba(0, 0, 0, 0.1);\n  }\n\n  nav a:after {\n    content: none;\n  }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  margin: 0;\n  font-family: \"Montserrat\", sans-serif;\n}\n\n.phopixNavbar {\n  padding: 20px 0;\n  background: repeating-linear-gradient(45deg, #f0f2ed, #f0f2ed 20px, #f8f4eb 20px, #f8f4eb 40px);\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);\n}\n\n.container {\n  padding: 0 20px;\n  max-width: 963px;\n  margin: 0 auto;\n}\n\n.phopixLogo {\n  width: 6rem;\n}\n\n.logo-box {\n  float: left;\n  margin-right: 20px;\n}\n\n.logo-box a {\n  outline: none;\n  display: block;\n}\n\n.logo-box img {\n  display: block;\n}\n\nnav {\n  overflow: hidden;\n}\n\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  float: right;\n}\n\nnav li {\n  display: inline-block;\n  margin-left: 25px;\n  height: 70px;\n  line-height: 70px;\n  transition: 0.5s linear;\n}\n\nnav a {\n  text-decoration: none;\n  display: block;\n  position: relative;\n  color: #868686;\n  text-transform: uppercase;\n}\n\nnav a:after {\n  content: \"\";\n  width: 0;\n  height: 2px;\n  position: absolute;\n  left: 0;\n  bottom: 15px;\n  background: #868686;\n  transition: width 0.5s linear;\n}\n\nnav a:hover:after {\n  width: 100%;\n}\n\n.myButton {\n  box-shadow: 0px 10px 14px -7px #732773;\n  background: linear-gradient(to bottom, #599bb3 5%, #994059 100%);\n  background-color: #599bb3;\n  border-radius: 8px;\n  display: inline-block;\n  cursor: pointer;\n  color: #ffffff;\n  font-family: Arial;\n  font-size: 20px;\n  font-weight: bold;\n  padding: 1px 32px;\n  text-decoration: none;\n  text-shadow: 0px 1px 0px #713e8a;\n}\n\n.myButton:hover {\n  background: linear-gradient(to bottom, #994059 5%, #599bb3 100%);\n  background-color: #994059;\n}\n\n.myButton:active {\n  position: relative;\n  top: 1px;\n}\n\n@media screen and (max-width: 660px) {\n  .phopixNavbar {\n    text-align: center;\n  }\n\n  .logo-box {\n    float: none;\n    display: inline-block;\n    margin: 0 0 16px 0;\n  }\n\n  ul {\n    float: none;\n  }\n\n  nav li:first-of-type {\n    margin-left: 0;\n  }\n}\n@media screen and (max-width: 550px) {\n  nav {\n    overflow: visible;\n  }\n\n  nav li {\n    display: block;\n    margin: 0;\n    height: 40px;\n    line-height: 40px;\n  }\n\n  nav li:hover {\n    background: rgba(0, 0, 0, 0.1);\n  }\n\n  nav a:after {\n    content: none;\n  }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

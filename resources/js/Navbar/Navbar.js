@@ -1,8 +1,28 @@
 import React from 'react';
 import '../../sass/navbar/navbar.scss';
+import {useHistory} from "react-router-dom";
 
 const Navbar = () => {
-    let name = localStorage.getItem('name');
+    let authToken     = localStorage.getItem('token');
+    let name          = localStorage.getItem('name');
+    let history = useHistory();
+
+    const logout      = () => {
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${authToken}`
+        };
+
+        const data = "";
+
+        axios.post('http://localhost/api/logout', data, {headers})
+            .then(resp => {
+                localStorage.removeItem('token');
+                history.push('/');
+            }).catch(err => {
+                console.log(err);
+        });
+    }
 
     return(
         <div className="phopixNavbar">
@@ -15,8 +35,8 @@ const Navbar = () => {
                 <nav>
                     <ul>
                         <li><a href="">Home</a></li>
-                        <li><a href="">How To Win</a></li>
                         <li style={{color: "#000000"}}>Welcome, {name}!</li>
+                        <li><a href="#" className="myButton" onClick={logout}>Logout</a></li>
                     </ul>
                 </nav>
             </div>

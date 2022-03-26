@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import { Button, Image, Modal } from "react-bootstrap";
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import { Button, Image, Modal } from "react-bootstrap";
 import '../../../sass/gallery/gallery.scss';
 import Grid from "../Grid/Grid";
 import Navbar from "../../Navbar/Navbar";

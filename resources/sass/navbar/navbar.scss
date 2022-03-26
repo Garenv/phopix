@@ -1,3 +1,6 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300';
+
+
 body {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
@@ -60,6 +63,32 @@ nav a:after {
     transition: width .5s linear;
 }
 nav a:hover:after {width: 100%;}
+
+.myButton {
+    box-shadow: 0px 10px 14px -7px #732773;
+    background:linear-gradient(to bottom, #599bb3 5%, #994059 100%);
+    background-color:#599bb3;
+    border-radius:8px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:20px;
+    font-weight:bold;
+    padding: 1px 32px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #713e8a;
+}
+.myButton:hover {
+    background:linear-gradient(to bottom, #994059 5%, #599bb3 100%);
+    background-color:#994059;
+}
+.myButton:active {
+    position:relative;
+    top:1px;
+}
+
+
 
 @media screen and (max-width: 660px) {
     .phopixNavbar {text-align: center;}
