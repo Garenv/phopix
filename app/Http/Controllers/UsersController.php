@@ -61,7 +61,7 @@ class UsersController extends Controller
 
     public function getUserLikes($userId)
     {
-        $this->__usersRepository->getUserLikes($userId);
+        return $this->__usersRepository->getUserLikes($userId);
     }
 
     public function deleteUserUpload(Request $request)
