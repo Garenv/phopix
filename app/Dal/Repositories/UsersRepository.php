@@ -35,6 +35,16 @@ class UsersRepository implements IUsersRepository
             ->get();
     }
 
+    public function selectTopThreeWinners()
+    {
+        return DB::table('uploads')
+            ->select('users.name', 'uploads.likes')
+            ->join('users', 'users.UserID', '=', 'uploads.UserID')
+            ->orderBy('likes', 'desc')
+            ->limit(3)
+            ->get();
+    }
+
     public function deleteUserUpload($userId)
     {
         return Upload::where('UserID', $userId)->delete();

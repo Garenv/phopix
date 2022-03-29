@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUsersRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
@@ -22,10 +21,10 @@ class UsersController extends Controller
     public function incrementDecrementLike(Request $request)
     {
         try {
-            $userId                    = $request->get('UserID');
-            $likeCount                 = $request->get('likeCount');
-            $getUserLikes              = $this->__usersRepository->getUserLikes($userId);
-            $userLikes                 = $getUserLikes[0]->likes;
+            $userId                                = $request->get('UserID');
+            $likeCount                             = $request->get('likeCount');
+            $getUserLikes                          = $this->__usersRepository->getUserLikes($userId);
+            $userLikes                             = $getUserLikes[0]->likes;
 
             if($userLikes >= 1) {
                 $userLikes--;
@@ -33,18 +32,18 @@ class UsersController extends Controller
             }
 
             $userLikes++;
-            $incrementDecrementLike    = $this->__usersRepository->incrementDecrementLike($userId, $userLikes, $likeCount);
+            $incrementDecrementLike                 = $this->__usersRepository->incrementDecrementLike($userId, $userLikes, $likeCount);
 
             if(!$incrementDecrementLike) {
                 return [
-                    'status'           => 'failed',
-                    'message'          => 'something went wrong!'
+                    'status'                        => 'failed',
+                    'message'                       => 'something went wrong!'
                 ];
             }
 
             return [
-                'status'               => "successful",
-                'UserID'               => $userId,
+                'status'                             => "successful",
+                'UserID'                             => $userId,
                 'incrementDecrementLikes'            => $incrementDecrementLike,
             ];
         } catch (\Exception $e) {
@@ -52,16 +51,6 @@ class UsersController extends Controller
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
 
-    }
-
-    public function getUserUploadsData()
-    {
-        return $this->__usersRepository->getUploads();
-    }
-
-    public function getUserLikes($userId)
-    {
-        return $this->__usersRepository->getUserLikes($userId);
     }
 
     public function deleteUserUpload(Request $request)
@@ -80,6 +69,16 @@ class UsersController extends Controller
             Log::error($e->getMessage());
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    public function getUserUploadsData()
+    {
+        return $this->__usersRepository->getUploads();
+    }
+
+    public function getUserLikes($userId)
+    {
+        return $this->__usersRepository->getUserLikes($userId);
     }
 
 }
