@@ -4,17 +4,24 @@ import { Button, Image, Modal } from "react-bootstrap";
 import '../../../sass/gallery/gallery.scss';
 import Grid from "../Grid/Grid";
 import Navbar from "../../Navbar/Navbar";
+import SelectedWinners from "../SelectedWinners/SelectedWinners";
 
 const Gallery = () => {
-
     let authToken                                                 = localStorage.getItem('token');
+    let today                                                     = new Date();
 
-    // Preview modal
+    // Preview modal content
     const [show, setShow]                                         = useState(false);
+    const [filePreview, setFilePreview]                           = useState(null);
     const handleClose                                             = () => setShow(false);
     const handleShow                                              = () => setShow(true);
 
-    const [filePreview, setFilePreview]                           = useState(null);
+    // Winner modal content
+    const weeklyDay                                               = today.getDay();
+    const [showWinners, setShowWinners]                           = useState(true);
+    const handleCloseWinners                                      = () => setShowWinners(false);
+
+    // User clicks for likes
     const [currentUserClicks, setCurrentUserClicks]               = useState(1);
 
     async function fetchUploads(){
@@ -24,7 +31,22 @@ const Gallery = () => {
         };
 
         const {data} = await axios.get('http://localhost/api/get-user-uploads-data', {headers});
-        return data
+        return data;
+    }
+
+    async function fetchWinners(){
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${authToken}`
+        };
+
+        const {data} =  axios.get('http://localhost/api/choose-winners', {headers})
+            .then(resp => {
+                if(resp.data === 200) {
+                    return data;
+                }
+            });
+        return data;
     }
 
     const handleLikesBasedOnUserId = (likedPhotoUserId) => {
@@ -94,7 +116,11 @@ const Gallery = () => {
         });
     };
 
-    const {data, error, isError, isLoading } = useQuery('uploads', fetchUploads)
+
+    const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads);
+    const { data: winnersData } = useQuery('winners', fetchWinners);
+    console.log(data);
+    console.log('winnersData', winnersData);
     // first argument is a string to cache and track the query result
     if(isLoading){
         return <div>Loading...</div>
@@ -124,6 +150,27 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
+            {weeklyDay === 3 ? <Modal show={showWinners} onHide={handleCloseWinners}>
+                <h1>Top Three Winners of the week!</h1>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                    {
+                        winnersData?.data.map((photos, index) => {
+                            console.log(photos)
+                            return <SelectedWinners
+                                src={photos.url}
+                                likes={photos.likes}
+                                userName={photos.name}
+                                key={index}
+                            />
+                        })
+                    }
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseWinners}>Close</Button>
+                </Modal.Footer>
+            </Modal> : null}
+
             <section className="gallery">
                 <div className="container">
                     <div className="img-container">
@@ -144,6 +191,8 @@ const Gallery = () => {
                     </div>
                 </div>
             </section>
+
+
         </>
 
     );

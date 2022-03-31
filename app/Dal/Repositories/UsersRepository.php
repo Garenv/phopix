@@ -38,7 +38,7 @@ class UsersRepository implements IUsersRepository
     public function selectTopThreeWinners()
     {
         return DB::table('uploads')
-            ->select('users.name', 'uploads.likes')
+            ->select('users.name', 'uploads.likes', 'uploads.url')
             ->join('users', 'users.UserID', '=', 'uploads.UserID')
             ->orderBy('likes', 'desc')
             ->limit(3)
