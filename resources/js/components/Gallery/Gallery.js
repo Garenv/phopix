@@ -134,7 +134,7 @@ const Gallery = () => {
             </Modal>
 
             {weeklyDay === 5 ? <Modal show={showWinners} onHide={handleCloseWinners}>
-                <h1>Top Three Winners of the week!</h1>
+                <h1>This Week's Top 3 Winners!</h1>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
                     <SelectedWinners/>

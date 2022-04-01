@@ -23,16 +23,18 @@ const SelectedWinners = () => {
                 <div className="userData">
                     {
                         data?.map((photos, index) => {
-                            console.log(photos)
                             return (
-                                <>
-                                    <img src={photos.url} className="img-fluid" alt="Winner Photos"/>
+                                <div key={index}>
+                                    <img src={photos.url} className="img-fluid" alt="Winner Photos" />
                                     <div className="winnerInfo">
                                         <h2 className="winnerUserName">{photos.name}</h2>
                                         <h2 className="winnerLikes">Likes {photos.likes}</h2>
+                                        <h2 className="firstPlace">{photos.firstPlace}</h2>
+                                        <h2 className="secondPlace">{photos.secondPlace}</h2>
+                                        <h2 className="thirdPlace">{photos.thirdPlace}</h2>
+                                        <br/>
                                     </div>
-                                    <br/>
-                                </>
+                                </div>
                             )
                         })
                     }
