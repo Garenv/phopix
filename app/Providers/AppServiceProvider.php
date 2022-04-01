@@ -4,10 +4,11 @@ namespace App\Providers;
 
 use App\Dal\Interfaces\IUploadsRepository;
 use App\Dal\Interfaces\IUsersRepository;
+use App\Dal\Interfaces\IWinnersRepository;
 use App\Dal\Repositories\UploadsRepository;
 use App\Dal\Repositories\UsersRepository;
+use App\Dal\Repositories\WinnersRepository;
 use Illuminate\Support\ServiceProvider;
-use Prettus\Repository\Providers\RepositoryServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(TelescopeServiceProvider::class);
             $this->app->bind(IUploadsRepository::class,UploadsRepository::class);
             $this->app->bind(IUsersRepository::class,UsersRepository::class);
+            $this->app->bind(IWinnersRepository::class,WinnersRepository::class);
         }
     }
 

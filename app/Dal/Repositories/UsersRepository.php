@@ -5,7 +5,6 @@ namespace App\Dal\Repositories;
 
 use App\Dal\Interfaces\IUsersRepository;
 use App\Models\Upload;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class UsersRepository implements IUsersRepository
@@ -32,16 +31,6 @@ class UsersRepository implements IUsersRepository
         return DB::table('uploads')
             ->select('uploads.url', 'uploads.likes', 'users.UserID', 'users.name')
             ->join('users', 'users.UserID', '=', 'uploads.UserID')
-            ->get();
-    }
-
-    public function selectTopThreeWinners()
-    {
-        return DB::table('uploads')
-            ->select('users.name', 'uploads.likes', 'uploads.url')
-            ->join('users', 'users.UserID', '=', 'uploads.UserID')
-            ->orderBy('likes', 'desc')
-            ->limit(3)
             ->get();
     }
 
