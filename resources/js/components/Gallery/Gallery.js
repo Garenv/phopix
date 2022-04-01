@@ -34,21 +34,6 @@ const Gallery = () => {
         return data;
     }
 
-    async function fetchWinners(){
-        const headers = {
-            "Accept": 'application/json',
-            "Authorization": `Bearer ${authToken}`
-        };
-
-        const {data} =  axios.get('http://localhost/api/choose-winners', {headers})
-            .then(resp => {
-                if(resp.data === 200) {
-                    return data;
-                }
-            });
-        return data;
-    }
-
     const handleLikesBasedOnUserId = (likedPhotoUserId) => {
         if(currentUserClicks > 1) {
             setCurrentUserClicks(currentUserClicks - 1);
@@ -118,9 +103,7 @@ const Gallery = () => {
 
 
     const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads);
-    const { data: winnersData } = useQuery('winners', fetchWinners);
-    console.log(data);
-    console.log('winnersData', winnersData);
+
     // first argument is a string to cache and track the query result
     if(isLoading){
         return <div>Loading...</div>
@@ -150,21 +133,11 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            {weeklyDay === 3 ? <Modal show={showWinners} onHide={handleCloseWinners}>
+            {weeklyDay === 5 ? <Modal show={showWinners} onHide={handleCloseWinners}>
                 <h1>Top Three Winners of the week!</h1>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    {
-                        winnersData?.data.map((photos, index) => {
-                            console.log(photos)
-                            return <SelectedWinners
-                                src={photos.url}
-                                likes={photos.likes}
-                                userName={photos.name}
-                                key={index}
-                            />
-                        })
-                    }
+                    <SelectedWinners/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseWinners}>Close</Button>
