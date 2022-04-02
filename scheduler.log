@@ -1,0 +1,19 @@
+
+   ErrorException 
+
+  Object of class Illuminate\Support\Collection could not be converted to int
+
+  at vendor/laravel/framework/src/Illuminate/Console/Command.php:136
+    132▕     protected function execute(InputInterface $input, OutputInterface $output)
+    133▕     {
+    134▕         $method = method_exists($this, 'handle') ? 'handle' : '__invoke';
+    135▕ 
+  ➜ 136▕         return (int) $this->laravel->call([$this, $method]);
+    137▕     }
+    138▕ 
+    139▕     /**
+    140▕      * Resolve the console command instance for the given command.
+
+      [2m+8 vendor frames [22m
+  9   artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))

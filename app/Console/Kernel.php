@@ -24,9 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('message:daily')
-            ->everyMinute()
-            ->appendOutputTo('scheduler.log');
+        $schedule->command('weekly:winners')->timezone('America/New_York')->weeklyOn(6, '16:35:00');
+        $schedule->command('truncate:winners')->timezone('America/New_York')->weeklyOn(6, '16:36:00');
     }
 
     public function scheduleTimezone()

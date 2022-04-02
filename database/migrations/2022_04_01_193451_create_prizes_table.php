@@ -14,7 +14,7 @@ class CreatePrizesTable extends Migration
     public function up()
     {
         Schema::create('prizes', function (Blueprint $table) {
-            $table->string('prizeId');
+            $table->id('prizeId');
             $table->string('prizeName');
         });
     }

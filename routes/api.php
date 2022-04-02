@@ -30,7 +30,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('file-upload',                        [FileUploadController::class, 'fileUpload']);
     Route::post('logout',                             [AuthController::class,       'logout']);
     Route::get('get-user-like',                       [UsersController::class,      'getUserLikes']);
-    Route::get('choose-winners',                      [WinnersController::class,    'selectTopThreeWinners']);
+    Route::get('choose-winners',                      [WinnersController::class,    'getTopThreeWinnersFromUploadsTable']);
+    Route::get('get-winners',                         [WinnersController::class,    'getTopThreeWinnersFromWinnersTable']);
     Route::post('post-user-like',                     [UsersController::class,      'incrementDecrementLike']);
     Route::post('delete-user-upload',                 [UsersController::class,      'deleteUserUpload']);
 });

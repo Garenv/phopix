@@ -2791,7 +2791,7 @@ var Gallery = function Gallery() {
           children: "Upload!"
         })]
       })]
-    }), weeklyDay === 5 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }), weeklyDay === 6 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
       show: showWinners,
       onHide: handleCloseWinners,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h1", {
@@ -3234,7 +3234,7 @@ var SelectedWinners = function SelectedWinners() {
                 "Authorization": "Bearer ".concat(authToken)
               };
               _context.next = 3;
-              return axios.get('http://localhost/api/choose-winners', {
+              return axios.get('http://localhost/api/get-winners', {
                 headers: headers
               });
 

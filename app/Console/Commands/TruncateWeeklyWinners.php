@@ -2,23 +2,24 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Winners;
 use Illuminate\Console\Command;
 
-class DailyMessage extends Command
+class TruncateWeeklyWinners extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'message:daily';
+    protected $signature = 'truncate:winners';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Artisan Command to send daily messages';
+    protected $description = 'Artisan Command to truncate weekly winners from winners table';
 
     /**
      * Create a new command instance.
@@ -33,10 +34,10 @@ class DailyMessage extends Command
     /**
      * Execute the console command.
      *
-     * @return int
      */
     public function handle()
     {
-        echo 'This is my first basic schedular ' . PHP_EOL;
+        // Truncate winners table for the week to make way for the next top 3 winners
+        Winners::truncate();
     }
 }
