@@ -19,8 +19,8 @@ class WinnersController extends Controller
     }
 
     /**
-     * Selects the top three winners from the
-     * uploads table to get the crob job ready
+     * Gets the top three winners from the
+     * uploads table to get the cron job ready
      * @return mixed
      */
     public function getTopThreeWinnersFromUploadsTable()
@@ -29,8 +29,11 @@ class WinnersController extends Controller
     }
 
     /**
-     * Selects the top three winners from the
+     * Gets the top three winners from the
      * winners table and sends data to the frontend
+     * based on the cron job's results.
+     * This will be called once per week
+     * see app/Console/Kernel.php for more details.
      * @return mixed
      */
     public function getTopThreeWinnersFromWinnersTable()

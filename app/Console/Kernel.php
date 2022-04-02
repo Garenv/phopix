@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('weekly:winners')->timezone('America/New_York')->weeklyOn(6, '16:35:00');
-        $schedule->command('truncate:winners')->timezone('America/New_York')->weeklyOn(6, '16:36:00');
+        $schedule->command('weekly:winners')->timezone('America/New_York')->weeklyOn(6, '18:18');
+        $schedule->command('truncate:winners')->timezone('America/New_York')->weeklyOn(6, '18:20');
     }
 
     public function scheduleTimezone()

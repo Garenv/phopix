@@ -133,7 +133,7 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            {weeklyDay === 6 ? <Modal show={showWinners} onHide={handleCloseWinners}>
+            {weeklyDay === 7 ? <Modal show={showWinners} onHide={handleCloseWinners}>
                 <h1>This Week's Top 3 Winners!</h1>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>

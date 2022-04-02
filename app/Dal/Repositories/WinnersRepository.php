@@ -21,7 +21,7 @@ class WinnersRepository implements IWinnersRepository
     {
         return DB::table('winners')
             ->select('users.name', 'winners.likes', 'winners.url')
-            ->join('users', 'users.UserID', '=', 'uploads.UserID')
+            ->join('users', 'users.UserID', '=', 'winners.UserID')
             ->orderBy('likes', 'desc')
             ->get();
     }
