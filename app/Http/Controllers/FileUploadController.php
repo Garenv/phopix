@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
 
 class FileUploadController extends Controller
 {
@@ -46,10 +47,20 @@ class FileUploadController extends Controller
                 'url'         => $url,
                 'UserID'      => $userId,
                 'isUploaded'  => true,
-                'timeStamp'   => $timeStamp
+                'timeStamp'   => $timeStamp,
+                'message'     => 'Successfully uploaded photo! 🙂'
             ];
 
-            Upload::create($data);
+            try {
+                Upload::create($data);
+            } catch(QueryException $e){
+                $errorCode = $e->errorInfo[1];
+
+                // If duplicate entry
+                if($errorCode == 1062) {
+                    return response()->json(['status' => 'failed', 'message' => 'You\'ve already uploaded a photo!'], 500);
+                }
+            }
 
             return $data;
 

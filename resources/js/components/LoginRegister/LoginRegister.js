@@ -61,7 +61,8 @@ const LoginRegister = () => {
                 history.push('/gallery');
             }).catch(error => {
                 let errorMessage = error.response.data.message;
-                let errorStatus = error.response.status;
+                let errorStatus  = error.response.status;
+
                 setEmailError(errorMessage);
                 setErrorStatus(errorStatus);
         });
@@ -72,10 +73,10 @@ const LoginRegister = () => {
             { errorStatus === 400 ?
                 <section>
                     <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                        <span className="title">!&nbsp;&nbsp;&nbsp;&nbsp;Error</span> {emailError} <span className='close' onClick={closeMessages}>X</span>
+                        <span className="title">Error</span> {emailError} <span className='close' onClick={closeMessages}>X</span>
                     </div>
                 </section>
-                : null}
+                : null }
             <div className="section">
                 <div className="container">
                     <div className="row full-height justify-content-center">

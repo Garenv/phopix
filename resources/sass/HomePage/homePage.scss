@@ -268,14 +268,13 @@ section{
 }
 .notification .title{
     margin-right: 15px;
-    padding: 0px 15px;
     line-height: 40px;
     display: inline-block;
 }
 
 .notification .close{
     background: rgba(255,255,255,0.2);
-    padding: 0px 15px;
+    //padding: 0px 15px;
     float: right;
     line-height: 40px;
     display: inline-block;
@@ -303,9 +302,13 @@ section{
 
 .notification.success{
     background: #2ecc71;
+
 }
 .notification.success .title{
     background: #27ae60;
+    float: left;
+    width: 18%;
+    text-align: center;
 }
 
 .notification.error{
@@ -314,6 +317,8 @@ section{
 .notification.error .title{
     background: #c0392b;
     float: left;
+    width: 18%;
+    text-align: center;
 }
 
 .notification.warning{

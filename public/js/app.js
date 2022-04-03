@@ -2610,6 +2610,26 @@ var Gallery = function Gallery() {
       filePreview = _useState4[0],
       setFilePreview = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+      _useState6 = _slicedToArray(_useState5, 2),
+      statusMessage = _useState6[0],
+      setStatusMessage = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      statusCode = _useState8[0],
+      setStatusCode = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      errorClose = _useState10[0],
+      setErrorClose = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState12 = _slicedToArray(_useState11, 2),
+      uploadSuccess = _useState12[0],
+      setUploadSuccess = _useState12[1];
+
   var handleClose = function handleClose() {
     return setShow(false);
   };
@@ -2621,20 +2641,24 @@ var Gallery = function Gallery() {
 
   var weeklyDay = today.getDay();
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      _useState6 = _slicedToArray(_useState5, 2),
-      showWinners = _useState6[0],
-      setShowWinners = _useState6[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState14 = _slicedToArray(_useState13, 2),
+      showWinners = _useState14[0],
+      setShowWinners = _useState14[1];
 
   var handleCloseWinners = function handleCloseWinners() {
     return setShowWinners(false);
   }; // User clicks for likes
 
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
-      _useState8 = _slicedToArray(_useState7, 2),
-      currentUserClicks = _useState8[0],
-      setCurrentUserClicks = _useState8[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
+      _useState16 = _slicedToArray(_useState15, 2),
+      currentUserClicks = _useState16[0],
+      setCurrentUserClicks = _useState16[1];
+
+  var closeMessages = function closeMessages() {
+    setErrorClose(true);
+  };
 
   function fetchUploads() {
     return _fetchUploads.apply(this, arguments);
@@ -2728,9 +2752,21 @@ var Gallery = function Gallery() {
     axios.post(url, formData, {
       headers: headers
     }).then(function (resp) {
-      console.log(resp.data);
+      var okStatus = resp.status;
+      var successMessage = resp.data.message;
+
+      if (okStatus) {
+        setShow(false);
+      }
+
+      setUploadSuccess(okStatus);
+      setStatusMessage(successMessage);
+      setStatusCode(okStatus);
     })["catch"](function (error) {
-      console.log(error);
+      var errorMessage = error.response.data.message;
+      var errorStatus = error.response.status;
+      setStatusMessage(errorMessage);
+      setStatusCode(errorStatus);
     });
   };
 
@@ -2756,6 +2792,18 @@ var Gallery = function Gallery() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
     children: [location.pathname === '/gallery' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Navbar_Navbar__WEBPACK_IMPORTED_MODULE_5__["default"], {
       data: data
+    }) : null, statusCode === 200 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("section", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "notification success ".concat(errorClose ? 'closed' : null),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "title",
+          children: "Got it!"
+        }), statusMessage, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "close",
+          onClick: closeMessages,
+          children: "X"
+        })]
+      })
     }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       className: "fileUpload text-center",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
@@ -2771,7 +2819,20 @@ var Gallery = function Gallery() {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
       show: show,
       onHide: handleClose,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h1", {
+      className: uploadSuccess === 200 ? "hideModal" : "",
+      children: [statusCode === 500 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("section", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "notification error ".concat(errorClose ? 'closed' : null),
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+            className: "title",
+            children: "Error"
+          }), statusMessage, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+            className: "close",
+            onClick: closeMessages,
+            children: "X"
+          })]
+        })
+      }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h1", {
         children: "Would you like to upload this photo?"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Header, {
         closeButton: true
@@ -3034,7 +3095,7 @@ var LoginRegister = function LoginRegister() {
         className: "notification error ".concat(errorClose ? 'closed' : null),
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
           className: "title",
-          children: "!\xA0\xA0\xA0\xA0Error"
+          children: "Error"
         }), " ", emailError, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
           className: "close",
           onClick: closeMessages,
@@ -7859,7 +7920,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\n  font-family: \"Poppins\", sans-serif;\n  font-weight: 300;\n  font-size: 15px;\n  line-height: 1.7;\n  color: #fff;\n  background: #3f5efb;\n  background: radial-gradient(circle, #3f5efb 0%, #c446fc 100%);\n  overflow-x: hidden;\n}\n\na {\n  cursor: pointer;\n  transition: all 200ms linear;\n}\n\na:hover {\n  text-decoration: none;\n}\n\n.link {\n  color: #fff;\n}\n\n.link:hover {\n  color: #12f8ad;\n}\n\np {\n  font-weight: 500;\n  font-size: 14px;\n  line-height: 1.7;\n}\n\nh4 {\n  font-weight: 600;\n}\n\nh6 span {\n  padding: 0 20px;\n  text-transform: uppercase;\n  font-weight: 700;\n}\n\n.section {\n  position: relative;\n  width: 100%;\n  display: block;\n}\n\n.full-height {\n  min-height: 100vh;\n}\n\n[type=checkbox]:checked,\n[type=checkbox]:not(:checked) {\n  position: absolute;\n  left: -9999px;\n}\n\n.checkbox:checked + label,\n.checkbox:not(:checked) + label {\n  position: relative;\n  display: block;\n  text-align: center;\n  width: 60px;\n  height: 16px;\n  border-radius: 8px;\n  padding: 0;\n  margin: 10px auto;\n  cursor: pointer;\n  background-color: #ffffff;\n}\n\n.checkbox:checked + label:before,\n.checkbox:not(:checked) + label:before {\n  position: absolute;\n  display: block;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  color: #12f8ad;\n  background-color: #2a2b38;\n  font-family: \"unicons\";\n  content: \"\\eb4f\";\n  z-index: 20;\n  top: -10px;\n  left: -10px;\n  line-height: 36px;\n  text-align: center;\n  font-size: 24px;\n  transition: all 0.5s ease;\n}\n\n.checkbox:checked + label:before {\n  transform: translateX(44px) rotate(-270deg);\n}\n\n.card-3d-wrap {\n  position: relative;\n  width: 440px;\n  max-width: 100%;\n  height: 400px;\n  transform-style: preserve-3d;\n  perspective: 800px;\n  margin-top: 40px;\n}\n\n.card-3d-wrapper {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  transform-style: preserve-3d;\n  transition: all 600ms ease-out;\n}\n\n.card-front, .card-back {\n  width: 100%;\n  height: 100%;\n  background-color: #2a2b38;\n  position: absolute;\n  border-radius: 6px;\n  left: 0;\n  top: 0;\n  transform-style: preserve-3d;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\n\n.card-back {\n  transform: rotateY(180deg);\n}\n\n.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {\n  transform: rotateY(180deg);\n}\n\n.center-wrap {\n  position: absolute;\n  width: 100%;\n  padding: 0 35px;\n  top: 50%;\n  left: 0;\n  transform: translate3d(0, -50%, 35px) perspective(100px);\n  z-index: 20;\n  display: block;\n}\n\n.form-group {\n  position: relative;\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n\n.form-style {\n  padding: 13px 20px;\n  padding-left: 55px;\n  height: 48px;\n  width: 100%;\n  font-weight: 500;\n  border-radius: 4px;\n  font-size: 14px;\n  line-height: 22px;\n  letter-spacing: 0.5px;\n  outline: none;\n  color: #c4c3ca;\n  background-color: #1f2029;\n  border: none;\n  transition: all 200ms linear;\n  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);\n}\n\n.form-style:focus,\n.form-style:active {\n  border: none;\n  outline: none;\n  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);\n}\n\n.input-icon {\n  position: absolute;\n  top: 0;\n  left: 18px;\n  height: 48px;\n  font-size: 24px;\n  line-height: 48px;\n  text-align: left;\n  color: #12f8ad;\n  transition: all 200ms linear;\n}\n\n.form-group input:-ms-input-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -ms-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input::-moz-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:-moz-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input::-webkit-input-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -webkit-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus:-ms-input-placeholder {\n  opacity: 0;\n  -ms-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus::-moz-placeholder {\n  opacity: 0;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus:-moz-placeholder {\n  opacity: 0;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus::-webkit-input-placeholder {\n  opacity: 0;\n  -webkit-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.btn {\n  border-radius: 4px;\n  height: 44px;\n  font-size: 13px;\n  font-weight: 600;\n  text-transform: uppercase;\n  transition: all 200ms linear;\n  padding: 0 30px;\n  letter-spacing: 1px;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  -ms-flex-pack: center;\n  text-align: center;\n  border: none;\n  background-color: #12f8ad;\n  color: #fff;\n  box-shadow: 0 8px 24px 0 rgba(18, 248, 173, 0.2);\n}\n\n.btn:active,\n.btn:focus {\n  background-color: #fff;\n  color: #12f8ad;\n  box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.2);\n}\n\n.btn:hover {\n  background-color: #fff;\n  color: #12f8ad;\n  box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.2);\n}\n\n.logo {\n  font-family: \"Lobster\", cursive;\n  position: absolute;\n  font-size: 50px;\n  top: 300px;\n  left: 400px;\n  color: white;\n  text-shadow: #020002 0.0118614px 0.0118614px 0px, #020002 1.01186px 1.01186px 0px, #020002 2.01186px 2.01186px 0px, #020002 3.01186px 3.01186px 0px, #020002 4.01186px 4.01186px 0px, #020002 5.01186px 5.01186px 0px, #020002 6.01186px 6.01186px 0px, #020002 7.01186px 7.01186px 0px, #020002 8.01186px 8.01186px 0px, #0a0108 9.01186px 9.01186px 0px, #12030f 10.0119px 10.0119px 0px, #1a0416 11.0119px 11.0119px 0px, #22061d 12.0119px 12.0119px 0px, #2a0724 13.0119px 13.0119px 0px, #32092b 14.0119px 14.0119px 0px, #3a0a32 15.0119px 15.0119px 0px, #420c39 16.0119px 16.0119px 0px, #4a0d40 17.0119px 17.0119px 0px, #520f46 18.0119px 18.0119px 0px, #5a104d 19.0119px 19.0119px 0px, #621254 20.0119px 20.0119px 0px, #6a135b 21.0119px 21.0119px 0px, #721562 22.0119px 22.0119px 0px, #7a1669 23.0119px 23.0119px 0px, #821870 24.0119px 24.0119px 0px, #8a1977 25.0119px 25.0119px 0px, #931b7e 26.0119px 26.0119px 0px;\n}\n\n.logo * {\n  box-sizing: border-box;\n  transition: all 0.3s;\n}\n\n.logo a {\n  color: white;\n  text-decoration: none;\n}\n\n.logo a:hover {\n  color: #FFC721;\n}\n\nsection {\n  overflow: hidden;\n}\n\n.notification {\n  border-radius: 0px 0px 5px 5px;\n  margin: 0 auto;\n  box-shadow: #95a5a6 0px 0px 6px 2px;\n  color: white;\n  line-height: 40px;\n  overflow: hidden;\n  -webkit-animation: reveal 0.4s;\n          animation: reveal 0.4s;\n}\n\n.notification .title {\n  margin-right: 15px;\n  padding: 0px 15px;\n  line-height: 40px;\n  display: inline-block;\n}\n\n.notification .close {\n  background: rgba(255, 255, 255, 0.2);\n  padding: 0px 15px;\n  float: right;\n  line-height: 40px;\n  display: inline-block;\n  color: white;\n}\n\n.notification .close:hover {\n  cursor: pointer;\n}\n\n.notification.closed {\n  transform: translate(0px, -50px);\n  transition: 0.7s;\n}\n\n@-webkit-keyframes reveal {\n  0% {\n    transform: translate(0px, -50px);\n  }\n  50% {\n    transform: translate(0px, -50px);\n  }\n  100% {\n    transform: translate(0px, 0px);\n  }\n}\n\n@keyframes reveal {\n  0% {\n    transform: translate(0px, -50px);\n  }\n  50% {\n    transform: translate(0px, -50px);\n  }\n  100% {\n    transform: translate(0px, 0px);\n  }\n}\n.notification.success {\n  background: #2ecc71;\n}\n\n.notification.success .title {\n  background: #27ae60;\n}\n\n.notification.error {\n  background: #e74c3c;\n}\n\n.notification.error .title {\n  background: #c0392b;\n  float: left;\n}\n\n.notification.warning {\n  background: #f1c40f;\n}\n\n.notification.warning .title {\n  background: #f39c12;\n}\n\n.notification.normal {\n  background: #3498db;\n}\n\n.notification.normal .title {\n  background: #2980b9;\n}\n\n@media only screen and (max-width: 767px) {\n  .logo {\n    font-size: 20px;\n    position: absolute;\n    margin: -20px 15px;\n    left: 190px;\n  }\n}\n@media only screen and (max-width: 1180px) {\n  .logo {\n    font-size: 15px;\n  }\n}\n@media only screen and (max-width: 150px) {\n  .logo {\n    font-size: 8px;\n  }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  font-family: \"Poppins\", sans-serif;\n  font-weight: 300;\n  font-size: 15px;\n  line-height: 1.7;\n  color: #fff;\n  background: #3f5efb;\n  background: radial-gradient(circle, #3f5efb 0%, #c446fc 100%);\n  overflow-x: hidden;\n}\n\na {\n  cursor: pointer;\n  transition: all 200ms linear;\n}\n\na:hover {\n  text-decoration: none;\n}\n\n.link {\n  color: #fff;\n}\n\n.link:hover {\n  color: #12f8ad;\n}\n\np {\n  font-weight: 500;\n  font-size: 14px;\n  line-height: 1.7;\n}\n\nh4 {\n  font-weight: 600;\n}\n\nh6 span {\n  padding: 0 20px;\n  text-transform: uppercase;\n  font-weight: 700;\n}\n\n.section {\n  position: relative;\n  width: 100%;\n  display: block;\n}\n\n.full-height {\n  min-height: 100vh;\n}\n\n[type=checkbox]:checked,\n[type=checkbox]:not(:checked) {\n  position: absolute;\n  left: -9999px;\n}\n\n.checkbox:checked + label,\n.checkbox:not(:checked) + label {\n  position: relative;\n  display: block;\n  text-align: center;\n  width: 60px;\n  height: 16px;\n  border-radius: 8px;\n  padding: 0;\n  margin: 10px auto;\n  cursor: pointer;\n  background-color: #ffffff;\n}\n\n.checkbox:checked + label:before,\n.checkbox:not(:checked) + label:before {\n  position: absolute;\n  display: block;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  color: #12f8ad;\n  background-color: #2a2b38;\n  font-family: \"unicons\";\n  content: \"\\eb4f\";\n  z-index: 20;\n  top: -10px;\n  left: -10px;\n  line-height: 36px;\n  text-align: center;\n  font-size: 24px;\n  transition: all 0.5s ease;\n}\n\n.checkbox:checked + label:before {\n  transform: translateX(44px) rotate(-270deg);\n}\n\n.card-3d-wrap {\n  position: relative;\n  width: 440px;\n  max-width: 100%;\n  height: 400px;\n  transform-style: preserve-3d;\n  perspective: 800px;\n  margin-top: 40px;\n}\n\n.card-3d-wrapper {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  transform-style: preserve-3d;\n  transition: all 600ms ease-out;\n}\n\n.card-front, .card-back {\n  width: 100%;\n  height: 100%;\n  background-color: #2a2b38;\n  position: absolute;\n  border-radius: 6px;\n  left: 0;\n  top: 0;\n  transform-style: preserve-3d;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\n\n.card-back {\n  transform: rotateY(180deg);\n}\n\n.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {\n  transform: rotateY(180deg);\n}\n\n.center-wrap {\n  position: absolute;\n  width: 100%;\n  padding: 0 35px;\n  top: 50%;\n  left: 0;\n  transform: translate3d(0, -50%, 35px) perspective(100px);\n  z-index: 20;\n  display: block;\n}\n\n.form-group {\n  position: relative;\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n\n.form-style {\n  padding: 13px 20px;\n  padding-left: 55px;\n  height: 48px;\n  width: 100%;\n  font-weight: 500;\n  border-radius: 4px;\n  font-size: 14px;\n  line-height: 22px;\n  letter-spacing: 0.5px;\n  outline: none;\n  color: #c4c3ca;\n  background-color: #1f2029;\n  border: none;\n  transition: all 200ms linear;\n  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);\n}\n\n.form-style:focus,\n.form-style:active {\n  border: none;\n  outline: none;\n  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);\n}\n\n.input-icon {\n  position: absolute;\n  top: 0;\n  left: 18px;\n  height: 48px;\n  font-size: 24px;\n  line-height: 48px;\n  text-align: left;\n  color: #12f8ad;\n  transition: all 200ms linear;\n}\n\n.form-group input:-ms-input-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -ms-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input::-moz-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:-moz-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input::-webkit-input-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -webkit-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus:-ms-input-placeholder {\n  opacity: 0;\n  -ms-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus::-moz-placeholder {\n  opacity: 0;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus:-moz-placeholder {\n  opacity: 0;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus::-webkit-input-placeholder {\n  opacity: 0;\n  -webkit-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.btn {\n  border-radius: 4px;\n  height: 44px;\n  font-size: 13px;\n  font-weight: 600;\n  text-transform: uppercase;\n  transition: all 200ms linear;\n  padding: 0 30px;\n  letter-spacing: 1px;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  -ms-flex-pack: center;\n  text-align: center;\n  border: none;\n  background-color: #12f8ad;\n  color: #fff;\n  box-shadow: 0 8px 24px 0 rgba(18, 248, 173, 0.2);\n}\n\n.btn:active,\n.btn:focus {\n  background-color: #fff;\n  color: #12f8ad;\n  box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.2);\n}\n\n.btn:hover {\n  background-color: #fff;\n  color: #12f8ad;\n  box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.2);\n}\n\n.logo {\n  font-family: \"Lobster\", cursive;\n  position: absolute;\n  font-size: 50px;\n  top: 300px;\n  left: 400px;\n  color: white;\n  text-shadow: #020002 0.0118614px 0.0118614px 0px, #020002 1.01186px 1.01186px 0px, #020002 2.01186px 2.01186px 0px, #020002 3.01186px 3.01186px 0px, #020002 4.01186px 4.01186px 0px, #020002 5.01186px 5.01186px 0px, #020002 6.01186px 6.01186px 0px, #020002 7.01186px 7.01186px 0px, #020002 8.01186px 8.01186px 0px, #0a0108 9.01186px 9.01186px 0px, #12030f 10.0119px 10.0119px 0px, #1a0416 11.0119px 11.0119px 0px, #22061d 12.0119px 12.0119px 0px, #2a0724 13.0119px 13.0119px 0px, #32092b 14.0119px 14.0119px 0px, #3a0a32 15.0119px 15.0119px 0px, #420c39 16.0119px 16.0119px 0px, #4a0d40 17.0119px 17.0119px 0px, #520f46 18.0119px 18.0119px 0px, #5a104d 19.0119px 19.0119px 0px, #621254 20.0119px 20.0119px 0px, #6a135b 21.0119px 21.0119px 0px, #721562 22.0119px 22.0119px 0px, #7a1669 23.0119px 23.0119px 0px, #821870 24.0119px 24.0119px 0px, #8a1977 25.0119px 25.0119px 0px, #931b7e 26.0119px 26.0119px 0px;\n}\n\n.logo * {\n  box-sizing: border-box;\n  transition: all 0.3s;\n}\n\n.logo a {\n  color: white;\n  text-decoration: none;\n}\n\n.logo a:hover {\n  color: #FFC721;\n}\n\nsection {\n  overflow: hidden;\n}\n\n.notification {\n  border-radius: 0px 0px 5px 5px;\n  margin: 0 auto;\n  box-shadow: #95a5a6 0px 0px 6px 2px;\n  color: white;\n  line-height: 40px;\n  overflow: hidden;\n  -webkit-animation: reveal 0.4s;\n          animation: reveal 0.4s;\n}\n\n.notification .title {\n  margin-right: 15px;\n  line-height: 40px;\n  display: inline-block;\n}\n\n.notification .close {\n  background: rgba(255, 255, 255, 0.2);\n  float: right;\n  line-height: 40px;\n  display: inline-block;\n  color: white;\n}\n\n.notification .close:hover {\n  cursor: pointer;\n}\n\n.notification.closed {\n  transform: translate(0px, -50px);\n  transition: 0.7s;\n}\n\n@-webkit-keyframes reveal {\n  0% {\n    transform: translate(0px, -50px);\n  }\n  50% {\n    transform: translate(0px, -50px);\n  }\n  100% {\n    transform: translate(0px, 0px);\n  }\n}\n\n@keyframes reveal {\n  0% {\n    transform: translate(0px, -50px);\n  }\n  50% {\n    transform: translate(0px, -50px);\n  }\n  100% {\n    transform: translate(0px, 0px);\n  }\n}\n.notification.success {\n  background: #2ecc71;\n}\n\n.notification.success .title {\n  background: #27ae60;\n  float: left;\n  width: 18%;\n  text-align: center;\n}\n\n.notification.error {\n  background: #e74c3c;\n}\n\n.notification.error .title {\n  background: #c0392b;\n  float: left;\n  width: 18%;\n  text-align: center;\n}\n\n.notification.warning {\n  background: #f1c40f;\n}\n\n.notification.warning .title {\n  background: #f39c12;\n}\n\n.notification.normal {\n  background: #3498db;\n}\n\n.notification.normal .title {\n  background: #2980b9;\n}\n\n@media only screen and (max-width: 767px) {\n  .logo {\n    font-size: 20px;\n    position: absolute;\n    margin: -20px 15px;\n    left: 190px;\n  }\n}\n@media only screen and (max-width: 1180px) {\n  .logo {\n    font-size: 15px;\n  }\n}\n@media only screen and (max-width: 150px) {\n  .logo {\n    font-size: 8px;\n  }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7907,7 +7968,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nh1 {\n  font-family: \"Franklin Gothic Medium\", \"Arial Narrow\", Arial, sans-serif;\n  font-size: 55px;\n  text-align: center;\n  margin: 30px 0 40px;\n  color: #454545;\n}\n\n.container {\n  max-width: 1440px;\n  width: 95%;\n  margin: 0 auto;\n}\n\n.img-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n  grid-gap: 20px;\n}\n\n.gallery-img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n  transition: all 0.3s;\n  border-radius: 5px;\n}\n\n.img-container:hover .gallery-img {\n  filter: blur(3px);\n  transform: scale(0.95);\n}\n\n.img-container .gallery-img:hover {\n  filter: blur(0);\n  transform: scale(1);\n}\n\n.userData {\n  padding-top: 1rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nh1 {\n  font-family: \"Franklin Gothic Medium\", \"Arial Narrow\", Arial, sans-serif;\n  font-size: 55px;\n  text-align: center;\n  margin: 30px 0 40px;\n  color: #454545;\n}\n\n.container {\n  max-width: 1440px;\n  width: 95%;\n  margin: 0 auto;\n}\n\n.img-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n  grid-gap: 20px;\n}\n\n.gallery-img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n  transition: all 0.3s;\n  border-radius: 5px;\n}\n\n.img-container:hover .gallery-img {\n  filter: blur(3px);\n  transform: scale(0.95);\n}\n\n.img-container .gallery-img:hover {\n  filter: blur(0);\n  transform: scale(1);\n}\n\n.userData {\n  padding-top: 1rem;\n}\n\n.hideModal {\n  display: none;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

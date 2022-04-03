@@ -13,6 +13,11 @@ const Gallery = () => {
     // Preview modal content
     const [show, setShow]                                         = useState(false);
     const [filePreview, setFilePreview]                           = useState(null);
+    const [statusMessage, setStatusMessage]                           = useState("");
+    const [statusCode, setStatusCode]                           = useState(null);
+    const [errorClose, setErrorClose]                             = useState(false);
+    const [uploadSuccess, setUploadSuccess]                             = useState(null);
+
     const handleClose                                             = () => setShow(false);
     const handleShow                                              = () => setShow(true);
 
@@ -23,6 +28,10 @@ const Gallery = () => {
 
     // User clicks for likes
     const [currentUserClicks, setCurrentUserClicks]               = useState(1);
+
+    const closeMessages = () => {
+        setErrorClose(true);
+    }
 
     async function fetchUploads(){
         const headers = {
@@ -95,9 +104,22 @@ const Gallery = () => {
 
         axios.post(url, formData, {headers})
             .then(resp => {
-                console.log(resp.data);
+                let okStatus       = resp.status;
+                let successMessage = resp.data.message;
+
+                if(okStatus) {
+                    setShow(false);
+                }
+
+                setUploadSuccess(okStatus);
+                setStatusMessage(successMessage);
+                setStatusCode(okStatus);
             }).catch(error => {
-            console.log(error);
+            let errorMessage       = error.response.data.message;
+            let errorStatus        = error.response.status;
+
+            setStatusMessage(errorMessage);
+            setStatusCode(errorStatus);
         });
     };
 
@@ -116,12 +138,26 @@ const Gallery = () => {
         <>
             {location.pathname === '/gallery' ? <Navbar data={data}/> : null }
 
+            { statusCode === 200 ? <section>
+                <div className={`notification success ${errorClose ? 'closed' : null}`}>
+                    <span className="title">Got it!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
+                </div>
+            </section>
+                : null }
+
             <div className="fileUpload text-center">
                 <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>
                 <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
             </div>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} className={uploadSuccess === 200 ? "hideModal" : ""}>
+                { statusCode === 500 ?
+                    <section>
+                        <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                            <span className="title">Error</span>{statusMessage}<span className='close' onClick={closeMessages}>X</span>
+                        </div>
+                    </section>
+                    : null }
                 <h1>Would you like to upload this photo?</h1>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
