@@ -150,7 +150,7 @@ const Gallery = () => {
                 <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
             </div>
 
-            <Modal show={show} onHide={handleClose} className={uploadSuccess === 200 ? "hideModal" : " "}>
+            <Modal show={show} onHide={handleClose} className={uploadSuccess === 200 ? "hideModal" : ""}>
                 { statusCode === 500 ?
                     <section>
                         <div className={`notification error ${errorClose ? 'closed' : null}`}>

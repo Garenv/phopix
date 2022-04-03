@@ -2819,7 +2819,7 @@ var Gallery = function Gallery() {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
       show: show,
       onHide: handleClose,
-      className: uploadSuccess === 200 ? "hideModal" : " ",
+      className: uploadSuccess === 200 ? "hideModal" : "",
       children: [statusCode === 500 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("section", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
           className: "notification error ".concat(errorClose ? 'closed' : null),
