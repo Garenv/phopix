@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Stevebauman\Location\Facades\Location;
 
@@ -81,12 +82,21 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         try {
-            $request->validate([
+            $validator = Validator::make($request->all(),[
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'age' => 'required',
                 'password' => 'required|min:6',
             ]);
+
+            if($validator->fails()) {
+                $failedRules = $validator->failed();
+
+                if(isset($failedRules['email']['Unique'])) {
+                    return response()->json(['status' => 'failed', 'message' => 'Looks like you already have an account!'], 400);
+                }
+
+            }
 
             $userId = 'u-' . Str::uuid()->toString();
             $data = $request->all();

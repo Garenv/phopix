@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useRef, useState} from "react";
 import { useHistory } from 'react-router-dom';
 
 const LoginRegister = () => {
@@ -6,8 +6,15 @@ const LoginRegister = () => {
     const [email, setEmail]       = useState("");
     const [age, setAge]           = useState("");
     const [password, setPassword] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [errorStatus, setErrorStatus] = useState(null);
+    const [errorClose, setErrorClose] = useState(false);
 
     let history = useHistory();
+
+    const closeMessages = () => {
+        setErrorClose(true);
+    }
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -36,8 +43,6 @@ const LoginRegister = () => {
     const handleRegister = (e) => {
         e.preventDefault();
 
-        console.log("Clicked Register");
-
         let dataRegister = {
             'name': name,
             'email': email,
@@ -49,18 +54,28 @@ const LoginRegister = () => {
 
         axios.post('http://localhost/api/register', dataRegister)
             .then(resp => {
-                console.log(dataRegister);
+                console.log(resp);
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
                 localStorage.setItem('name', resp.data.name);
                 history.push('/gallery');
             }).catch(error => {
-                console.log(error);
+                let errorMessage = error.response.data.message;
+                let errorStatus = error.response.status;
+                setEmailError(errorMessage);
+                setErrorStatus(errorStatus);
         });
     };
 
     return (
         <>
+            { errorStatus === 400 ?
+                <section>
+                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                        <span className="title">!&nbsp;&nbsp;&nbsp;&nbsp;Error</span> {emailError} <span className='close' onClick={closeMessages}>X</span>
+                    </div>
+                </section>
+                : null}
             <div className="section">
                 <div className="container">
                     <div className="row full-height justify-content-center">
