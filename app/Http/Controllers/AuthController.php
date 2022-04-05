@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+
 
 class AuthController extends Controller
 {
@@ -161,4 +165,89 @@ class AuthController extends Controller
             'message' => 'You have successfully logged out and the token was successfully deleted'
         ];
     }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function showForgotPasswordForm()
+    {
+        return view('auth.forgetPassword');
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function submitForgotPasswordForm(Request $request)
+    {
+//        dd($request->all());
+        $forgotPasswordEmail = $request->input('email');
+
+
+        $request->validate([
+            'email' => 'unique:users,email,10',
+        ]);
+
+//        dd($yo);
+
+        $token = Str::random(64);
+
+        DB::table('password_resets')->insert([
+            'email' => $forgotPasswordEmail,
+            'token' => $token,
+            'created_at' => Carbon::now()
+        ]);
+
+        Mail::send('email.forgot_password', ['token' => $token], function($message) use($request){
+            $message->to($request->get('email'));
+            $message->subject('Reset Password');
+        });
+
+
+    }
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function showResetPasswordForm($token) {
+        return view('auth.forgetPasswordLink', ['token' => $token]);
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function submitResetPasswordForm(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        $updatePassword = DB::table('password_resets')
+            ->where([
+                'email' => $request->email,
+                'token' => $request->token
+            ])
+            ->first();
+
+        if(!$updatePassword){
+            return back()->withInput()->with('error', 'Invalid token!');
+        }
+
+        $user = User::where('email', $request->email)
+            ->update(['password' => Hash::make($request->password)]);
+
+        DB::table('password_resets')->where(['email'=> $request->email])->delete();
+
+        return redirect('/login')->with('message', 'Your password has been changed!');
+    }
+
+
 }

@@ -25,6 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login',                                  [AuthController::class,       'login']);
 Route::post('register',                               [AuthController::class,       'register']);
 
+Route::post('forgot-password', [AuthController::class, 'submitForgotPasswordForm']);
+Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('reset.password.get');;
+Route::post('reset-password', [AuthController::class, 'submitResetPasswordForm']);
+
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get( 'get-user-uploads-data',              [UsersController::class,      'getUserUploadsData']);
     Route::post('file-upload',                        [FileUploadController::class, 'fileUpload']);

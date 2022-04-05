@@ -1,15 +1,20 @@
 import React, {useRef, useState} from "react";
-import { useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import {Button, Image, Modal} from "react-bootstrap";
 
 const LoginRegister = () => {
     const [name, setName]         = useState("");
     const [email, setEmail]       = useState("");
+    const [forgotPasswordEmail, setForgotPasswordEmailEmail]       = useState("");
     const [age, setAge]           = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState("");
     const [errorStatus, setErrorStatus] = useState(null);
     const [errorClose, setErrorClose] = useState(false);
 
+    const [show, setShow]                                         = useState(false);
+    const handleClose                                             = () => setShow(false);
+    const handleShow                                              = () => setShow(true);
     let history = useHistory();
 
     const closeMessages = () => {
@@ -68,6 +73,32 @@ const LoginRegister = () => {
         });
     };
 
+    const handleForgotPassword = (e) => {
+        e.preventDefault();
+
+        let dataRegister = {
+            'email': forgotPasswordEmail,
+        };
+
+        console.log(dataRegister)
+
+        axios.post('http://localhost/api/forgot-password', dataRegister)
+            .then(resp => {
+                console.log(resp);
+                // localStorage.setItem('token', resp.data.token);
+                // localStorage.setItem('UserID', resp.data.UserID);
+                // localStorage.setItem('name', resp.data.name);
+                // history.push('/gallery');
+            }).catch(error => {
+                console.log(error.response);
+            // let errorMessage = error.response.data.message;
+            // let errorStatus  = error.response.status;
+            //
+            // setEmailError(errorMessage);
+            // setErrorStatus(errorStatus);
+        });
+    };
+
     return (
         <>
             { errorStatus === 400 ?
@@ -115,9 +146,6 @@ const LoginRegister = () => {
                                                             <i className="input-icon uil uil-lock-alt"></i>
                                                         </div>
                                                         <button className="btn mt-4">Login</button>
-                                                        <p className="mb-0 mt-4 text-center">
-                                                            <a href="#0" className="link">Forgot your password?</a>
-                                                        </p>
                                                     </form>
                                                 </div>
                                             </div>
@@ -184,6 +212,41 @@ const LoginRegister = () => {
                     </div>
                 </div>
             </div>
+            <p className="mb-0 mt-4 text-center">
+                <p className="mb-0 mt-4 text-center">
+                    <Link onClick={handleShow} className="link">Forgot Password</Link>
+                </p>
+            </p>
+
+            <Modal show={show} onHide={handleClose}>
+                <h1>Forgot Password</h1>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                    <form onSubmit={handleForgotPassword} method="POST">
+                        <div className="form-group row">
+                            <label htmlFor="email_address" className="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                            <div className="col-md-6">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="email"
+                                    onChange={(e) => setForgotPasswordEmailEmail(e.target.value)}
+                                    required
+                                    autoFocus
+                                />
+                            </div>
+                        </div>
+                        <div className="col-md-6 offset-md-4">
+                            <button type="submit" className="btn btn-primary">
+                                Send Password Reset Link
+                            </button>
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 
