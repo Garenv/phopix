@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\ReactController;
 
@@ -21,3 +22,7 @@ use \App\Http\Controllers\ReactController;
 //Route::view('/{path?}', 'welcome');
 
 Route::get('/{path?}', [ReactController::class, 'show']);
+
+Route::post('reset-password', [AuthController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('reset.password.get');;
+

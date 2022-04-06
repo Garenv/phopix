@@ -183,15 +183,12 @@ class AuthController extends Controller
      */
     public function submitForgotPasswordForm(Request $request)
     {
-//        dd($request->all());
         $forgotPasswordEmail = $request->input('email');
 
 
         $request->validate([
             'email' => 'unique:users,email,10',
         ]);
-
-//        dd($yo);
 
         $token = Str::random(64);
 
@@ -214,7 +211,7 @@ class AuthController extends Controller
      * @return response()
      */
     public function showResetPasswordForm($token) {
-        return view('auth.forgetPasswordLink', ['token' => $token]);
+        return view('email.forgot_password_link', ['token' => $token]);
     }
 
     /**
@@ -224,6 +221,7 @@ class AuthController extends Controller
      */
     public function submitResetPasswordForm(Request $request)
     {
+//        dd($request->all());
         $request->validate([
             'email' => 'required|email|exists:users',
             'password' => 'required|string|min:6|confirmed',
@@ -237,16 +235,17 @@ class AuthController extends Controller
             ])
             ->first();
 
+        dd($updatePassword);
+
         if(!$updatePassword){
             return back()->withInput()->with('error', 'Invalid token!');
         }
 
-        $user = User::where('email', $request->email)
+        User::where('email', $request->email)
             ->update(['password' => Hash::make($request->password)]);
 
         DB::table('password_resets')->where(['email'=> $request->email])->delete();
 
-        return redirect('/login')->with('message', 'Your password has been changed!');
     }
 
 
