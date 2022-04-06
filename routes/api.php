@@ -22,19 +22,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login',                                  [AuthController::class,       'login']);
-Route::post('register',                               [AuthController::class,       'register']);
-
-Route::post('forgot-password', [AuthController::class, 'submitForgotPasswordForm']);
-//Route::post('reset-password', [AuthController::class, 'submitResetPasswordForm']);
+Route::post('login',                                    [AuthController::class,       'login']);
+Route::post('register',                                 [AuthController::class,       'register']);
+Route::post('forgot-password',                          [AuthController::class,       'submitForgotPasswordForm']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get( 'get-user-uploads-data',              [UsersController::class,      'getUserUploadsData']);
-    Route::post('file-upload',                        [FileUploadController::class, 'fileUpload']);
-    Route::post('logout',                             [AuthController::class,       'logout']);
-    Route::get('get-user-like',                       [UsersController::class,      'getUserLikes']);
-    Route::get('choose-winners',                      [WinnersController::class,    'getTopThreeWinnersFromUploadsTable']);
-    Route::get('get-winners',                         [WinnersController::class,    'getTopThreeWinnersFromWinnersTable']);
-    Route::post('post-user-like',                     [UsersController::class,      'incrementDecrementLike']);
+    Route::get( 'get-user-uploads-data',                [UsersController::class,      'getUserUploadsData']);
+    Route::post('file-upload',                          [FileUploadController::class, 'fileUpload']);
+    Route::post('logout',                               [AuthController::class,       'logout']);
+    Route::get('get-user-like',                         [UsersController::class,      'getUserLikes']);
+    Route::get('choose-winners',                        [WinnersController::class,    'getTopThreeWinnersFromUploadsTable']);
+    Route::get('get-winners',                           [WinnersController::class,    'getTopThreeWinnersFromWinnersTable']);
+    Route::post('post-user-like',                       [UsersController::class,      'incrementDecrementLike']);
     Route::delete('delete-user-upload',                 [UsersController::class,      'deleteUserUpload']);
 });

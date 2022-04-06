@@ -52,7 +52,7 @@ class AuthController extends Controller
                 'password' => 'required',
             ]);
 
-            $credentials = $request->only('email', 'password');
+            $credentials = $request->only('email', 'password');;
 
             if (!Auth::attempt($credentials)) {
                 return response()->json(['message' => 'Unauthorized'], 401);
@@ -171,23 +171,12 @@ class AuthController extends Controller
      *
      * @return response()
      */
-    public function showForgotPasswordForm()
-    {
-        return view('auth.forgetPassword');
-    }
-
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
     public function submitForgotPasswordForm(Request $request)
-    {
+    {;
         $forgotPasswordEmail = $request->input('email');
 
-
         $request->validate([
-            'email' => 'unique:users,email,10',
+            'email' => 'required',
         ]);
 
         $token = Str::random(64);
@@ -205,10 +194,10 @@ class AuthController extends Controller
 
 
     }
+
     /**
-     * Write code on Method
-     *
-     * @return response()
+     * @param $token
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function showResetPasswordForm($token) {
         return view('email.forgot_password_link', ['token' => $token]);
@@ -221,21 +210,25 @@ class AuthController extends Controller
      */
     public function submitResetPasswordForm(Request $request)
     {
-//        dd($request->all());
-        $request->validate([
-            'email' => 'required|email|exists:users',
-            'password' => 'required|string|min:6|confirmed',
+
+        $validator = Validator::make($request->all() , [
+            'emailForgotPassword' => 'required',
+            'password' => 'required',
             'password_confirmation' => 'required'
         ]);
 
+        if($validator->failed()) {
+            return redirect('reset-password')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $updatePassword = DB::table('password_resets')
             ->where([
-                'email' => $request->email,
-                'token' => $request->token
+                'email' => $request->get('email'),
+                'token' => $request->get('token')
             ])
             ->first();
-
-        dd($updatePassword);
 
         if(!$updatePassword){
             return back()->withInput()->with('error', 'Invalid token!');
