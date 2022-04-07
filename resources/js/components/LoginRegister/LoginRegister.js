@@ -150,6 +150,36 @@ const LoginRegister = () => {
                                                         </div>
                                                         <button className="btn mt-4">Login</button>
                                                     </form>
+                                                    <p className="mb-0 mt-4 text-center">
+                                                        <p className="mb-0 mt-4 text-center">
+                                                            <Link onClick={handleShow} className="link">Forgot Password</Link>
+                                                        </p>
+                                                    </p>
+
+                                                    <Modal show={show} onHide={handleClose}>
+                                                        <Modal.Header closeButton className="modalHeader"></Modal.Header>
+                                                        <h1 className="forgotPasswordText">Forgot Password</h1>
+                                                        <Modal.Body>
+                                                            <form onSubmit={handleForgotPassword} method="POST">
+                                                                <div className="form-group row">
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        placeholder="Enter your email address"
+                                                                        name="email"
+                                                                        onChange={(e) => setForgotPasswordEmailEmail(e.target.value)}
+                                                                        required
+                                                                        autoFocus
+                                                                    />
+                                                                </div>
+                                                                <div className="text-center sendPasswordResetLinkBtnWrapper">
+                                                                    <button type="submit" className="btn btn-primary sendPasswordResetLinkBtn">
+                                                                        Send Password Reset Link
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </Modal.Body>
+                                                    </Modal>
                                                 </div>
                                             </div>
                                         </div>
@@ -215,40 +245,7 @@ const LoginRegister = () => {
                     </div>
                 </div>
             </div>
-            <p className="mb-0 mt-4 text-center">
-                <p className="mb-0 mt-4 text-center">
-                    <Link onClick={handleShow} className="link">Forgot Password</Link>
-                </p>
-            </p>
 
-            <Modal show={show} onHide={handleClose}>
-                <h1>Forgot Password</h1>
-                <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>
-                    <form onSubmit={handleForgotPassword} method="POST">
-                        <div className="form-group row">
-                            <label htmlFor="email_address" className="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter your email address"
-                                    name="email"
-                                    onChange={(e) => setForgotPasswordEmailEmail(e.target.value)}
-                                    required
-                                    autoFocus
-                                />
-                        </div>
-                        <div className="text-center">
-                            <button type="submit" className="btn btn-primary">
-                                Send Password Reset Link
-                            </button>
-                        </div>
-                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
-                </Modal.Footer>
-            </Modal>
         </>
     );
 

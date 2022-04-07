@@ -105,12 +105,15 @@ h6 span{
     transform-style: preserve-3d;
     backface-visibility: hidden;
 }
+
 .card-back {
     transform: rotateY(180deg);
 }
+
 .checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
     transform: rotateY(180deg);
 }
+
 .center-wrap{
     position: absolute;
     width: 100%;
@@ -121,12 +124,14 @@ h6 span{
     z-index: 20;
     display: block;
 }
+
 .form-group{
     position: relative;
     display: block;
     margin: 0;
     padding: 0;
 }
+
 .form-style {
     padding: 13px 20px;
     padding-left: 55px;
@@ -144,12 +149,14 @@ h6 span{
     transition: all 200ms linear;
     box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
 }
+
 .form-style:focus,
 .form-style:active {
     border: none;
     outline: none;
     box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
 }
+
 .input-icon {
     position: absolute;
     top: 0;
@@ -280,12 +287,33 @@ section{
     display: inline-block;
     color: white;
 }
+
 .notification .close:hover{
     cursor: pointer;
 }
+
 .notification.closed{
     transform: translate(0px, -50px);
     transition: 0.7s;
+}
+
+.modalHeader {
+    border-bottom: 0;
+    float: left;
+}
+
+.forgotPasswordText {
+    margin-bottom: -3rem;
+    position: relative;
+    top: -3rem;
+}
+
+.sendPasswordResetLinkBtnWrapper {
+    padding-top: 1rem;
+}
+
+.sendPasswordResetLinkBtnWrapper {
+    padding-top: 1rem;
 }
 
 @keyframes reveal{
