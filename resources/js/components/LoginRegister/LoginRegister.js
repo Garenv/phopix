@@ -3,19 +3,24 @@ import {Link, useHistory} from 'react-router-dom';
 import {Button, Image, Modal} from "react-bootstrap";
 
 const LoginRegister = () => {
-    const [name, setName]         = useState("");
-    const [email, setEmail]       = useState("");
-    const [forgotPasswordEmail, setForgotPasswordEmailEmail]       = useState("");
-    const [age, setAge]           = useState("");
-    const [password, setPassword] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [errorStatus, setErrorStatus] = useState(null);
-    const [errorClose, setErrorClose] = useState(false);
+    const [name, setName]                                           = useState("");
+    const [email, setEmail]                                         = useState("");
+    const [age, setAge]                                             = useState("");
+    const [password, setPassword]                                   = useState("");
+    const [forgotPasswordEmail, setForgotPasswordEmailEmail]        = useState("");
+    const [emailError, setEmailError]                               = useState("");
+    const [errorStatus, setErrorStatus]                             = useState(null);
 
-    const [show, setShow]                                         = useState(false);
-    const handleClose                                             = () => setShow(false);
-    const handleShow                                              = () => setShow(true);
-    let history = useHistory();
+    // Handles password error upon logging in
+    const [passwordError, setPasswordError]                         = useState("");
+
+    // Close error
+    const [errorClose, setErrorClose]                               = useState(false);
+
+    const [show, setShow]                                           = useState(false);
+    const handleClose                                               = () => setShow(false);
+    const handleShow                                                = () => setShow(true);
+    let history                                                     = useHistory();
 
     const closeMessages = () => {
         setErrorClose(true);
@@ -35,12 +40,17 @@ const LoginRegister = () => {
 
         axios.post('http://localhost/api/login', dataLogin)
             .then(resp => {
+                console.log(resp);
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
                 localStorage.setItem('name', resp.data.name);
                 history.push('/gallery');
             }).catch(error => {
-            console.log(error);
+            let errorMessage = error.response.data.message;
+            let errorStatus  = error.response.status;
+
+            setPasswordError(errorMessage);
+            setErrorStatus(errorStatus);
         });
 
     };
@@ -59,7 +69,6 @@ const LoginRegister = () => {
 
         axios.post('http://localhost/api/register', dataRegister)
             .then(resp => {
-                console.log(resp);
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
                 localStorage.setItem('name', resp.data.name);
@@ -82,21 +91,7 @@ const LoginRegister = () => {
 
         console.log(dataRegister)
 
-        axios.post('http://localhost/api/forgot-password', dataRegister)
-            .then(resp => {
-                console.log(resp);
-                // localStorage.setItem('token', resp.data.token);
-                // localStorage.setItem('UserID', resp.data.UserID);
-                // localStorage.setItem('name', resp.data.name);
-                // history.push('/gallery');
-            }).catch(error => {
-                console.log(error.response);
-            // let errorMessage = error.response.data.message;
-            // let errorStatus  = error.response.status;
-            //
-            // setEmailError(errorMessage);
-            // setErrorStatus(errorStatus);
-        });
+        axios.post('http://localhost/api/forgot-password', dataRegister);
     };
 
     return (
@@ -105,6 +100,14 @@ const LoginRegister = () => {
                 <section>
                     <div className={`notification error ${errorClose ? 'closed' : null}`}>
                         <span className="title">Error</span> {emailError} <span className='close' onClick={closeMessages}>X</span>
+                    </div>
+                </section>
+                : null }
+
+            { errorStatus === 401 ?
+                <section>
+                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                        <span className="title">Error</span> {passwordError} <span className='close' onClick={closeMessages}>X</span>
                     </div>
                 </section>
                 : null }
@@ -225,18 +228,17 @@ const LoginRegister = () => {
                     <form onSubmit={handleForgotPassword} method="POST">
                         <div className="form-group row">
                             <label htmlFor="email_address" className="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                            <div className="col-md-6">
                                 <input
                                     type="text"
                                     className="form-control"
+                                    placeholder="Enter your email address"
                                     name="email"
                                     onChange={(e) => setForgotPasswordEmailEmail(e.target.value)}
                                     required
                                     autoFocus
                                 />
-                            </div>
                         </div>
-                        <div className="col-md-6 offset-md-4">
+                        <div className="text-center">
                             <button type="submit" className="btn btn-primary">
                                 Send Password Reset Link
                             </button>

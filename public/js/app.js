@@ -3023,18 +3023,18 @@ var LoginRegister = function LoginRegister() {
 
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState6 = _slicedToArray(_useState5, 2),
-      forgotPasswordEmail = _useState6[0],
-      setForgotPasswordEmailEmail = _useState6[1];
+      age = _useState6[0],
+      setAge = _useState6[1];
 
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState8 = _slicedToArray(_useState7, 2),
-      age = _useState8[0],
-      setAge = _useState8[1];
+      password = _useState8[0],
+      setPassword = _useState8[1];
 
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState10 = _slicedToArray(_useState9, 2),
-      password = _useState10[0],
-      setPassword = _useState10[1];
+      forgotPasswordEmail = _useState10[0],
+      setForgotPasswordEmailEmail = _useState10[1];
 
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState12 = _slicedToArray(_useState11, 2),
@@ -3044,17 +3044,24 @@ var LoginRegister = function LoginRegister() {
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState14 = _slicedToArray(_useState13, 2),
       errorStatus = _useState14[0],
-      setErrorStatus = _useState14[1];
+      setErrorStatus = _useState14[1]; // Handles password error upon logging in
 
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState16 = _slicedToArray(_useState15, 2),
-      errorClose = _useState16[0],
-      setErrorClose = _useState16[1];
+      passwordError = _useState16[0],
+      setPasswordError = _useState16[1]; // Close error
+
 
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState18 = _slicedToArray(_useState17, 2),
-      show = _useState18[0],
-      setShow = _useState18[1];
+      errorClose = _useState18[0],
+      setErrorClose = _useState18[1];
+
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState20 = _slicedToArray(_useState19, 2),
+      show = _useState20[0],
+      setShow = _useState20[1];
 
   var handleClose = function handleClose() {
     return setShow(false);
@@ -3079,12 +3086,16 @@ var LoginRegister = function LoginRegister() {
     };
     JSON.stringify(dataLogin);
     axios.post('http://localhost/api/login', dataLogin).then(function (resp) {
+      console.log(resp);
       localStorage.setItem('token', resp.data.token);
       localStorage.setItem('UserID', resp.data.UserID);
       localStorage.setItem('name', resp.data.name);
       history.push('/gallery');
     })["catch"](function (error) {
-      console.log(error);
+      var errorMessage = error.response.data.message;
+      var errorStatus = error.response.status;
+      setPasswordError(errorMessage);
+      setErrorStatus(errorStatus);
     });
   };
 
@@ -3098,7 +3109,6 @@ var LoginRegister = function LoginRegister() {
     };
     JSON.stringify(dataRegister);
     axios.post('http://localhost/api/register', dataRegister).then(function (resp) {
-      console.log(resp);
       localStorage.setItem('token', resp.data.token);
       localStorage.setItem('UserID', resp.data.UserID);
       localStorage.setItem('name', resp.data.name);
@@ -3117,18 +3127,7 @@ var LoginRegister = function LoginRegister() {
       'email': forgotPasswordEmail
     };
     console.log(dataRegister);
-    axios.post('http://localhost/api/forgot-password', dataRegister).then(function (resp) {
-      console.log(resp); // localStorage.setItem('token', resp.data.token);
-      // localStorage.setItem('UserID', resp.data.UserID);
-      // localStorage.setItem('name', resp.data.name);
-      // history.push('/gallery');
-    })["catch"](function (error) {
-      console.log(error.response); // let errorMessage = error.response.data.message;
-      // let errorStatus  = error.response.status;
-      //
-      // setEmailError(errorMessage);
-      // setErrorStatus(errorStatus);
-    });
+    axios.post('http://localhost/api/forgot-password', dataRegister);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
@@ -3139,6 +3138,18 @@ var LoginRegister = function LoginRegister() {
           className: "title",
           children: "Error"
         }), " ", emailError, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          className: "close",
+          onClick: closeMessages,
+          children: "X"
+        })]
+      })
+    }) : null, errorStatus === 401 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("section", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "notification error ".concat(errorClose ? 'closed' : null),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          className: "title",
+          children: "Error"
+        }), " ", passwordError, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
           className: "close",
           onClick: closeMessages,
           children: "X"
@@ -3332,21 +3343,19 @@ var LoginRegister = function LoginRegister() {
               htmlFor: "email_address",
               className: "col-md-4 col-form-label text-md-right",
               children: "E-Mail Address"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-              className: "col-md-6",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
-                type: "text",
-                className: "form-control",
-                name: "email",
-                onChange: function onChange(e) {
-                  return setForgotPasswordEmailEmail(e.target.value);
-                },
-                required: true,
-                autoFocus: true
-              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+              type: "text",
+              className: "form-control",
+              placeholder: "Enter your email address",
+              name: "email",
+              onChange: function onChange(e) {
+                return setForgotPasswordEmailEmail(e.target.value);
+              },
+              required: true,
+              autoFocus: true
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-            className: "col-md-6 offset-md-4",
+            className: "text-center",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
               type: "submit",
               className: "btn btn-primary",
