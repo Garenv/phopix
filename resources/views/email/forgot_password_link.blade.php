@@ -157,6 +157,7 @@
         @if(session()->has('invalidToken'))
             <h3 class="error">{{ session()->get('invalidToken') }} <a href="#">customer support</a></h3>
         @endif
+
         <div class="input-container ic1">
             <input id="firstname" class="input" type="text" name="email" placeholder=" " />
             <div class="cut"></div>

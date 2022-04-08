@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, useHistory} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import '../../sass/HomePage/homePage.scss';
 import LoginRegister from "./LoginRegister/LoginRegister";
 import Gallery from "./Gallery/Gallery";
 import {QueryClient, QueryClientProvider, useQuery} from "react-query";
+import Support from "./Support/Support";
 
 const App = () => {
     let { push }      = useHistory();
@@ -14,8 +15,6 @@ const App = () => {
     useEffect(() => {
         if(authToken !== null) {
             push('/gallery');
-        } else {
-            push('/');
         }
     }, [push, authToken]);
 
@@ -25,6 +24,8 @@ const App = () => {
                 <Switch>
                     <Route exact path="/" component={LoginRegister} />
                     <Route exact path="/gallery" component={Gallery} />
+                    <Route exact path="/support" component={Support} />
+
                 </Switch>
             </QueryClientProvider>
         </>
