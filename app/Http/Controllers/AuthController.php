@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Stevebauman\Location\Facades\Location;
@@ -27,8 +28,8 @@ class AuthController extends Controller
     public function sendError($error, $errorMessages = [], $code = 401)
     {
         $response = [
-            'success' => false,
-            'message' => $error,
+            'success'         => false,
+            'message'         => $error,
         ];
 
         if(!empty($errorMessages)){
@@ -48,32 +49,32 @@ class AuthController extends Controller
 
         try {
             $request->validate([
-                'email'    => 'required',
-                'password' => 'required',
+                'email'     => 'required',
+                'password'  => 'required',
             ]);
 
-            $credentials = $request->only('email', 'password');;
+            $credentials    = $request->only('email', 'password');;
 
             if (!Auth::attempt($credentials)) {
                 return response()->json(['message' => 'Incorrect email or password!'], 401);
             }
 
-            $user        = Auth::user();
-            $name        = $user['name'];
-            $email       = $user['email'];
-            $userId      = $user['UserID'];
-            $age         = $user['age'];
+            $user           = Auth::user();
+            $name           = $user['name'];
+            $email          = $user['email'];
+            $userId         = $user['UserID'];
+            $age            = $user['age'];
 
-            $modelUser   = User::where('email', $email)->firstOrFail();
-            $createToken = $modelUser->createToken('auth_token')->plainTextToken;
+            $modelUser      = User::where('email', $email)->firstOrFail();
+            $createToken    = $modelUser->createToken('auth_token')->plainTextToken;
 
             return response()->json([
-                'status' => true,
-                'token'  => $createToken,
-                'name'   => $name,
-                'email'  => $email,
-                'UserID' => $userId,
-                'age'    => $age
+                'status'    => true,
+                'token'     => $createToken,
+                'name'      => $name,
+                'email'     => $email,
+                'UserID'    => $userId,
+                'age'       => $age
             ]);
 
         } catch(\Exception $e) {
@@ -86,15 +87,15 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(),[
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'age' => 'required',
-                'password' => 'required|min:6',
+            $validator          = Validator::make($request->all(),[
+                'name'          => 'required',
+                'email'         => 'required|email|unique:users',
+                'age'           => 'required',
+                'password'      => 'required|min:6',
             ]);
 
             if($validator->fails()) {
-                $failedRules = $validator->failed();
+                $failedRules    = $validator->failed();
 
                 if(isset($failedRules['email']['Unique'])) {
                     return response()->json(['status' => 'failed', 'message' => 'Looks like you already have an account!'], 400);
@@ -102,29 +103,29 @@ class AuthController extends Controller
 
             }
 
-            $userId = 'u-' . Str::uuid()->toString();
-            $data = $request->all();
-            $data['UserID'] = $userId;
-            $age = $data['age'];
+            $userId              = 'u-' . Str::uuid()->toString();
+            $data                = $request->all();
+            $data['UserID']      = $userId;
+            $age                 = $data['age'];
 
-            $locationData = Location::get();
+            $locationData        = Location::get();
 
-            $data['ip'] = $locationData->ip;
+            $data['ip']          = $locationData->ip;
             $data['countryName'] = $locationData->countryName;
             $data['countryCode'] = $locationData->countryCode;
-            $data['regionCode'] = $locationData->regionCode;
-            $data['regionName'] = $locationData->regionName;
-            $data['cityName'] = $locationData->cityName;
-            $data['zipCode'] = $locationData->zipCode;
+            $data['regionCode']  = $locationData->regionCode;
+            $data['regionName']  = $locationData->regionName;
+            $data['cityName']    = $locationData->cityName;
+            $data['zipCode']     = $locationData->zipCode;
 
             $user = $this->create($data);
 
             return response()->json([
-                "status" => true,
-                "UserID" => $userId,
-                "message" => "Registered Successfully!",
-                "age" => $age,
-                'token' => $user->createToken('tokens')->plainTextToken
+                "status"         => true,
+                "UserID"         => $userId,
+                "message"        => "Registered Successfully!",
+                "age"            => $age,
+                'token'          => $user->createToken('tokens')->plainTextToken
             ]);
         } catch(\Exception $e) {
             Log::error($e->getMessage());
@@ -166,13 +167,8 @@ class AuthController extends Controller
         ];
     }
 
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
     public function submitForgotPasswordForm(Request $request)
-    {;
+    {
         $forgotPasswordEmail = $request->input('email');
 
         $request->validate([
@@ -191,55 +187,60 @@ class AuthController extends Controller
             $message->to($request->get('email'));
             $message->subject('Reset Password');
         });
-
-
     }
 
-    /**
-     * @param $token
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function showResetPasswordForm($token) {
+    public function showResetPasswordForm($token)
+    {
         return view('email.forgot_password_link', ['token' => $token]);
     }
 
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
     public function submitResetPasswordForm(Request $request)
     {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email'                               => 'required|email|exists:users,email',
+                'password'                            => 'required|min:6',
+                'password_confirmation'               => 'required|min:6|same:password'
+            ]);
 
-        $validator = Validator::make($request->all() , [
-            'emailForgotPassword' => 'required',
-            'password' => 'required',
-            'password_confirmation' => 'required'
-        ]);
+            if($validator->fails()) {
+                $failedRules                          = $validator->failed();
 
-        if($validator->failed()) {
-            return redirect('reset-password')
-                ->withErrors($validator)
-                ->withInput();
+                if(isset($failedRules['password_confirmation']['Same'])) {
+                    return Redirect::back()->with('passwordNotMatching', "The entered passwords don't match!");
+                }
+
+                if(isset($failedRules['email']['Exists'])) {
+                    return Redirect::back()->with('failed', "We can't find that account!");
+                }
+
+            }
+
+            $email                                       = $request->get('email');
+            $token                                       = $request->get('token');
+            $password                                    = $request->get('password');
+
+            $data = [
+                'email'                                  => $email,
+                'token'                                  => $token
+            ];
+
+            $updatePassword = DB::table('password_resets')->where($data)->first();
+
+            if(!$updatePassword){
+                return Redirect::back()->with("invalidToken", "Something went wrong, please contact");
+            }
+
+            User::where('email', $email)->update(['password' => Hash::make($password)]);
+
+            DB::table('password_resets')->where(['email' => $email])->delete();
+
+            return Redirect::back()->with('success', "Successfully updated your account password!");
+
+        } catch(\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
-
-        $updatePassword = DB::table('password_resets')
-            ->where([
-                'email' => $request->get('email'),
-                'token' => $request->get('token')
-            ])
-            ->first();
-
-        if(!$updatePassword){
-            return back()->withInput()->with('error', 'Invalid token!');
-        }
-
-        User::where('email', $request->email)
-            ->update(['password' => Hash::make($request->password)]);
-
-        DB::table('password_resets')->where(['email'=> $request->email])->delete();
 
     }
-
-
 }

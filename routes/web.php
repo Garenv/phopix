@@ -21,7 +21,7 @@ use \App\Http\Controllers\ReactController;
 
 //Route::view('/{path?}', 'welcome');
 
-Route::get('/{path?}', [ReactController::class, 'show']);
+Route::get('/{path?}', [ReactController::class, 'show'])->name('routes');
 
 Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('reset.password.get');;
 Route::post('reset-password', [AuthController::class, 'submitResetPasswordForm'])->name('reset.password.post');

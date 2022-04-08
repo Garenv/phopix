@@ -121,6 +121,16 @@
             background-color: #06b;
         }
 
+        .error {
+            color: #FF0000;
+            text-align: center;
+        }
+
+        .success {
+            color: #008000;
+            text-align: center;
+        }
+
     </style>
 
 </head>
@@ -129,20 +139,34 @@
     <form action="{{ route('reset.password.post') }}" method="POST" class="form">
         {{csrf_field()}}
         <input type="hidden" name="token" value="{{ $token }}">
-        <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/user/phopixLogo_v2.png" class="logo" alt="Phopixel Logo">
-{{--        <h3 style="color: red;">error</h3>--}}
+        <a href="{{ route('routes') }}">
+            <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/user/phopixLogo_v2.png" class="logo" alt="Phopixel Logo">
+        </a>
+        @if(session()->has('success'))
+            <h3 class="success">{{ session()->get('success') }}</h3>
+        @endif
+
+        @if(session()->has('failed'))
+            <h3 class="error">{{ session()->get('failed') }}</h3>
+        @endif
+
+        @if(session()->has('passwordNotMatching'))
+            <h3 class="error">{{ session()->get('passwordNotMatching') }}</h3>
+        @endif
+
+        @if(session()->has('invalidToken'))
+            <h3 class="error">{{ session()->get('invalidToken') }} <a href="#">customer support</a></h3>
+        @endif
         <div class="input-container ic1">
             <input id="firstname" class="input" type="text" name="email" placeholder=" " />
             <div class="cut"></div>
             <label for="Email" class="placeholder">Email</label>
         </div>
-{{--        <h3 style="color: red;">error</h3>--}}
         <div class="input-container ic2">
             <input id="lastname" class="input" type="password" name="password" placeholder=" " />
             <div class="cut"></div>
             <label for="Password" class="placeholder">Password</label>
         </div>
-{{--        <h3 style="color: red;">error</h3>--}}
         <div class="input-container ic2">
             <input id="email" class="input" type="password" name="password_confirmation" placeholder=" " />
             <div class="cut"></div>
@@ -152,56 +176,3 @@
     </form>
 </body>
 </html>
-
-
-
-
-
-{{--<main class="login-form">--}}
-{{--    <div class="cotainer">--}}
-{{--        <div class="row justify-content-center">--}}
-{{--            <div class="col-md-8">--}}
-{{--                <div class="card">--}}
-{{--                    <div class="card-header">Reset Password</div>--}}
-{{--                    <div class="card-body">--}}
-
-{{--                        <form action="{{ route('reset.password.post') }}" method="POST">--}}
-{{--                            {{csrf_field()}}--}}
-{{--                            <input type="hidden" name="token" value="{{ $token }}">--}}
-
-{{--                            <div class="form-group row">--}}
-{{--                                <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>--}}
-{{--                                <div class="col-md-6">--}}
-{{--                                    <input type="text" id="email_address" class="form-control" name="email" required autofocus>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="form-group row">--}}
-{{--                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>--}}
-{{--                                <div class="col-md-6">--}}
-{{--                                    <input type="password" id="password" class="form-control" name="password" required autofocus>--}}
-
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="form-group row">--}}
-{{--                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>--}}
-{{--                                <div class="col-md-6">--}}
-{{--                                    <input type="password" id="password-confirm" class="form-control" name="password_confirmation" required autofocus>--}}
-
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="col-md-6 offset-md-4">--}}
-{{--                                <button type="submit" class="btn btn-primary">--}}
-{{--                                    Reset Password--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                        </form>--}}
-
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</main>--}}
