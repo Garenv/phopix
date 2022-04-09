@@ -4,21 +4,28 @@ import '../../../sass/Support/support.scss';
 
 const Support = () => {
     const [fileName, setFileName] = useState("");
+    const [fileChosen, setFileChosen] = useState(false);
 
     // Create a reference to the hidden file input element
     const hiddenFileInput = React.useRef(null);
 
-    // Programmatically click the hidden file input element
-    // when the Button component is clicked
     const handleClick = () => {
+        // Programmatically click the hidden file input element
+        // when the Button component is clicked
         hiddenFileInput.current.click();
+
+        let formData = new FormData();
+        let imagefile = document.querySelector('#real-file');
+        formData.append("image", imagefile.files[0]);
+        // console.log(formData);
     };
 
     // Call a function (passed as a prop from the parent component)
     // to handle the user-selected file
     const handleChange = (event) => {
-        const fileUploaded = event.target.files[0].name;
-        setFileName(fileUploaded);
+        const fileUploadedName = event.target.files[0].name;
+        setFileName(fileUploadedName);
+        setFileChosen(true);
     };
 
     return(
@@ -50,18 +57,22 @@ const Support = () => {
                             <div className="screen-body-item">
                                 <div className="app-form">
                                     <div className="contact-form-group">
-                                        <input className="contact-form-control" placeholder="Name"/>
+                                        <label htmlFor="name"/>
+                                        <input className="contact-form-control" name="name" placeholder="Name"/>
                                     </div>
                                     <div className="contact-form-group">
-                                        <input className="contact-form-control" placeholder="Email"/>
+                                        <label htmlFor="email"/>
+                                        <input className="contact-form-control" name="email" placeholder="Email"/>
                                     </div>
                                     <div className="contact-form-group">
-                                        <input type="file" id="real-file" hidden="hidden" ref={hiddenFileInput} onChange={handleChange} />
+                                        <label htmlFor="file"/>
+                                        <input type="file" id="real-file" name="file" hidden="hidden" ref={hiddenFileInput} onChange={handleChange} />
                                         <button type="button" id="custom-button" onClick={handleClick}>Choose File</button>
-                                        <span id="custom-text">{fileName}</span>
+                                        <span id="custom-text">{!fileChosen ? "No file chosen, yet" : fileName}</span>
                                     </div>
                                     <div className="contact-form-group message">
-                                        <textarea className="contact-form-control" placeholder="Message"/>
+                                        <label htmlFor="message"/>
+                                        <textarea className="contact-form-control" name="message" placeholder="Message"/>
                                     </div>
                                     <div className="contact-form-group buttons">
                                         <button className="app-form-button">Submit</button>

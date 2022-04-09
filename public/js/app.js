@@ -3527,21 +3527,31 @@ var Support = function Support() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       fileName = _useState2[0],
-      setFileName = _useState2[1]; // Create a reference to the hidden file input element
+      setFileName = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      fileChosen = _useState4[0],
+      setFileChosen = _useState4[1]; // Create a reference to the hidden file input element
 
 
-  var hiddenFileInput = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null); // Programmatically click the hidden file input element
-  // when the Button component is clicked
+  var hiddenFileInput = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
 
   var handleClick = function handleClick() {
+    // Programmatically click the hidden file input element
+    // when the Button component is clicked
     hiddenFileInput.current.click();
+    var formData = new FormData();
+    var imagefile = document.querySelector('#real-file');
+    formData.append("image", imagefile.files[0]); // console.log(formData);
   }; // Call a function (passed as a prop from the parent component)
   // to handle the user-selected file
 
 
   var handleChange = function handleChange(event) {
-    var fileUploaded = event.target.files[0].name;
-    setFileName(fileUploaded);
+    var fileUploadedName = event.target.files[0].name;
+    setFileName(fileUploadedName);
+    setFileChosen(true);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
@@ -3594,23 +3604,32 @@ var Support = function Support() {
               className: "screen-body-item",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                 className: "app-form",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "contact-form-group",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "name"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     className: "contact-form-control",
+                    name: "name",
                     placeholder: "Name"
-                  })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                  className: "contact-form-group",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-                    className: "contact-form-control",
-                    placeholder: "Email"
-                  })
+                  })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "contact-form-group",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "email"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                    className: "contact-form-control",
+                    name: "email",
+                    placeholder: "Email"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "contact-form-group",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "file"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     type: "file",
                     id: "real-file",
+                    name: "file",
                     hidden: "hidden",
                     ref: hiddenFileInput,
                     onChange: handleChange
@@ -3621,14 +3640,17 @@ var Support = function Support() {
                     children: "Choose File"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                     id: "custom-text",
-                    children: fileName
+                    children: !fileChosen ? "No file chosen, yet" : fileName
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "contact-form-group message",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("textarea", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "message"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("textarea", {
                     className: "contact-form-control",
+                    name: "message",
                     placeholder: "Message"
-                  })
+                  })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                   className: "contact-form-group buttons",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {

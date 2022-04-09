@@ -2,29 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\AttachmentMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class SupportController extends Controller
 {
 
     public function support(Request $request)
     {
-        $name        = $request->get('name');
-        $email       = $request->get('email');
-        $file        = $request->file('file');
-        $messageText = $request->get('message');
+        $name         = $request->get('name');
+        $email        = $request->get('email');
+        $file         = $request->file('file');
+        $messageText  = $request->get('message');
 
         $data = [
-            'name' => $name,
-            'email' => $email,
-            'file' => $file,
+            'name'    => $name,
+            'email'   => $email,
+            'file'    => $file,
             'message' => $messageText
         ];
 
-        $attachFile = [public_path('/attachments/test.jpg')];
+        $publicPath   = public_path('/attachments');
+        $fileName     = $file->getClientOriginalName();
+        $file->move($publicPath, $fileName);
+//        $attachFile   = [$publicPath];
 
         Mail::send('email.support.support', $data, function($message) use($data, $attachFile) {
             $message->to('garen.vartanian@apexunitedllc.com');

@@ -25,7 +25,6 @@ const App = () => {
                     <Route exact path="/" component={LoginRegister} />
                     <Route exact path="/gallery" component={Gallery} />
                     <Route exact path="/support" component={Support} />
-
                 </Switch>
             </QueryClientProvider>
         </>

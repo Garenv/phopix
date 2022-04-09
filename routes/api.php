@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WinnersController;
+use App\Http\Controllers\SupportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login',                                    [AuthController::class,       'login']);
 Route::post('register',                                 [AuthController::class,       'register']);
 Route::post('forgot-password',                          [AuthController::class,       'submitForgotPasswordForm']);
+Route::post('support',                                  [SupportController::class,    'support']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get( 'get-user-uploads-data',                [UsersController::class,      'getUserUploadsData']);
