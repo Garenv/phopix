@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
 
 class SupportController extends Controller
 {
@@ -25,10 +23,10 @@ class SupportController extends Controller
             'message' => $messageText
         ];
 
-        $publicPath   = public_path('/attachments');
+        $publicPath   = public_path('/attachments/');
         $fileName     = $file->getClientOriginalName();
         $file->move($publicPath, $fileName);
-//        $attachFile   = [$publicPath];
+        $attachFile   = [$publicPath . $fileName];
 
         Mail::send('email.support.support', $data, function($message) use($data, $attachFile) {
             $message->to('garen.vartanian@apexunitedllc.com');
@@ -36,7 +34,6 @@ class SupportController extends Controller
             foreach ($attachFile as $file){
                 $message->attach($file);
             }
-
         });
 
         view('email.support.support', compact('name', 'email', 'file', 'messageText'));
