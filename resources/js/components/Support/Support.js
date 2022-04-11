@@ -3,8 +3,14 @@ import { Link } from 'react-router-dom';
 import '../../../sass/Support/support.scss';
 
 const Support = () => {
-    const [fileName, setFileName] = useState("");
-    const [fileChosen, setFileChosen] = useState(false);
+    const [fileName, setFileName]                                                 = useState("");
+    const [fileChosen, setFileChosen]                                             = useState(false);
+    const [fileContent, setFileContent]                                           = useState(null);
+    const [emailError, setErrorMessage]                                           = useState("");
+    const [errorStatus, setErrorStatus]                                           = useState(null);
+    const [name, setName]                                                         = useState("");
+    const [email, setEmail]                                                       = useState("");
+    const [messageText, setMessageText]                                           = useState("");
 
     // Create a reference to the hidden file input element
     const hiddenFileInput = React.useRef(null);
@@ -13,19 +19,41 @@ const Support = () => {
         // Programmatically click the hidden file input element
         // when the Button component is clicked
         hiddenFileInput.current.click();
-
-        let formData = new FormData();
-        let imagefile = document.querySelector('#real-file');
-        formData.append("image", imagefile.files[0]);
-        // console.log(formData);
     };
 
-    // Call a function (passed as a prop from the parent component)
-    // to handle the user-selected file
+    // Call a function (passed as a prop from the parent component to handle the user-selected file
     const handleChange = (event) => {
-        const fileUploadedName = event.target.files[0].name;
-        setFileName(fileUploadedName);
         setFileChosen(true);
+        setFileContent(event.target.files[0]);
+        setFileName(event.target.files[0].name);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        let data = {
+            'name' : name,
+            'email' : email,
+            'file'  : fileContent,
+            'messageText' : messageText
+        };
+
+        console.log(data);
+
+        const headers = {
+            "Accept": 'application/json'
+        };
+
+        axios.post('http://localhost/api/support', data, {headers})
+            .then(resp => {
+                console.log(resp);
+            }).catch(error => {
+            let errorMessage = error.response.data.message;
+            let errorStatus  = error.response.status;
+
+            setErrorMessage(errorMessage);
+            setErrorStatus(errorStatus);
+        });
     };
 
     return(
@@ -55,29 +83,31 @@ const Support = () => {
                                 </div>
                             </div>
                             <div className="screen-body-item">
-                                <div className="app-form">
-                                    <div className="contact-form-group">
-                                        <label htmlFor="name"/>
-                                        <input className="contact-form-control" name="name" placeholder="Name"/>
+                                <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data/">
+                                    <div className="app-form">
+                                        <div className="contact-form-group">
+                                            <label htmlFor="name"/>
+                                            <input className="contact-form-control" name="name" placeholder="Name" onChange={(e) => setName(e.target.value)}/>
+                                        </div>
+                                        <div className="contact-form-group">
+                                            <label htmlFor="email"/>
+                                            <input className="contact-form-control" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+                                        </div>
+                                        <div className="contact-form-group">
+                                            <label htmlFor="image"/>
+                                            <input type="file" id="file" name="file" hidden onChange={handleChange} ref={hiddenFileInput}/>
+                                            <button type="button" id="custom-button" onClick={handleClick}>Choose File</button>
+                                            <span id="custom-text">{!fileChosen ? "No file chosen, yet" : fileName}</span>
+                                        </div>
+                                        <div className="contact-form-group message">
+                                            <label htmlFor="message"/>
+                                            <textarea className="contact-form-control" name="messageText" placeholder="Message" onChange={(e) => setMessageText(e.target.value)}/>
+                                        </div>
+                                        <div className="contact-form-group buttons">
+                                            <button className="app-form-button">Submit</button>
+                                        </div>
                                     </div>
-                                    <div className="contact-form-group">
-                                        <label htmlFor="email"/>
-                                        <input className="contact-form-control" name="email" placeholder="Email"/>
-                                    </div>
-                                    <div className="contact-form-group">
-                                        <label htmlFor="file"/>
-                                        <input type="file" id="real-file" name="file" hidden="hidden" ref={hiddenFileInput} onChange={handleChange} />
-                                        <button type="button" id="custom-button" onClick={handleClick}>Choose File</button>
-                                        <span id="custom-text">{!fileChosen ? "No file chosen, yet" : fileName}</span>
-                                    </div>
-                                    <div className="contact-form-group message">
-                                        <label htmlFor="message"/>
-                                        <textarea className="contact-form-control" name="message" placeholder="Message"/>
-                                    </div>
-                                    <div className="contact-form-group buttons">
-                                        <button className="app-form-button">Submit</button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

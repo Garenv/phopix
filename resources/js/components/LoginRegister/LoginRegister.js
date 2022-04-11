@@ -1,6 +1,6 @@
-import React, {useRef, useState} from "react";
-import {Link, useHistory} from 'react-router-dom';
-import {Button, Image, Modal} from "react-bootstrap";
+import React, { useState } from "react";
+import { Link, useHistory } from 'react-router-dom';
+import { Modal } from "react-bootstrap";
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
@@ -125,7 +125,7 @@ const LoginRegister = () => {
                                             <div className="center-wrap">
                                                 <div className="section text-center">
                                                     <h4 className="mb-4 pb-3">Log In</h4>
-                                                    <form onSubmit={handleLogin}>
+                                                    <form onSubmit={handleLogin} method="POST">
                                                         <div className="form-group">
                                                             <input type="email"
                                                                    name="email"

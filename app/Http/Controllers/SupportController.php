@@ -12,6 +12,7 @@ class SupportController extends Controller
 
     public function support(Request $request)
     {
+//        dd($request->file('file'));
         try {
             $name                        = $request->get('name');
             $email                       = $request->get('email');
