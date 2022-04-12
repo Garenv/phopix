@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
@@ -17,10 +17,13 @@ const LoginRegister = () => {
     // Close error
     const [errorClose, setErrorClose]                               = useState(false);
 
-    const [show, setShow]                                           = useState(false);
+
     const handleClose                                               = () => setShow(false);
     const handleShow                                                = () => setShow(true);
     let history                                                     = useHistory();
+
+    // faq, about, random
+    const [show, setShow]                                           = useState(false);
 
     const closeMessages = () => {
         setErrorClose(true);
@@ -111,6 +114,15 @@ const LoginRegister = () => {
                     </div>
                 </section>
                 : null }
+
+
+            <div className="btn-group topButtons">
+                <Link to="/faq"><Button>FAQ</Button></Link>
+                <Link to="/prizes"><Button>Prizes</Button></Link>
+            </div>
+
+            {/*<img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixLogo_v2.png" className="phopixLogo" alt=""/>*/}
+
             <div className="section">
                 <div className="container">
                     <div className="row full-height justify-content-center">
