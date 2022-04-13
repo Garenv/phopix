@@ -7,6 +7,7 @@ import Gallery from "./Gallery/Gallery";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Support from "./Support/Support";
 import FaqComp from "./Faq/FaqComp";
+import Prizes from "./Prizes/Prizes";
 
 const App = () => {
     let { push }      = useHistory();
@@ -27,7 +28,7 @@ const App = () => {
                     <Route exact path="/gallery" component={Gallery} />
                     <Route exact path="/support" component={Support} />
                     <Route exact path='/faq' component={FaqComp} />
-                    <Route exact path='/prizes' component={FaqComp} />
+                    <Route exact path='/prizes' component={Prizes} />
                 </Switch>
             </QueryClientProvider>
         </>
