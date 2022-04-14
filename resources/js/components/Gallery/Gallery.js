@@ -147,7 +147,7 @@ const Gallery = () => {
 
             <div className="fileUpload text-center">
                 <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>
-                <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
+                <Button variant="primary" onClick={handleShow}>Preview your upload!</Button>
             </div>
 
             <Modal show={show} onHide={handleClose} className={uploadSuccess === 200 ? "hideModal" : ""}>
@@ -180,26 +180,24 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal> : null}
 
-            <section className="gallery">
-                <div className="container">
-                    <div className="img-container">
-                        {
-                            data.map((photos, index) => {
-                                return <Grid
-                                    src={photos.url}
-                                    likes={photos.likes}
-                                    currentUserClicks={currentUserClicks}
-                                    userName={photos.name}
-                                    key={index}
-                                    onClick={handleLikesBasedOnUserId}
-                                    userDelete={deleteUserUpload}
-                                    userId={photos.UserID}
-                                />
-                            })
-                        }
-                    </div>
-                </div>
-            </section>
+            <div className="main">
+                <ul className="cards">
+                    {
+                        data.map((photos, index) => {
+                            return <Grid
+                                src={photos.url}
+                                likes={photos.likes}
+                                currentUserClicks={currentUserClicks}
+                                userName={photos.name}
+                                key={index}
+                                onClick={handleLikesBasedOnUserId}
+                                userDelete={deleteUserUpload}
+                                userId={photos.UserID}
+                            />
+                        })
+                    }
+                </ul>
+            </div>
 
 
         </>

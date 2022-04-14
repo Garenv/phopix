@@ -1,46 +1,72 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* Font */
+@import url("https://fonts.googleapis.com/css?family=Quicksand:400,700");
 
-h1 {
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    font-size: 55px;
-    text-align: center;
-    margin: 30px 0 40px;
-    color: #454545;
-}
-
-.container {
-    max-width: 1440px; width: 95%;
+.main {
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-.img-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 20px;
+h1 {
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
 }
 
-.gallery-img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    cursor: pointer;
-    transition: all 0.3s;
-    border-radius: 5px;
+img.gallery-img {
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
 }
 
-.img-container:hover .gallery-img {
-    filter: blur(3px);
-    transform: scale(0.95);
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.img-container .gallery-img:hover {
-    filter: blur(0);
-    transform: scale(1);
+.cards_item {
+    display: flex;
+    padding: 1rem;
 }
 
-.userData {
-    padding-top: 1rem;
+@media (min-width: 40rem) {
+    .cards_item {
+        width: 50%;
+    }
 }
 
-.hideModal {
-    display: none;
+@media (min-width: 56rem) {
+    .cards_item {
+        width: 33.3333%;
+    }
+}
+
+//.galleryCardContent {
+//    padding: 1rem;
+//    background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%);
+//}
+
+.card_title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    margin: 0px;
+}
+
+.card_text {
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    font-weight: 400;
+}
+.made_by {
+    font-weight: 400;
+    font-size: 13px;
+    margin-top: 35px;
+    text-align: center;
 }

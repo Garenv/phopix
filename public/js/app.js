@@ -2916,7 +2916,7 @@ var Gallery = function Gallery() {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
         variant: "primary",
         onClick: handleShow,
-        children: "Launch demo modal"
+        children: "Preview your upload!"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
       show: show,
@@ -2970,23 +2970,20 @@ var Gallery = function Gallery() {
           children: "Close"
         })
       })]
-    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("section", {
-      className: "gallery",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-        className: "container",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          className: "img-container",
-          children: data.map(function (photos, index) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Grid_Grid__WEBPACK_IMPORTED_MODULE_4__["default"], {
-              src: photos.url,
-              likes: photos.likes,
-              currentUserClicks: currentUserClicks,
-              userName: photos.name,
-              onClick: handleLikesBasedOnUserId,
-              userDelete: deleteUserUpload,
-              userId: photos.UserID
-            }, index);
-          })
+    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "main",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
+        className: "cards",
+        children: data.map(function (photos, index) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Grid_Grid__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            src: photos.url,
+            likes: photos.likes,
+            currentUserClicks: currentUserClicks,
+            userName: photos.name,
+            onClick: handleLikesBasedOnUserId,
+            userDelete: deleteUserUpload,
+            userId: photos.UserID
+          }, index);
         })
       })
     })]
@@ -3035,19 +3032,22 @@ var Grid = function Grid(props) {
       likes = _useState2[0],
       setLikes = _useState2[1];
 
-  var createUserPhotoNodes = function createUserPhotoNodes() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-        src: props.src,
-        alt: "Photo",
-        className: "gallery-img",
-        onClick: function onClick() {
-          return props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
-        }
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "userData",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-          className: "userName",
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+      className: "cards_item",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "card_image",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            src: props.src,
+            alt: "Photo",
+            className: "gallery-img",
+            onClick: function onClick() {
+              return props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
+            }
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+          className: "card_title",
           children: props.userName
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
           style: {
@@ -3056,19 +3056,15 @@ var Grid = function Grid(props) {
           children: props.currentUserClicks
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
           className: "likes",
-          children: ["Likes ", likes]
+          children: ["Likes: ", likes]
         }), localStorage.getItem('UserID') === props.userId ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           onClick: function onClick() {
             return props.userDelete(props.userId);
           },
           children: "delete"
         }) : null]
-      })]
-    });
-  };
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-    children: createUserPhotoNodes()
+      })
+    })
   });
 };
 
@@ -8627,8 +8623,9 @@ __webpack_require__.r(__webpack_exports__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nh1 {\n  font-family: \"Franklin Gothic Medium\", \"Arial Narrow\", Arial, sans-serif;\n  font-size: 55px;\n  text-align: center;\n  margin: 30px 0 40px;\n  color: #454545;\n}\n\n.container {\n  max-width: 1440px;\n  width: 95%;\n  margin: 0 auto;\n}\n\n.img-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n  grid-gap: 20px;\n}\n\n.gallery-img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n  transition: all 0.3s;\n  border-radius: 5px;\n}\n\n.img-container:hover .gallery-img {\n  filter: blur(3px);\n  transform: scale(0.95);\n}\n\n.img-container .gallery-img:hover {\n  filter: blur(0);\n  transform: scale(1);\n}\n\n.userData {\n  padding-top: 1rem;\n}\n\n.hideModal {\n  display: none;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font */\n.main {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\nh1 {\n  font-size: 24px;\n  font-weight: 400;\n  text-align: center;\n}\n\nimg.gallery-img {\n  height: auto;\n  max-width: 100%;\n  vertical-align: middle;\n}\n\n.cards {\n  display: flex;\n  flex-wrap: wrap;\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n.cards_item {\n  display: flex;\n  padding: 1rem;\n}\n\n@media (min-width: 40rem) {\n  .cards_item {\n    width: 50%;\n  }\n}\n@media (min-width: 56rem) {\n  .cards_item {\n    width: 33.3333%;\n  }\n}\n.card_title {\n  color: #ffffff;\n  font-size: 1.1rem;\n  font-weight: 700;\n  letter-spacing: 1px;\n  text-transform: capitalize;\n  margin: 0px;\n}\n\n.card_text {\n  color: #ffffff;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  margin-bottom: 1.25rem;\n  font-weight: 400;\n}\n\n.made_by {\n  font-weight: 400;\n  font-size: 13px;\n  margin-top: 35px;\n  text-align: center;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8703,7 +8700,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Font */\n.main {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\nh1 {\n  font-size: 24px;\n  font-weight: 400;\n  text-align: center;\n}\n\nimg {\n  height: auto;\n  max-width: 100%;\n  vertical-align: middle;\n}\n\n.btn:hover {\n  background-color: rgba(255, 255, 255, 0.12);\n}\n\n.cards {\n  display: flex;\n  flex-wrap: wrap;\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n.cards_item {\n  display: flex;\n  padding: 1rem;\n}\n\n@media (min-width: 40rem) {\n  .cards_item {\n    width: 50%;\n  }\n}\n@media (min-width: 56rem) {\n  .cards_item {\n    width: 33.3333%;\n  }\n}\n.card {\n  background-color: white;\n  border-radius: 0.25rem;\n  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);\n  display: flex;\n  flex-direction: column;\n  overflow: hidden;\n}\n\n.card_content {\n  padding: 1rem;\n  background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);\n}\n\n.card_title {\n  color: #ffffff;\n  font-size: 1.1rem;\n  font-weight: 700;\n  letter-spacing: 1px;\n  text-transform: capitalize;\n  margin: 0px;\n}\n\n.card_text {\n  color: #ffffff;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  margin-bottom: 1.25rem;\n  font-weight: 400;\n}\n\n.made_by {\n  font-weight: 400;\n  font-size: 13px;\n  margin-top: 35px;\n  text-align: center;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font */\n.main {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\nh1 {\n  font-size: 24px;\n  font-weight: 400;\n  text-align: center;\n}\n\nimg {\n  height: auto;\n  max-width: 100%;\n  vertical-align: middle;\n}\n\n.btn:hover {\n  background-color: rgba(255, 255, 255, 0.12);\n}\n\n.cards {\n  display: flex;\n  flex-wrap: wrap;\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n.cards_item {\n  display: flex;\n  padding: 1rem;\n}\n\n@media (min-width: 40rem) {\n  .cards_item {\n    width: 50%;\n  }\n}\n@media (min-width: 56rem) {\n  .cards_item {\n    width: 33.3333%;\n  }\n}\n.card {\n  border-radius: 0.25rem;\n  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);\n  display: flex;\n  flex-direction: column;\n  overflow: hidden;\n}\n\n.card_content {\n  padding: 1rem;\n  background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);\n}\n\n.card_title {\n  color: #ffffff;\n  font-size: 1.1rem;\n  font-weight: 700;\n  letter-spacing: 1px;\n  text-transform: capitalize;\n  margin: 0px;\n}\n\n.card_text {\n  color: #ffffff;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  margin-bottom: 1.25rem;\n  font-weight: 400;\n}\n\n.made_by {\n  font-weight: 400;\n  font-size: 13px;\n  margin-top: 35px;\n  text-align: center;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
