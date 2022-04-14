@@ -115,11 +115,11 @@ const LoginRegister = () => {
                 </section>
                 : null }
 
+                <div className="container">
+                    <Link to="/faq"><Button>FAQ</Button></Link>
+                    <Link to="/prizes"><Button>Prizes</Button></Link>
+                </div>
 
-            <div className="btn-group topButtons">
-                <Link to="/faq"><Button>FAQ</Button></Link>
-                <Link to="/prizes"><Button>Prizes</Button></Link>
-            </div>
 
             {/*<img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixLogo_v2.png" className="phopixLogo" alt=""/>*/}
 

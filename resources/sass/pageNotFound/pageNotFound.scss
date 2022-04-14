@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@900&display=swap');
+
+.pageNotFoundBody {
+    font-family: 'Merriweather', serif;
+    margin: 0;
+    text-align: center;
+    color: white;
+    user-select: none;
+    padding-top: 8vh;
+}
+.containerPageNotFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.pageNotFound {
+    font-size: 150px;
+    margin: 0;
+    text-shadow: 15px 5px 2px black;
+}
+.oopsPageNotFound {
+    font-size: 40px;
+    margin: 20px;
+}
+.pageNotFoundRedirect{
+    font-size: 18px;
+    margin: 5px;
+}
+.pageNotFoundRedirect:last-of-type{
+    margin-bottom: 35px;
+}
+

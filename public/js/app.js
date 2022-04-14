@@ -2484,8 +2484,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _sass_HomePage_homePage_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../sass/HomePage/homePage.scss */ "./resources/sass/HomePage/homePage.scss");
 /* harmony import */ var _Home_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Home/Home */ "./resources/js/components/Home/Home.js");
@@ -2494,7 +2494,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Support_Support__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Support/Support */ "./resources/js/components/Support/Support.js");
 /* harmony import */ var _Faq_FaqComp__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Faq/FaqComp */ "./resources/js/components/Faq/FaqComp.js");
 /* harmony import */ var _Prizes_Prizes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Prizes/Prizes */ "./resources/js/components/Prizes/Prizes.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _PageNotFound_PageNotFound__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PageNotFound/PageNotFound */ "./resources/js/components/PageNotFound/PageNotFound.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
@@ -2510,7 +2512,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  var _useHistory = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useHistory)(),
+  var _useHistory = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_11__.useHistory)(),
       push = _useHistory.push;
 
   var authToken = localStorage.getItem('token');
@@ -2520,30 +2522,29 @@ var App = function App() {
       push('/gallery');
     }
   }, [push, authToken]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_query__WEBPACK_IMPORTED_MODULE_5__.QueryClientProvider, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_query__WEBPACK_IMPORTED_MODULE_5__.QueryClientProvider, {
       client: queryClient,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Switch, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Switch, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           exact: true,
           path: "/",
           component: _Home_Home__WEBPACK_IMPORTED_MODULE_3__["default"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-          exact: true,
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/gallery",
           component: _Gallery_Gallery__WEBPACK_IMPORTED_MODULE_4__["default"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-          exact: true,
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/support",
           component: _Support_Support__WEBPACK_IMPORTED_MODULE_6__["default"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-          exact: true,
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/faq",
           component: _Faq_FaqComp__WEBPACK_IMPORTED_MODULE_7__["default"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-          exact: true,
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/prizes",
           component: _Prizes_Prizes__WEBPACK_IMPORTED_MODULE_8__["default"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          path: "*",
+          component: _PageNotFound_PageNotFound__WEBPACK_IMPORTED_MODULE_9__["default"]
         })]
       })
     })
@@ -2553,8 +2554,8 @@ var App = function App() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
 if (document.getElementById('example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.BrowserRouter, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(App, {})
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.BrowserRouter, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(App, {})
   }), document.getElementById('example'));
 }
 
@@ -3257,7 +3258,7 @@ var LoginRegister = function LoginRegister() {
         })]
       })
     }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-      className: "btn-group topButtons",
+      className: "container",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         to: "/faq",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -3482,6 +3483,56 @@ var LoginRegister = function LoginRegister() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LoginRegister);
+
+/***/ }),
+
+/***/ "./resources/js/components/PageNotFound/PageNotFound.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/PageNotFound/PageNotFound.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _sass_pageNotFound_pageNotFound_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../sass/pageNotFound/pageNotFound.scss */ "./resources/sass/pageNotFound/pageNotFound.scss");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+var PageNotFound = function PageNotFound() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "pageNotFoundBody",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "containerPageNotFound",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+          className: "pageNotFound",
+          children: "404"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
+          className: "oopsPageNotFound",
+          children: "Oops, looks like the page you've navigated to cannot be found!"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+          to: "/",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+            className: "btn mt-4",
+            children: "Go Home"
+          })
+        })]
+      })
+    })
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PageNotFound);
 
 /***/ }),
 
@@ -8481,7 +8532,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\n  font-family: \"Poppins\", sans-serif;\n  font-size: 15px;\n  line-height: 1.7;\n  color: #fff;\n  background: #3f5efb;\n  background: radial-gradient(circle, #3f5efb 0%, #c446fc 100%);\n  overflow-x: hidden;\n}\n\na {\n  cursor: pointer;\n  transition: all 200ms linear;\n}\n\na:hover {\n  text-decoration: none;\n}\n\n.link {\n  color: #fff;\n}\n\n.link:hover {\n  color: #08d;\n}\n\np {\n  font-weight: 500;\n  font-size: 14px;\n  line-height: 1.7;\n}\n\nh4 {\n  font-weight: 600;\n}\n\nh6 span {\n  padding: 0 20px;\n  text-transform: uppercase;\n  font-weight: 700;\n}\n\n.section {\n  position: relative;\n  width: 100%;\n  display: block;\n}\n\n.full-height {\n  min-height: 100vh;\n}\n\n.topButtons {\n  justify-content: center;\n  display: flex;\n}\n\n[type=checkbox]:checked,\n[type=checkbox]:not(:checked) {\n  position: absolute;\n  left: -9999px;\n}\n\n.checkbox:checked + label,\n.checkbox:not(:checked) + label {\n  position: relative;\n  display: block;\n  text-align: center;\n  width: 60px;\n  height: 16px;\n  border-radius: 8px;\n  padding: 0;\n  margin: 10px auto;\n  cursor: pointer;\n  background-color: #ffffff;\n}\n\n.checkbox:checked + label:before,\n.checkbox:not(:checked) + label:before {\n  position: absolute;\n  display: block;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  color: #08d;\n  background-color: #2a2b38;\n  font-family: \"unicons\";\n  content: \"\\eb4f\";\n  z-index: 20;\n  top: -10px;\n  left: -10px;\n  line-height: 36px;\n  text-align: center;\n  font-size: 24px;\n  transition: all 0.5s ease;\n}\n\n.checkbox:checked + label:before {\n  transform: translateX(44px) rotate(-270deg);\n}\n\n.card-3d-wrap {\n  position: relative;\n  width: 440px;\n  max-width: 100%;\n  height: 400px;\n  transform-style: preserve-3d;\n  perspective: 800px;\n  margin-top: 40px;\n}\n\n.card-3d-wrapper {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  transform-style: preserve-3d;\n  transition: all 600ms ease-out;\n}\n\n.card-front, .card-back {\n  width: 100%;\n  height: 100%;\n  background-color: #2a2b38;\n  position: absolute;\n  border-radius: 6px;\n  left: 0;\n  top: 0;\n  transform-style: preserve-3d;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\n\n.card-back {\n  transform: rotateY(180deg);\n}\n\n.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {\n  transform: rotateY(180deg);\n}\n\n.center-wrap {\n  position: absolute;\n  width: 100%;\n  padding: 0 35px;\n  top: 50%;\n  left: 0;\n  transform: translate3d(0, -50%, 35px) perspective(100px);\n  z-index: 20;\n  display: block;\n}\n\n.form-group {\n  position: relative;\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n\n.form-style {\n  padding: 13px 20px;\n  padding-left: 55px;\n  height: 48px;\n  width: 100%;\n  font-weight: 500;\n  border-radius: 4px;\n  font-size: 14px;\n  line-height: 22px;\n  letter-spacing: 0.5px;\n  outline: none;\n  color: #c4c3ca;\n  background-color: #1f2029;\n  border: none;\n  transition: all 200ms linear;\n  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);\n}\n\n.form-style:focus,\n.form-style:active {\n  border: none;\n  outline: none;\n  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);\n}\n\n.input-icon {\n  position: absolute;\n  top: 0;\n  left: 18px;\n  height: 48px;\n  font-size: 24px;\n  line-height: 48px;\n  text-align: left;\n  color: #08d;\n  transition: all 200ms linear;\n}\n\n.form-group input:-ms-input-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -ms-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input::-moz-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:-moz-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input::-webkit-input-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -webkit-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus:-ms-input-placeholder {\n  opacity: 0;\n  -ms-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus::-moz-placeholder {\n  opacity: 0;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus:-moz-placeholder {\n  opacity: 0;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus::-webkit-input-placeholder {\n  opacity: 0;\n  -webkit-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.btn {\n  border-radius: 4px;\n  height: 44px;\n  font-size: 13px;\n  font-weight: 600;\n  text-transform: uppercase;\n  transition: all 200ms linear;\n  padding: 0 30px;\n  letter-spacing: 1px;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  -ms-flex-pack: center;\n  text-align: center;\n  border: none;\n  background-color: #08d;\n  color: #fff;\n  box-shadow: 0 8px 24px 0 rgba(18, 248, 173, 0.2);\n}\n\n.btn:active,\n.btn:focus {\n  background-color: #fff;\n  color: #08d;\n  box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.2);\n}\n\n.btn:hover {\n  background-color: #fff;\n  color: #08d;\n  box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.2);\n}\n\n.logo {\n  font-family: \"Lobster\", cursive;\n  position: absolute;\n  font-size: 50px;\n  top: 300px;\n  left: 400px;\n  color: white;\n  text-shadow: #020002 0.0118614px 0.0118614px 0px, #020002 1.01186px 1.01186px 0px, #020002 2.01186px 2.01186px 0px, #020002 3.01186px 3.01186px 0px, #020002 4.01186px 4.01186px 0px, #020002 5.01186px 5.01186px 0px, #020002 6.01186px 6.01186px 0px, #020002 7.01186px 7.01186px 0px, #020002 8.01186px 8.01186px 0px, #0a0108 9.01186px 9.01186px 0px, #12030f 10.0119px 10.0119px 0px, #1a0416 11.0119px 11.0119px 0px, #22061d 12.0119px 12.0119px 0px, #2a0724 13.0119px 13.0119px 0px, #32092b 14.0119px 14.0119px 0px, #3a0a32 15.0119px 15.0119px 0px, #420c39 16.0119px 16.0119px 0px, #4a0d40 17.0119px 17.0119px 0px, #520f46 18.0119px 18.0119px 0px, #5a104d 19.0119px 19.0119px 0px, #621254 20.0119px 20.0119px 0px, #6a135b 21.0119px 21.0119px 0px, #721562 22.0119px 22.0119px 0px, #7a1669 23.0119px 23.0119px 0px, #821870 24.0119px 24.0119px 0px, #8a1977 25.0119px 25.0119px 0px, #931b7e 26.0119px 26.0119px 0px;\n}\n\n.logo * {\n  box-sizing: border-box;\n  transition: all 0.3s;\n}\n\n.logo a {\n  color: white;\n  text-decoration: none;\n}\n\n.logo a:hover {\n  color: #FFC721;\n}\n\nsection {\n  overflow: hidden;\n}\n\n.notification {\n  border-radius: 0px 0px 5px 5px;\n  margin: 0 auto;\n  box-shadow: #95a5a6 0px 0px 6px 2px;\n  color: white;\n  line-height: 40px;\n  overflow: hidden;\n  -webkit-animation: reveal 0.4s;\n          animation: reveal 0.4s;\n}\n\n.notification .title {\n  margin-right: 15px;\n  line-height: 40px;\n  display: inline-block;\n}\n\n.notification .close {\n  background: rgba(255, 255, 255, 0.2);\n  float: right;\n  line-height: 40px;\n  display: inline-block;\n  color: white;\n}\n\n.notification .close:hover {\n  cursor: pointer;\n}\n\n.notification.closed {\n  transform: translate(0px, -50px);\n  transition: 0.7s;\n}\n\n.modalHeader {\n  border-bottom: 0;\n  float: left;\n}\n\n.forgotPasswordText {\n  margin-bottom: -3rem;\n  position: relative;\n  top: -3rem;\n}\n\n.sendPasswordResetLinkBtnWrapper {\n  padding-top: 1rem;\n}\n\n.sendPasswordResetLinkBtnWrapper {\n  padding-top: 1rem;\n}\n\n@-webkit-keyframes reveal {\n  0% {\n    transform: translate(0px, -50px);\n  }\n  50% {\n    transform: translate(0px, -50px);\n  }\n  100% {\n    transform: translate(0px, 0px);\n  }\n}\n\n@keyframes reveal {\n  0% {\n    transform: translate(0px, -50px);\n  }\n  50% {\n    transform: translate(0px, -50px);\n  }\n  100% {\n    transform: translate(0px, 0px);\n  }\n}\n.notification.success {\n  background: #2ecc71;\n}\n\n.notification.success .title {\n  background: #27ae60;\n  float: left;\n  width: 18%;\n  text-align: center;\n}\n\n.notification.error {\n  background: #e74c3c;\n}\n\n.notification.error .title {\n  background: #c0392b;\n  float: left;\n  width: 18%;\n  text-align: center;\n}\n\n.notification.warning {\n  background: #f1c40f;\n}\n\n.notification.warning .title {\n  background: #f39c12;\n}\n\n.notification.normal {\n  background: #3498db;\n}\n\n.notification.normal .title {\n  background: #2980b9;\n}\n\n@media only screen and (max-width: 767px) {\n  .logo {\n    font-size: 20px;\n    position: absolute;\n    margin: -20px 15px;\n    left: 190px;\n  }\n}\n@media only screen and (max-width: 1180px) {\n  .logo {\n    font-size: 15px;\n  }\n}\n@media only screen and (max-width: 150px) {\n  .logo {\n    font-size: 8px;\n  }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  font-family: \"Poppins\", sans-serif;\n  font-size: 15px;\n  line-height: 1.7;\n  color: #fff;\n  background: #3f5efb;\n  background: radial-gradient(circle, #3f5efb 0%, #c446fc 100%);\n  overflow-x: hidden;\n}\n\na {\n  cursor: pointer;\n  transition: all 200ms linear;\n}\n\na:hover {\n  text-decoration: none;\n}\n\n.link {\n  color: #fff;\n}\n\n.link:hover {\n  color: #08d;\n}\n\np {\n  font-weight: 500;\n  font-size: 14px;\n  line-height: 1.7;\n}\n\nh4 {\n  font-weight: 600;\n}\n\nh6 span {\n  padding: 0 20px;\n  text-transform: uppercase;\n  font-weight: 700;\n}\n\n.section {\n  position: relative;\n  width: 100%;\n  display: block;\n}\n\n.full-height {\n  min-height: 100vh;\n}\n\n.topButtons {\n  justify-content: center;\n  display: flex;\n}\n\n[type=checkbox]:checked,\n[type=checkbox]:not(:checked) {\n  position: absolute;\n  left: -9999px;\n}\n\n.checkbox:checked + label,\n.checkbox:not(:checked) + label {\n  position: relative;\n  display: block;\n  text-align: center;\n  width: 60px;\n  height: 16px;\n  border-radius: 8px;\n  padding: 0;\n  margin: 10px auto;\n  cursor: pointer;\n  background-color: #ffffff;\n}\n\n.checkbox:checked + label:before,\n.checkbox:not(:checked) + label:before {\n  position: absolute;\n  display: block;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  color: #08d;\n  background-color: #2a2b38;\n  font-family: \"unicons\";\n  content: \"\\eb4f\";\n  z-index: 20;\n  top: -10px;\n  left: -10px;\n  line-height: 36px;\n  text-align: center;\n  font-size: 24px;\n  transition: all 0.5s ease;\n}\n\n.checkbox:checked + label:before {\n  transform: translateX(44px) rotate(-270deg);\n}\n\n.card-3d-wrap {\n  position: relative;\n  width: 440px;\n  max-width: 100%;\n  height: 400px;\n  transform-style: preserve-3d;\n  perspective: 800px;\n  margin-top: 40px;\n}\n\n.card-3d-wrapper {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  transform-style: preserve-3d;\n  transition: all 600ms ease-out;\n}\n\n.card-front, .card-back {\n  width: 100%;\n  height: 100%;\n  background-color: #2a2b38;\n  position: absolute;\n  border-radius: 6px;\n  left: 0;\n  top: 0;\n  transform-style: preserve-3d;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\n\n.card-back {\n  transform: rotateY(180deg);\n}\n\n.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {\n  transform: rotateY(180deg);\n}\n\n.center-wrap {\n  position: absolute;\n  width: 100%;\n  padding: 0 35px;\n  top: 50%;\n  left: 0;\n  transform: translate3d(0, -50%, 35px) perspective(100px);\n  z-index: 20;\n  display: block;\n}\n\n.form-group {\n  position: relative;\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n\n.form-style {\n  padding: 13px 20px;\n  padding-left: 55px;\n  height: 48px;\n  width: 100%;\n  font-weight: 500;\n  border-radius: 4px;\n  font-size: 14px;\n  line-height: 22px;\n  letter-spacing: 0.5px;\n  outline: none;\n  color: #c4c3ca;\n  background-color: #1f2029;\n  border: none;\n  transition: all 200ms linear;\n  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);\n}\n\n.form-style:focus,\n.form-style:active {\n  border: none;\n  outline: none;\n  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);\n}\n\n.input-icon {\n  position: absolute;\n  top: 0;\n  left: 18px;\n  height: 48px;\n  font-size: 24px;\n  line-height: 48px;\n  text-align: left;\n  color: #08d;\n  transition: all 200ms linear;\n}\n\n.form-group input:-ms-input-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -ms-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input::-moz-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:-moz-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input::-webkit-input-placeholder {\n  color: #c4c3ca;\n  opacity: 0.7;\n  -webkit-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus:-ms-input-placeholder {\n  opacity: 0;\n  -ms-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus::-moz-placeholder {\n  opacity: 0;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus:-moz-placeholder {\n  opacity: 0;\n  -moz-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.form-group input:focus::-webkit-input-placeholder {\n  opacity: 0;\n  -webkit-transition: all 200ms linear;\n  transition: all 200ms linear;\n}\n\n.btn {\n  border-radius: 4px;\n  height: 44px;\n  font-size: 13px;\n  font-weight: 600;\n  text-transform: uppercase;\n  transition: all 200ms linear;\n  padding: 0 30px;\n  letter-spacing: 1px;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  -ms-flex-pack: center;\n  text-align: center;\n  border: none;\n  background-color: #08d;\n  color: #fff;\n  box-shadow: 0 8px 24px 0 rgba(18, 248, 173, 0.2);\n}\n\n.btn:active,\n.btn:focus {\n  background-color: #fff;\n  color: #08d;\n  box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.2);\n}\n\n.btn:hover {\n  background-color: #fff;\n  box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.2);\n}\n\n.logo {\n  font-family: \"Lobster\", cursive;\n  position: absolute;\n  font-size: 50px;\n  top: 300px;\n  left: 400px;\n  color: white;\n  text-shadow: #020002 0.0118614px 0.0118614px 0px, #020002 1.01186px 1.01186px 0px, #020002 2.01186px 2.01186px 0px, #020002 3.01186px 3.01186px 0px, #020002 4.01186px 4.01186px 0px, #020002 5.01186px 5.01186px 0px, #020002 6.01186px 6.01186px 0px, #020002 7.01186px 7.01186px 0px, #020002 8.01186px 8.01186px 0px, #0a0108 9.01186px 9.01186px 0px, #12030f 10.0119px 10.0119px 0px, #1a0416 11.0119px 11.0119px 0px, #22061d 12.0119px 12.0119px 0px, #2a0724 13.0119px 13.0119px 0px, #32092b 14.0119px 14.0119px 0px, #3a0a32 15.0119px 15.0119px 0px, #420c39 16.0119px 16.0119px 0px, #4a0d40 17.0119px 17.0119px 0px, #520f46 18.0119px 18.0119px 0px, #5a104d 19.0119px 19.0119px 0px, #621254 20.0119px 20.0119px 0px, #6a135b 21.0119px 21.0119px 0px, #721562 22.0119px 22.0119px 0px, #7a1669 23.0119px 23.0119px 0px, #821870 24.0119px 24.0119px 0px, #8a1977 25.0119px 25.0119px 0px, #931b7e 26.0119px 26.0119px 0px;\n}\n\n.logo * {\n  box-sizing: border-box;\n  transition: all 0.3s;\n}\n\n.logo a {\n  color: white;\n  text-decoration: none;\n}\n\n.logo a:hover {\n  color: #FFC721;\n}\n\nsection {\n  overflow: hidden;\n}\n\n.notification {\n  border-radius: 0px 0px 5px 5px;\n  margin: 0 auto;\n  box-shadow: #95a5a6 0px 0px 6px 2px;\n  color: white;\n  line-height: 40px;\n  overflow: hidden;\n  -webkit-animation: reveal 0.4s;\n          animation: reveal 0.4s;\n}\n\n.notification .title {\n  margin-right: 15px;\n  line-height: 40px;\n  display: inline-block;\n}\n\n.notification .close {\n  background: rgba(255, 255, 255, 0.2);\n  float: right;\n  line-height: 40px;\n  display: inline-block;\n  color: white;\n}\n\n.notification .close:hover {\n  cursor: pointer;\n}\n\n.notification.closed {\n  transform: translate(0px, -50px);\n  transition: 0.7s;\n}\n\n.modalHeader {\n  border-bottom: 0;\n  float: left;\n}\n\n.forgotPasswordText {\n  margin-bottom: -3rem;\n  position: relative;\n  top: -3rem;\n}\n\n.sendPasswordResetLinkBtnWrapper {\n  padding-top: 1rem;\n}\n\n.sendPasswordResetLinkBtnWrapper {\n  padding-top: 1rem;\n}\n\n@-webkit-keyframes reveal {\n  0% {\n    transform: translate(0px, -50px);\n  }\n  50% {\n    transform: translate(0px, -50px);\n  }\n  100% {\n    transform: translate(0px, 0px);\n  }\n}\n\n@keyframes reveal {\n  0% {\n    transform: translate(0px, -50px);\n  }\n  50% {\n    transform: translate(0px, -50px);\n  }\n  100% {\n    transform: translate(0px, 0px);\n  }\n}\n.notification.success {\n  background: #2ecc71;\n}\n\n.notification.success .title {\n  background: #27ae60;\n  float: left;\n  width: 18%;\n  text-align: center;\n}\n\n.notification.error {\n  background: #e74c3c;\n}\n\n.notification.error .title {\n  background: #c0392b;\n  float: left;\n  width: 18%;\n  text-align: center;\n}\n\n.notification.warning {\n  background: #f1c40f;\n}\n\n.notification.warning .title {\n  background: #f39c12;\n}\n\n.notification.normal {\n  background: #3498db;\n}\n\n.notification.normal .title {\n  background: #2980b9;\n}\n\n@media only screen and (max-width: 767px) {\n  .logo {\n    font-size: 20px;\n    position: absolute;\n    margin: -20px 15px;\n    left: 190px;\n  }\n}\n@media only screen and (max-width: 1180px) {\n  .logo {\n    font-size: 15px;\n  }\n}\n@media only screen and (max-width: 150px) {\n  .logo {\n    font-size: 8px;\n  }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8603,6 +8654,31 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "body {\n  margin: 0;\n  font-family: \"Montserrat\", sans-serif;\n}\n\n.phopixNavbar {\n  padding: 20px 0;\n  background: repeating-linear-gradient(45deg, #f0f2ed, #f0f2ed 20px, #f8f4eb 20px, #f8f4eb 40px);\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);\n}\n\n.container {\n  padding: 0 20px;\n  max-width: 963px;\n  margin: 0 auto;\n}\n\n.phopixLogo {\n  width: 6rem;\n}\n\n.logo-box {\n  float: left;\n  margin-right: 20px;\n}\n\n.logo-box a {\n  outline: none;\n  display: block;\n}\n\n.logo-box img {\n  display: block;\n}\n\nnav {\n  overflow: hidden;\n}\n\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  float: right;\n}\n\nnav li {\n  display: inline-block;\n  margin-left: 25px;\n  height: 70px;\n  line-height: 70px;\n  transition: 0.5s linear;\n}\n\nnav a {\n  text-decoration: none;\n  display: block;\n  position: relative;\n  color: #868686;\n  text-transform: uppercase;\n}\n\nnav a:after {\n  content: \"\";\n  width: 0;\n  height: 2px;\n  position: absolute;\n  left: 0;\n  bottom: 15px;\n  background: #868686;\n  transition: width 0.5s linear;\n}\n\nnav a:hover:after {\n  width: 100%;\n}\n\n.myButton {\n  box-shadow: 0px 10px 14px -7px #732773;\n  background: linear-gradient(to bottom, #599bb3 5%, #994059 100%);\n  background-color: #599bb3;\n  border-radius: 8px;\n  display: inline-block;\n  cursor: pointer;\n  color: #ffffff;\n  font-family: Arial;\n  font-size: 20px;\n  font-weight: bold;\n  padding: 1px 32px;\n  text-decoration: none;\n  text-shadow: 0px 1px 0px #713e8a;\n}\n\n.myButton:hover {\n  background: linear-gradient(to bottom, #994059 5%, #599bb3 100%);\n  background-color: #994059;\n}\n\n.myButton:active {\n  position: relative;\n  top: 1px;\n}\n\n@media screen and (max-width: 660px) {\n  .phopixNavbar {\n    text-align: center;\n  }\n\n  .logo-box {\n    float: none;\n    display: inline-block;\n    margin: 0 0 16px 0;\n  }\n\n  ul {\n    float: none;\n  }\n\n  nav li:first-of-type {\n    margin-left: 0;\n  }\n}\n@media screen and (max-width: 550px) {\n  nav {\n    overflow: visible;\n  }\n\n  nav li {\n    display: block;\n    margin: 0;\n    height: 40px;\n    line-height: 40px;\n  }\n\n  nav li:hover {\n    background: rgba(0, 0, 0, 0.1);\n  }\n\n  nav a:after {\n    content: none;\n  }\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/sass/pageNotFound/pageNotFound.scss":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/sass/pageNotFound/pageNotFound.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Merriweather:wght@900&display=swap);"]);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".pageNotFoundBody {\n  font-family: \"Merriweather\", serif;\n  margin: 0;\n  text-align: center;\n  color: white;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  padding-top: 8vh;\n}\n\n.containerPageNotFound {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  width: 100%;\n}\n\n.pageNotFound {\n  font-size: 150px;\n  margin: 0;\n  text-shadow: 15px 5px 2px black;\n}\n\n.oopsPageNotFound {\n  font-size: 40px;\n  margin: 20px;\n}\n\n.pageNotFoundRedirect {\n  font-size: 18px;\n  margin: 5px;\n}\n\n.pageNotFoundRedirect:last-of-type {\n  margin-bottom: 35px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -83611,6 +83687,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_navbar_scss__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./resources/sass/pageNotFound/pageNotFound.scss":
+/*!*******************************************************!*\
+  !*** ./resources/sass/pageNotFound/pageNotFound.scss ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_pageNotFound_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./pageNotFound.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/sass/pageNotFound/pageNotFound.scss");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_pageNotFound_scss__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_pageNotFound_scss__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 

@@ -7,7 +7,8 @@ import Gallery from "./Gallery/Gallery";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Support from "./Support/Support";
 import FaqComp from "./Faq/FaqComp";
-import Prizes from "./Prizes/Prizes";
+import Prizes from "./Prizes/Prizes"
+import PageNotFound from "./PageNotFound/PageNotFound";
 
 const App = () => {
     let { push }      = useHistory();
@@ -25,10 +26,11 @@ const App = () => {
             <QueryClientProvider client={queryClient}>
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route exact path="/gallery" component={Gallery} />
-                    <Route exact path="/support" component={Support} />
-                    <Route exact path='/faq' component={FaqComp} />
-                    <Route exact path='/prizes' component={Prizes} />
+                    <Route path="/gallery" component={Gallery} />
+                    <Route path="/support" component={Support} />
+                    <Route path='/faq' component={FaqComp} />
+                    <Route path='/prizes' component={Prizes} />
+                    <Route path= "*" component={PageNotFound} />
                 </Switch>
             </QueryClientProvider>
         </>
