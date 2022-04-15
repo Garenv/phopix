@@ -20,6 +20,11 @@ p { font-weight: 500; font-size: 14px; line-height: 1.7; }
 
 h4 { font-weight: 600; }
 
+.homePageButtons {
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 1rem;
+}
 h6 span{
     padding: 0 20px;
     text-transform: uppercase;
@@ -231,12 +236,12 @@ h6 span{
 .btn:focus{
     background-color: #fff;
     color: #08d;;
-    box-shadow: 0 8px 24px 0 rgba(255,255,255,.2);
+    //box-shadow: 0 8px 24px 0 rgba(255,255,255,.2);
 }
 .btn:hover{
     background-color: #fff;
     //color:#08d;
-    box-shadow: 0 8px 24px 0 rgba(255,255,255,.2);
+    //box-shadow: 0 8px 24px 0 rgba(255,255,255,.2);
 }
 
 .logo {
