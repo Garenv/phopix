@@ -2712,54 +2712,65 @@ var Gallery = function Gallery() {
       filePreview = _useState4[0],
       setFilePreview = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
       _useState6 = _slicedToArray(_useState5, 2),
-      statusMessage = _useState6[0],
-      setStatusMessage = _useState6[1];
+      filePreviewModalStatus = _useState6[0],
+      setFilePreviewModalStatus = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState8 = _slicedToArray(_useState7, 2),
-      statusCode = _useState8[0],
-      setStatusCode = _useState8[1];
+      statusMessage = _useState8[0],
+      setStatusMessage = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
       _useState10 = _slicedToArray(_useState9, 2),
-      errorClose = _useState10[0],
-      setErrorClose = _useState10[1];
+      statusCode = _useState10[0],
+      setStatusCode = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState12 = _slicedToArray(_useState11, 2),
-      uploadSuccess = _useState12[0],
-      setUploadSuccess = _useState12[1];
+      errorClose = _useState12[0],
+      setErrorClose = _useState12[1];
+
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState14 = _slicedToArray(_useState13, 2),
+      uploadSuccess = _useState14[0],
+      setUploadSuccess = _useState14[1];
 
   var handleClose = function handleClose() {
     return setShow(false);
-  };
-
-  var handleShow = function handleShow() {
-    return setShow(true);
   }; // Winner modal content
 
 
   var weeklyDay = today.getDay();
 
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      _useState14 = _slicedToArray(_useState13, 2),
-      showWinners = _useState14[0],
-      setShowWinners = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState16 = _slicedToArray(_useState15, 2),
+      showWinners = _useState16[0],
+      setShowWinners = _useState16[1];
 
   var handleCloseWinners = function handleCloseWinners() {
     return setShowWinners(false);
   }; // User clicks for likes
 
 
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
-      _useState16 = _slicedToArray(_useState15, 2),
-      currentUserClicks = _useState16[0],
-      setCurrentUserClicks = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
+      _useState18 = _slicedToArray(_useState17, 2),
+      currentUserClicks = _useState18[0],
+      setCurrentUserClicks = _useState18[1];
 
   var closeMessages = function closeMessages() {
     setErrorClose(true);
+  };
+
+  var handleShowPreviewModal = function handleShowPreviewModal() {
+    if (filePreview === null) {
+      setFilePreviewModalStatus(false);
+      setStatusMessage("Nothing to preview!");
+      return false;
+    }
+
+    setShow(true);
   };
 
   function fetchUploads() {
@@ -2906,6 +2917,18 @@ var Gallery = function Gallery() {
           children: "X"
         })]
       })
+    }) : null, !filePreviewModalStatus ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("section", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "notification error ".concat(errorClose ? 'closed' : null),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "title",
+          children: "Error"
+        }), statusMessage, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "close",
+          onClick: closeMessages,
+          children: "X"
+        })]
+      })
     }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       className: "fileUpload text-center",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
@@ -2915,8 +2938,8 @@ var Gallery = function Gallery() {
         required: true
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
         variant: "primary",
-        onClick: handleShow,
-        children: "Preview your upload!"
+        onClick: handleShowPreviewModal,
+        children: "Preview before Uploading!"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
       show: show,

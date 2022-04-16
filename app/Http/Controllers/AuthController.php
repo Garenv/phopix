@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Stevebauman\Location\Facades\Location;
@@ -64,7 +65,7 @@ class AuthController extends Controller
             $email          = $user['email'];
             $userId         = $user['UserID'];
             $age            = $user['age'];
-
+            $sessionId      = Session::getId();
             $modelUser      = User::where('email', $email)->firstOrFail();
             $createToken    = $modelUser->createToken('auth_token')->plainTextToken;
 
@@ -74,7 +75,8 @@ class AuthController extends Controller
                 'name'      => $name,
                 'email'     => $email,
                 'UserID'    => $userId,
-                'age'       => $age
+                'age'       => $age,
+                'sessionId' => $sessionId
             ]);
 
         } catch(\Exception $e) {

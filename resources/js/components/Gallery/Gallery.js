@@ -13,13 +13,13 @@ const Gallery = () => {
     // Preview modal content
     const [show, setShow]                                         = useState(false);
     const [filePreview, setFilePreview]                           = useState(null);
-    const [statusMessage, setStatusMessage]                           = useState("");
-    const [statusCode, setStatusCode]                           = useState(null);
+    const [filePreviewModalStatus, setFilePreviewModalStatus]     = useState(true);
+    const [statusMessage, setStatusMessage]                       = useState("");
+    const [statusCode, setStatusCode]                             = useState(null);
     const [errorClose, setErrorClose]                             = useState(false);
-    const [uploadSuccess, setUploadSuccess]                             = useState(null);
+    const [uploadSuccess, setUploadSuccess]                       = useState(null);
 
     const handleClose                                             = () => setShow(false);
-    const handleShow                                              = () => setShow(true);
 
     // Winner modal content
     const weeklyDay                                               = today.getDay();
@@ -32,6 +32,16 @@ const Gallery = () => {
     const closeMessages = () => {
         setErrorClose(true);
     }
+
+    const handleShowPreviewModal = () => {
+        if(filePreview === null) {
+            setFilePreviewModalStatus(false);
+            setStatusMessage("Nothing to preview!");
+            return false;
+        }
+
+        setShow(true);
+    };
 
     async function fetchUploads(){
         const headers = {
@@ -145,9 +155,16 @@ const Gallery = () => {
             </section>
                 : null }
 
+            { !filePreviewModalStatus ? <section>
+                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                        <span className="title">Error</span>{statusMessage}<span className='close' onClick={closeMessages}>X</span>
+                    </div>
+                </section>
+                : null }
+
             <div className="fileUpload text-center">
                 <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>
-                <Button variant="primary" onClick={handleShow}>Preview your upload!</Button>
+                <Button variant="primary" onClick={handleShowPreviewModal}>Preview before Uploading!</Button>
             </div>
 
             <Modal show={show} onHide={handleClose} className={uploadSuccess === 200 ? "hideModal" : ""}>
