@@ -99,6 +99,27 @@ const LoginRegister = () => {
 
     return (
         <>
+
+
+            {/*<div className="text-center homePageButtons">*/}
+            {/*    <Link to="/faq"><Button className="faqButton">FAQ</Button></Link>*/}
+            {/*    <br/>*/}
+            {/*    <Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link>*/}
+            {/*</div>*/}
+
+
+                    <div className="homePageButtons">
+                        <Link to="/faq"><Button className="faqButton">FAQ</Button></Link>
+                        &nbsp;
+                        &nbsp;
+                        <Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link>
+                    </div>
+
+
+
+
+
+
             { errorStatus === 400 ?
                 <section>
                     <div className={`notification error ${errorClose ? 'closed' : null}`}>
@@ -114,12 +135,6 @@ const LoginRegister = () => {
                     </div>
                 </section>
                 : null }
-
-                <div className="container">
-                    <Link to="/faq"><Button>FAQ</Button></Link>
-                    <Link to="/prizes"><Button>Prizes</Button></Link>
-                </div>
-
 
             {/*<img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixLogo_v2.png" className="phopixLogo" alt=""/>*/}
 
@@ -200,53 +215,53 @@ const LoginRegister = () => {
                                             <div className="center-wrap">
                                                 <div className="section text-center">
                                                     <h4 className="mb-4 pb-3">Sign Up</h4>
-                                                    <form onSubmit={handleRegister}>
-                                                    <div className="form-group">
-                                                        <input type="text"
-                                                               name="name"
-                                                               className="form-style"
-                                                               placeholder="Your Full Name"
-                                                               id="logname"
-                                                               autoComplete="none"
-                                                               onChange={(e) => setName(e.target.value)}
-                                                        />
-                                                        <i className="input-icon uil uil-user"></i>
-                                                    </div>
-                                                    <div className="form-group mt-2">
-                                                        <input type="email"
-                                                               name="email"
-                                                               className="form-style"
-                                                               placeholder="Your Email"
-                                                               id="logemail"
-                                                               autoComplete="none"
-                                                               onChange={(e) => setEmail(e.target.value)}
-                                                        />
-                                                        <i className="input-icon uil uil-at"></i>
-                                                    </div>
-                                                    <div className="form-group mt-2">
-                                                        <input type="number"
-                                                               name="age"
-                                                               className="form-style"
-                                                               placeholder="Your Age"
-                                                               id="logemail"
-                                                               autoComplete="none"
-                                                               onChange={(e) => setAge(e.target.value)}
-                                                        />
-                                                        <i className="input-icon uil uil-at"></i>
-                                                    </div>
-                                                    <div className="form-group mt-2">
-                                                        <input type="password"
-                                                               name="password"
-                                                               className="form-style"
-                                                               placeholder="Your Password"
-                                                               id="logpass"
-                                                               autoComplete="none"
-                                                               onChange={(e) => setPassword(e.target.value)}
-                                                        />
-                                                        <i className="input-icon uil uil-lock-alt"></i>
-                                                    </div>
+                                                        <form onSubmit={handleRegister}>
+                                                            <div className="form-group">
+                                                                <input type="text"
+                                                                       name="name"
+                                                                       className="form-style"
+                                                                       placeholder="Your Full Name"
+                                                                       id="logname"
+                                                                       autoComplete="none"
+                                                                       onChange={(e) => setName(e.target.value)}
+                                                                />
+                                                                <i className="input-icon uil uil-user"></i>
+                                                            </div>
+                                                            <div className="form-group mt-2">
+                                                                <input type="email"
+                                                                       name="email"
+                                                                       className="form-style"
+                                                                       placeholder="Your Email"
+                                                                       id="logemail"
+                                                                       autoComplete="none"
+                                                                       onChange={(e) => setEmail(e.target.value)}
+                                                                />
+                                                                <i className="input-icon uil uil-at"></i>
+                                                            </div>
+                                                            <div className="form-group mt-2">
+                                                                <input type="number"
+                                                                       name="age"
+                                                                       className="form-style"
+                                                                       placeholder="Your Age"
+                                                                       id="logemail"
+                                                                       autoComplete="none"
+                                                                       onChange={(e) => setAge(e.target.value)}
+                                                                />
+                                                                <i className="input-icon uil uil-at"></i>
+                                                            </div>
+                                                            <div className="form-group mt-2">
+                                                                <input type="password"
+                                                                       name="password"
+                                                                       className="form-style"
+                                                                       placeholder="Your Password"
+                                                                       id="logpass"
+                                                                       autoComplete="none"
+                                                                       onChange={(e) => setPassword(e.target.value)}
+                                                                />
+                                                                <i className="input-icon uil uil-lock-alt"></i>
+                                                            </div>
                                                         <button className="btn mt-4">Submit</button>
-                                            </form>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -257,7 +272,6 @@ const LoginRegister = () => {
                     </div>
                 </div>
             </div>
-
         </>
     );
 
