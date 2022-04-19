@@ -7,6 +7,7 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WinnersController;
 use App\Http\Controllers\SupportController;
+use App\Http\Controllers\PrizesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::post('login',                                    [AuthController::class, 
 Route::post('register',                                 [AuthController::class,       'register']);
 Route::post('forgot-password',                          [AuthController::class,       'submitForgotPasswordForm']);
 Route::post('support',                                  [SupportController::class,    'support']);
+Route::get('prizes',                                    [PrizesController::class,     'getPrizes']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get( 'get-user-uploads-data',                [UsersController::class,      'getUserUploadsData']);

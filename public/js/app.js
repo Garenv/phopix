@@ -3571,6 +3571,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _sass_prizes_prizes_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../sass/prizes/prizes.scss */ "./resources/sass/prizes/prizes.scss");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -3578,86 +3590,58 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Prizes = function Prizes() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    className: "main",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
-      children: "Responsive Card Grid Layout"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
-      className: "cards",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-        className: "cards_item",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "card",
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      prizeData = _useState2[0],
+      setPrizeData = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      statusCode = _useState4[0],
+      setStatusCode = _useState4[1];
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    axios.get('http://localhost/api/prizes').then(function (resp) {
+      setPrizeData(resp.data);
+    })["catch"](function (error) {
+      var errorStatus = error.response.status;
+      setStatusCode(errorStatus);
+    });
+  }, []);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: statusCode !== 404 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      className: "main",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
+        children: "Prizes"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("ul", {
+        className: "cards",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          className: "cards_item",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "card_image",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.samsclubresources.com%2Fis%2Fimage%2Fsamsclub%2F0079936673910_A%3F%24DT_PDP_Image%24&f=1&nofb=1",
-              className: "giftCards"
-            })
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-        className: "cards_item",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "card",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "card_image",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: "https://picsum.photos/500/300/?image=5",
-              className: "giftCards"
-            })
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-        className: "cards_item",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "card",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "card_image",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: "https://picsum.photos/500/300/?image=11",
-              className: "giftCards"
-            })
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-        className: "cards_item",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "card",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "card_image",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: "https://picsum.photos/500/300/?image=14",
-              className: "giftCards"
-            })
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-        className: "cards_item",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "card",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "card_image",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: "https://picsum.photos/500/300/?image=17",
-              className: "giftCards"
-            })
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-        className: "cards_item",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "card",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "card_image",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: "https://picsum.photos/500/300/?image=2",
-              className: "giftCards"
+            className: "card",
+            children: prizeData.map(function (prizes) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                  className: "card_image",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                    src: prizes.image_url,
+                    className: "giftCards"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                  className: "card_content",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+                    className: "card_title",
+                    children: prizes.prizeName
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {})]
+              });
             })
           })
         })
       })]
-    })]
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
+      children: "No prizes at this time!!"
+    })
   });
 };
 
@@ -8725,7 +8709,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Font */\n.main {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\nh1 {\n  font-size: 24px;\n  font-weight: 400;\n  text-align: center;\n}\n\nimg {\n  height: auto;\n  max-width: 100%;\n  vertical-align: middle;\n}\n\n.btn:hover {\n  background-color: rgba(255, 255, 255, 0.12);\n}\n\n.cards {\n  display: flex;\n  flex-wrap: wrap;\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n.cards_item {\n  display: flex;\n  padding: 1rem;\n}\n\n@media (min-width: 40rem) {\n  .cards_item {\n    width: 50%;\n  }\n}\n@media (min-width: 56rem) {\n  .cards_item {\n    width: 33.3333%;\n  }\n}\n.card {\n  border-radius: 0.25rem;\n  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);\n  display: flex;\n  flex-direction: column;\n  overflow: hidden;\n}\n\n.card_content {\n  padding: 1rem;\n  background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);\n}\n\n.card_title {\n  color: #ffffff;\n  font-size: 1.1rem;\n  font-weight: 700;\n  letter-spacing: 1px;\n  text-transform: capitalize;\n  margin: 0px;\n}\n\n.card_text {\n  color: #ffffff;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  margin-bottom: 1.25rem;\n  font-weight: 400;\n}\n\n.made_by {\n  font-weight: 400;\n  font-size: 13px;\n  margin-top: 35px;\n  text-align: center;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font */\n.main {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\nh1 {\n  font-size: 24px;\n  font-weight: 400;\n  text-align: center;\n}\n\nimg {\n  height: auto;\n  max-width: 100%;\n  vertical-align: middle;\n}\n\n.btn:hover {\n  background-color: rgba(255, 255, 255, 0.12);\n}\n\n.cards {\n  display: flex;\n  flex-wrap: wrap;\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n.card .cards_item {\n  display: flex;\n  padding: 1rem;\n}\n\n@media (min-width: 40rem) {\n  .cards_item {\n    width: 50%;\n  }\n}\n@media (min-width: 56rem) {\n  .cards_item {\n    width: 33.3333%;\n  }\n}\n.card {\n  background-color: transparent;\n  border-radius: 0.25rem;\n  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);\n  display: flex;\n  flex-direction: column;\n  overflow: hidden;\n}\n\n.card_content {\n  padding: 1rem;\n  background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);\n}\n\n.card_title {\n  color: #ffffff;\n  font-size: 1.1rem;\n  font-weight: 700;\n  letter-spacing: 1px;\n  text-transform: capitalize;\n  margin: 0px;\n}\n\n.card_text {\n  color: #ffffff;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  margin-bottom: 1.25rem;\n  font-weight: 400;\n}\n\n.made_by {\n  font-weight: 400;\n  font-size: 13px;\n  margin-top: 35px;\n  text-align: center;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

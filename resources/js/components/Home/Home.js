@@ -100,25 +100,12 @@ const LoginRegister = () => {
     return (
         <>
 
-
-            {/*<div className="text-center homePageButtons">*/}
-            {/*    <Link to="/faq"><Button className="faqButton">FAQ</Button></Link>*/}
-            {/*    <br/>*/}
-            {/*    <Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link>*/}
-            {/*</div>*/}
-
-
-                    <div className="homePageButtons">
-                        <Link to="/faq"><Button className="faqButton">FAQ</Button></Link>
-                        &nbsp;
-                        &nbsp;
-                        <Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link>
-                    </div>
-
-
-
-
-
+            <div className="homePageButtons">
+                <Link to="/faq"><Button className="faqButton">FAQ</Button></Link>
+                &nbsp;
+                &nbsp;
+                <Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link>
+            </div>
 
             { errorStatus === 400 ?
                 <section>
