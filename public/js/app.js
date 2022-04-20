@@ -2887,13 +2887,13 @@ var Gallery = function Gallery() {
       data = _useQuery.data,
       error = _useQuery.error,
       isError = _useQuery.isError,
-      isLoading = _useQuery.isLoading; // first argument is a string to cache and track the query result
+      isLoading = _useQuery.isLoading; // First argument is a string to cache and track the query result
 
 
   if (isLoading) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-      children: "Loading..."
-    });
+      className: "loading"
+    }); // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
   }
 
   if (isError) {
@@ -2934,9 +2934,14 @@ var Gallery = function Gallery() {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
         type: "file",
         id: "file",
-        onChange: getcreatedPhotoUrl,
-        required: true
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        onChange: getcreatedPhotoUrl
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
+        htmlFor: "file",
+        className: "btn-1",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          children: "Upload"
+        })
+      }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
         variant: "primary",
         onClick: handleShowPreviewModal,
         children: "Preview before Uploading!"
@@ -3069,22 +3074,26 @@ var Grid = function Grid(props) {
               return props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
             }
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-          className: "card_title",
-          children: props.userName
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+          className: "userName",
+          children: [props.userName, " ", localStorage.getItem('UserID') === props.userId ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h6", {
+            className: "you",
+            children: "(You)"
+          }) : null]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
           style: {
             display: 'none'
           },
           children: props.currentUserClicks
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h5", {
           className: "likes",
           children: ["Likes: ", likes]
         }), localStorage.getItem('UserID') === props.userId ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "btn-danger",
           onClick: function onClick() {
             return props.userDelete(props.userId);
           },
-          children: "delete"
+          children: "Delete"
         }) : null]
       })
     })
@@ -8634,7 +8643,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Font */\n.main {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\nh1 {\n  font-size: 24px;\n  font-weight: 400;\n  text-align: center;\n}\n\nimg.gallery-img {\n  height: auto;\n  max-width: 100%;\n  vertical-align: middle;\n}\n\n.cards {\n  display: flex;\n  flex-wrap: wrap;\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n.cards_item {\n  display: flex;\n  padding: 1rem;\n}\n\n@media (min-width: 40rem) {\n  .cards_item {\n    width: 50%;\n  }\n}\n@media (min-width: 56rem) {\n  .cards_item {\n    width: 33.3333%;\n  }\n}\n.card_title {\n  color: #ffffff;\n  font-size: 1.1rem;\n  font-weight: 700;\n  letter-spacing: 1px;\n  text-transform: capitalize;\n  margin: 0px;\n}\n\n.card_text {\n  color: #ffffff;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  margin-bottom: 1.25rem;\n  font-weight: 400;\n}\n\n.made_by {\n  font-weight: 400;\n  font-size: 13px;\n  margin-top: 35px;\n  text-align: center;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font */\n.main {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\nh1 {\n  font-size: 24px;\n  font-weight: 400;\n  text-align: center;\n}\n\nimg.gallery-img {\n  height: auto;\n  max-width: 100%;\n  vertical-align: middle;\n}\n\n.cards {\n  display: flex;\n  flex-wrap: wrap;\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n.cards_item {\n  display: flex;\n  padding: 1rem;\n}\n\n[type=file] {\n  height: 0;\n  overflow: hidden;\n  width: 0;\n}\n\n[type=file] + label {\n  background: #f15d22;\n  border: none;\n  border-radius: 5px;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: \"Rubik\", sans-serif;\n  font-size: inherit;\n  font-weight: 500;\n  margin-bottom: 1rem;\n  outline: none;\n  padding: 0.4rem 50px;\n  position: relative;\n  transition: all 0.3s;\n  vertical-align: middle;\n  margin-top: 0.6rem;\n}\n[type=file] + label:hover {\n  background-color: #d3460d;\n}\n[type=file] + label.btn-1 {\n  box-shadow: 0 6px #f57128;\n  transition: none;\n}\n[type=file] + label.btn-1:hover {\n  box-shadow: 0 4px #f57128;\n  top: 2px;\n}\n\n.userName {\n  color: #000000;\n  font-size: 1.1rem;\n  font-weight: 700;\n  letter-spacing: 1px;\n  text-transform: capitalize;\n  margin: 0px;\n}\n\nh6.you {\n  display: inline-block;\n}\n\n.card_text {\n  color: #ffffff;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  margin-bottom: 1.25rem;\n  font-weight: 400;\n}\n\n.made_by {\n  font-weight: 400;\n  font-size: 13px;\n  margin-top: 35px;\n  text-align: center;\n}\n\n.loading {\n  display: inline-block;\n  width: 50px;\n  height: 50px;\n  border: 3px solid rgba(255, 255, 255, 0.3);\n  border-radius: 50%;\n  border-top-color: #fff;\n  animation: spin 1s ease-in-out infinite;\n  -webkit-animation: spin 1s ease-in-out infinite;\n}\n\n@keyframes spin {\n  to {\n    -webkit-transform: rotate(360deg);\n  }\n}\n@-webkit-keyframes spin {\n  to {\n    -webkit-transform: rotate(360deg);\n  }\n}\n@-webkit-keyframes rotation {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(359deg);\n  }\n}\n@keyframes rotation {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(359deg);\n  }\n}\n@media (min-width: 40rem) {\n  .cards_item {\n    width: 50%;\n  }\n}\n@media (min-width: 56rem) {\n  .cards_item {\n    width: 33.3333%;\n  }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

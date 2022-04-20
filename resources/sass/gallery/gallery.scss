@@ -31,31 +31,58 @@ img.gallery-img {
     padding: 1rem;
 }
 
-@media (min-width: 40rem) {
-    .cards_item {
-        width: 50%;
+[type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+}
+
+[type="file"] + label {
+    background: #f15d22;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Rubik', sans-serif;
+    font-size: inherit;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    outline: none;
+    padding: 0.4rem 50px;
+    position: relative;
+    transition: all 0.3s;
+    vertical-align: middle;
+    margin-top: 0.6rem;
+
+    &:hover {
+        background-color: darken(#f15d22, 10%);
+    }
+
+    &.btn-1 {
+        //background-color: #f79159;
+        box-shadow: 0 6px darken(#f79159, 10%);
+        transition: none;
+
+        &:hover {
+            box-shadow: 0 4px darken(#f79159, 10%);
+            top: 2px;
+        }
     }
 }
 
-@media (min-width: 56rem) {
-    .cards_item {
-        width: 33.3333%;
-    }
-}
 
-//.galleryCardContent {
-//    padding: 1rem;
-//    background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%);
-//}
-
-
-.card_title {
-    color: #ffffff;
+.userName {
+    color: #000000;
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: capitalize;
     margin: 0px;
+}
+
+h6.you {
+    display: inline-block;
 }
 
 .card_text {
@@ -71,3 +98,51 @@ img.gallery-img {
     margin-top: 35px;
     text-align: center;
 }
+
+//.loading {
+//    animation: rotation 2s infinite linear;
+//    display: flex;
+//    justify-content: center;
+//    align-items: center;
+//    text-align: center;
+//}
+
+.loading {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+@media (min-width: 40rem) {
+    .cards_item {
+        width: 50%;
+    }
+}
+
+@media (min-width: 56rem) {
+    .cards_item {
+        width: 33.3333%;
+    }
+}
+

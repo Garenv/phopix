@@ -134,11 +134,12 @@ const Gallery = () => {
     };
 
 
-    const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads);
+    const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads); // First argument is a string to cache and track the query result
 
-    // first argument is a string to cache and track the query result
+
     if(isLoading){
-        return <div>Loading...</div>
+        return <div className="loading"></div>
+        // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
     }
     if(isError){
         return <div>Error! {error.message}</div>
@@ -147,6 +148,9 @@ const Gallery = () => {
     return (
         <>
             {location.pathname === '/gallery' ? <Navbar data={data}/> : null }
+
+            {/*{isLoading ? <div><img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" alt="Logo"/></div> : null}*/}
+
 
             { statusCode === 200 ? <section>
                 <div className={`notification success ${errorClose ? 'closed' : null}`}>
@@ -163,7 +167,11 @@ const Gallery = () => {
                 : null }
 
             <div className="fileUpload text-center">
-                <input type="file" id="file" onChange={getcreatedPhotoUrl} required/>
+                <input type="file" id="file" onChange={getcreatedPhotoUrl}/>
+                <label htmlFor="file" className="btn-1">
+                    <span>Upload</span>
+                </label>
+                &nbsp;
                 <Button variant="primary" onClick={handleShowPreviewModal}>Preview before Uploading!</Button>
             </div>
 
@@ -196,6 +204,7 @@ const Gallery = () => {
                     <Button variant="secondary" onClick={handleCloseWinners}>Close</Button>
                 </Modal.Footer>
             </Modal> : null}
+
 
             <div className="main">
                 <ul className="cards">
