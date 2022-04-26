@@ -9,6 +9,7 @@ import Support from "./Support/Support";
 import FaqComp from "./Faq/FaqComp";
 import Prizes from "./Prizes/Prizes"
 import PageNotFound from "./PageNotFound/PageNotFound";
+import PastWinners from "./PastWinners/PastWinners";
 
 const App = () => {
     let { push }      = useHistory();
@@ -30,6 +31,7 @@ const App = () => {
                     <Route path="/support" component={Support} />
                     <Route path='/faq' component={FaqComp} />
                     <Route path='/prizes' component={Prizes} />
+                    <Route path='/past-winners' component={PastWinners} />
                     <Route path= "*" component={PageNotFound} />
                 </Switch>
             </QueryClientProvider>

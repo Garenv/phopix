@@ -19,7 +19,8 @@ const Prizes = () => {
 
     return (
         <>
-            {statusCode !== 404 ?
+            {
+                statusCode !== 404 ?
                 <div className="main">
                     <h1>Prizes</h1>
                     <ul className="cards">
