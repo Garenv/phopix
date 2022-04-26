@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Dal\Interfaces\IWinnersRepository;
 use App\Models\LegacyWinners;
 use App\Models\Winners;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -51,6 +52,10 @@ class WeeklyWinners extends Command
         // Get prize data
         $prizesData                      = $this->__winnersRepository->getPrizeData();
 
+        // Get timestamp of the time winner got chosen
+        $time                            = Carbon::now();
+        $timeStamp                       = $time->toDateTimeString();
+
         // First place data
         $firstPlaceUserId                = $topThreeWinners[0]->UserID;
         $firstPlaceEmail                 = $topThreeWinners[0]->email;
@@ -78,31 +83,34 @@ class WeeklyWinners extends Command
         $dataFirstPlace = [
             'UserID'                    => $firstPlaceUserId,
             'email'                     => $firstPlaceEmail,
-            'place'                     => "1",
+            'place'                     => "1st Place",
             'likes'                     => $firstPlaceLikes,
             'winnerId'                  => $firstPlaceWinnerId,
             'url'                       => $firstPlaceUrl,
-            'prizeId'                   => $firstPlacePrizeId
+            'prizeId'                   => $firstPlacePrizeId,
+            'timeStamp'                 => $timeStamp
         ];
 
         $dataSecondPlace = [
             'UserID'                    => $secondPlaceUserId,
             'email'                     => $secondPlaceEmail,
-            'place'                     => "2",
+            'place'                     => "2nd Place",
             'likes'                     => $secondPlaceLikes,
             'winnerId'                  => $secondPlaceWinnerId,
             'url'                       => $secondPlaceUrl,
-            'prizeId'                   => $secondPlacePrizeId
+            'prizeId'                   => $secondPlacePrizeId,
+            'timeStamp'                 => $timeStamp
         ];
 
         $dataThirdPlace = [
             'UserID'                    => $thirdPlaceUserId,
             'email'                     => $thirdPlaceEmail,
-            'place'                     => "3",
+            'place'                     => "3rd Place",
             'likes'                     => $thirdPlaceLikes,
             'winnerId'                  => $thirdPlaceWinnerId,
             'url'                       => $thirdPlaceUrl,
-            'prizeId'                   => $thirdPlacePrizeId
+            'prizeId'                   => $thirdPlacePrizeId,
+            'timeStamp'                 => $timeStamp
         ];
 
         // store them in winners table

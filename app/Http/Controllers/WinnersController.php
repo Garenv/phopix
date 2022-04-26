@@ -40,4 +40,17 @@ class WinnersController extends Controller
     {
         return $this->__winnersRepository->getTopThreeWinnersFromWinnersTable();
     }
+
+    /**
+     * Gets the top three winners from the
+     * legacy winners table and sends data to the frontend
+     * based on the cron job's results.
+     * This will be called once per week
+     * see app/Console/Kernel.php for more details.
+     * @return mixed
+     */
+    public function getAllWinnersFromLegacyWinnersTable()
+    {
+        return $this->__winnersRepository->getAllWinnersFromLegacyWinnersTable();
+    }
 }

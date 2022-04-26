@@ -71,7 +71,7 @@ h6 span{
     background-color: #2a2b38;
     font-family: 'unicons';
     content: '\eb4f';
-    z-index: 20;
+    //z-index: 20;
     top: -10px;
     left: -10px;
     line-height: 36px;
@@ -370,6 +370,140 @@ section{
 }
 .notification.normal .title{
     background: #2980b9;
+}
+
+
+.homePageHeader {
+    background-color: #fff;
+    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+}
+
+.homePageHeader ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.homePageHeader li a {
+    display: block;
+    padding: 20px 20px;
+    border-right: 1px solid #f4f4f4;
+    text-decoration: none;
+}
+
+.homePageHeader li a:hover,
+.homePageHeader .menu-btn:hover {
+    background-color: #f4f4f4;
+}
+
+.homePageHeader .logo {
+    display: block;
+    float: left;
+    font-size: 2em;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+/* menu */
+
+.homePageHeader .menu {
+    clear: both;
+    max-height: 0;
+    transition: max-height .2s ease-out;
+}
+
+/* menu icon */
+
+.homePageHeader .menu-icon {
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    padding: 28px 20px;
+    position: relative;
+    user-select: none;
+}
+
+.homePageHeader .menu-icon .navicon {
+    background: #333;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: background .2s ease-out;
+    width: 18px;
+}
+
+.homePageHeader .menu-icon .navicon:before,
+.homePageHeader .menu-icon .navicon:after {
+    background: #333;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+
+.homePageHeader .menu-icon .navicon:before {
+    top: 5px;
+}
+
+.homePageHeader .menu-icon .navicon:after {
+    top: -5px;
+}
+
+/* menu btn */
+
+.homePageHeader .menu-btn {
+    display: none;
+}
+
+.homePageHeader .menu-btn:checked ~ .menu {
+    max-height: 240px;
+    text-align: center;
+}
+
+.homePageHeader .menu-btn:checked ~ .menu-icon .navicon {
+    background: transparent;
+}
+
+.homePageHeader .menu-btn:checked ~ .menu-icon .navicon:before {
+    transform: rotate(-45deg);
+}
+
+.homePageHeader .menu-btn:checked ~ .menu-icon .navicon:after {
+    transform: rotate(45deg);
+}
+
+.homePageHeader .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+.homePageHeader .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+    top: 0;
+}
+
+.logoHome {
+    width: 6rem;
+    background-color: navy;
+}
+
+@media (min-width: 48em) {
+    .homePageHeader li {
+        float: left;
+    }
+    .homePageHeader li a {
+        padding: 20px 30px;
+    }
+    .homePageHeader .menu {
+        clear: none;
+        float: right;
+        max-height: none;
+    }
+    .homePageHeader .menu-icon {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 767px) {

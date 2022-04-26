@@ -24,6 +24,7 @@ class LegacyWinners extends Model
         'likes',
         'winnerId',
         'url',
-        'prizeId'
+        'prizeId',
+        'timeStamp'
     ];
 }

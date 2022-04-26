@@ -100,12 +100,8 @@ const LoginRegister = () => {
     return (
         <>
 
-            <div className="homePageButtons">
-                <Link to="/faq"><Button className="faqButton">FAQ</Button></Link>
-                &nbsp;
-                &nbsp;
-                <Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link>
-            </div>
+
+
 
             { errorStatus === 400 ?
                 <section>
@@ -124,6 +120,17 @@ const LoginRegister = () => {
                 : null }
 
             {/*<img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixLogo_v2.png" className="phopixLogo" alt=""/>*/}
+            {/*<img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314.jpg" className="img-fluid" alt=""/>*/}
+
+            <header className="homePageHeader">
+                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314.jpg" className="logoHome" alt="logo" />
+                <input className="menu-btn" type="checkbox" id="menu-btn"/>
+                <label className="menu-icon" htmlFor="menu-btn"><span className="navicon"></span></label>
+                <ul className="menu">
+                    <li><Link to="/faq"><Button className="faqButton">FAQ</Button></Link></li>
+                    <li><Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link></li>
+                </ul>
+            </header>
 
             <div className="section">
                 <div className="container">

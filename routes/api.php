@@ -29,6 +29,7 @@ Route::post('register',                                 [AuthController::class, 
 Route::post('forgot-password',                          [AuthController::class,       'submitForgotPasswordForm']);
 Route::post('support',                                  [SupportController::class,    'support']);
 Route::get('prizes',                                    [PrizesController::class,     'getPrizes']);
+Route::get('get-all-legacy-winners',                    [WinnersController::class,    'getAllWinnersFromLegacyWinnersTable']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get( 'get-user-uploads-data',                [UsersController::class,      'getUserUploadsData']);

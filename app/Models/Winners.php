@@ -24,6 +24,7 @@ class Winners extends Model
         'likes',
         'winnerId',
         'url',
-        'prizeId'
+        'prizeId',
+        'timeStamp'
     ];
 }

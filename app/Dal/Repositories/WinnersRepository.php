@@ -3,10 +3,17 @@
 namespace App\Dal\Repositories;
 
 use App\Dal\Interfaces\IWinnersRepository;
+use App\Models\LegacyWinners;
 use Illuminate\Support\Facades\DB;
 
 class WinnersRepository implements IWinnersRepository
 {
+
+    public function getPrizeData()
+    {
+        return DB::table('prizes')->get();
+    }
+
     public function getTopThreeWinnersFromUploadsTable()
     {
         return DB::table('uploads')
@@ -26,25 +33,9 @@ class WinnersRepository implements IWinnersRepository
             ->get();
     }
 
-    public function getPrizeData()
+    public function getAllWinnersFromLegacyWinnersTable()
     {
-        return DB::table('prizes')->get();
+        return LegacyWinners::all();
     }
-
-    public function insertFirstPlace()
-    {
-
-    }
-
-    public function insertSecondPlace()
-    {
-
-    }
-
-    public function insertShirdPlace()
-    {
-
-    }
-
 
 }
