@@ -2,17 +2,16 @@ import React, {useEffect, useState} from 'react';
 import '../../../sass/pastWinners/pastWinners.scss';
 
 const PastWinners = () => {
-    const [winnersData, setWinnersData]                               = useState([]);
-    const [statusCode, setStatusCode]                                 = useState(null);
+    const [legacyWinnersData, setLegacyWinnersData] = useState([]);
+    const [statusCode, setStatusCode]               = useState(null);
 
     useEffect(() => {
         axios.get('http://localhost/api/get-all-legacy-winners')
             .then(resp => {
                 console.log(resp.data);
-                setWinnersData(resp.data);
+                setLegacyWinnersData(resp.data);
             }).catch(error => {
             let errorStatus        = error.response.status;
-
             setStatusCode(errorStatus);
         });
     },[]);
@@ -20,21 +19,24 @@ const PastWinners = () => {
     return (
         <>
             {
-                statusCode !== 404 ?
+                legacyWinnersData.length !== 0 ?
                     <>
+                        <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg" className="phopixLogoPastWinners" alt="Past Winners Phopix Logo"/>
                         <h1>Past Winners</h1>
                         <ul className="cards">
                             <li className="cards_item">
                                 <div className="card">
                                     {
-                                        winnersData.map((winnerData) => {
+                                        legacyWinnersData.map((winnerData) => {
                                             return(
                                                 <>
-                                                    <div className="card_image"><img src={winnerData.url} className="giftCards"/></div>
-                                                    <div className="card_content">
-                                                        <h2 className="card_title">{winnerData.place}</h2>
-                                                        <h2 className="card_title">Likes: {winnerData.likes}</h2>
-                                                    </div>
+                                                    <div className="card_image"><img src={winnerData.url} className="giftCards" alt="Gift Card Images"/></div>
+                                                        <div className={`card_content ${winnerData.place === "1st Place" ? 'firstPlace' : winnerData.place === "2nd Place" ? 'secondPlace' : winnerData.place === "3rd Place" ? 'thirdPlace' : null}`}>
+                                                            <h2 className="card_title">{winnerData.name}</h2>
+                                                            <h2 className='card_title'>{winnerData.place}</h2>
+                                                            <h2 className="card_title">Likes: {winnerData.likes}</h2>
+                                                            <h2 className="card_title">Prize Won: {winnerData.prizeName}</h2>
+                                                        </div>
                                                     <br/>
                                                 </>
                                             );

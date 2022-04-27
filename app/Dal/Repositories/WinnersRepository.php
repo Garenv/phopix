@@ -4,6 +4,7 @@ namespace App\Dal\Repositories;
 
 use App\Dal\Interfaces\IWinnersRepository;
 use App\Models\LegacyWinners;
+use App\Models\Prizes;
 use Illuminate\Support\Facades\DB;
 
 class WinnersRepository implements IWinnersRepository
@@ -11,7 +12,7 @@ class WinnersRepository implements IWinnersRepository
 
     public function getPrizeData()
     {
-        return DB::table('prizes')->get();
+        return Prizes::all();
     }
 
     public function getTopThreeWinnersFromUploadsTable()
@@ -35,7 +36,10 @@ class WinnersRepository implements IWinnersRepository
 
     public function getAllWinnersFromLegacyWinnersTable()
     {
-        return LegacyWinners::all();
+        return DB::table('legacy_winners')
+            ->select('legacy_winners.UserID', 'legacy_winners.likes', 'legacy_winners.place', 'legacy_winners.name', 'legacy_winners.url', 'prizes.prizeName')
+            ->join('prizes', 'legacy_winners.prizeId', '=', 'prizes.prizeId')
+            ->get();
     }
 
 }

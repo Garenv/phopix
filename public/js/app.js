@@ -3635,8 +3635,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var PastWinners = function PastWinners() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      winnersData = _useState2[0],
-      setWinnersData = _useState2[1];
+      legacyWinnersData = _useState2[0],
+      setLegacyWinnersData = _useState2[1];
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -3646,15 +3646,19 @@ var PastWinners = function PastWinners() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     axios.get('http://localhost/api/get-all-legacy-winners').then(function (resp) {
       console.log(resp.data);
-      setWinnersData(resp.data);
+      setLegacyWinnersData(resp.data);
     })["catch"](function (error) {
       var errorStatus = error.response.status;
       setStatusCode(errorStatus);
     });
   }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-    children: statusCode !== 404 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
+    children: legacyWinnersData.length !== 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+        src: "https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg",
+        className: "phopixLogoPastWinners",
+        alt: "Past Winners Phopix Logo"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
         children: "Past Winners"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("ul", {
         className: "cards",
@@ -3662,22 +3666,29 @@ var PastWinners = function PastWinners() {
           className: "cards_item",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "card",
-            children: winnersData.map(function (winnerData) {
+            children: legacyWinnersData.map(function (winnerData) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                   className: "card_image",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
                     src: winnerData.url,
-                    className: "giftCards"
+                    className: "giftCards",
+                    alt: "Gift Card Images"
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                  className: "card_content",
+                  className: "card_content ".concat(winnerData.place === "1st Place" ? 'firstPlace' : winnerData.place === "2nd Place" ? 'secondPlace' : winnerData.place === "3rd Place" ? 'thirdPlace' : null),
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+                    className: "card_title",
+                    children: winnerData.name
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
                     className: "card_title",
                     children: winnerData.place
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
                     className: "card_title",
                     children: ["Likes: ", winnerData.likes]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+                    className: "card_title",
+                    children: ["Prize Won: ", winnerData.prizeName]
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {})]
               });
@@ -8846,7 +8857,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".cards_item {\n  margin: 0 auto;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".cards_item {\n  margin: 0 auto;\n}\n\n.card_title {\n  color: #000000;\n}\n\n.phopixLogoPastWinners {\n  width: 50%;\n  msrgin: 0 auto;\n  display: flex;\n  margin: 0 auto;\n}\n\n.firstPlace {\n  color: rgba(0, 0, 0, 0.72);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 98, 0, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.34);\n  border: 1px solid #deca73;\n  background: linear-gradient(-72deg, #ffde45, #ffffff 16%, #ffde45 21%, #ffffff 24%, #452100 27%, #ffde45 36%, #ffffff 45%, #ffffff 60%, #ffde45 72%, #ffffff 80%, #ffde45 84%, #452100);\n}\n\n.secondPlace {\n  color: rgba(0, 0, 0, 0.5);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.34);\n  border: 1px solid #dedede;\n  background: linear-gradient(-72deg, #dedede, #ffffff 16%, #dedede 21%, #ffffff 24%, #454545 27%, #dedede 36%, #ffffff 45%, #ffffff 60%, #dedede 72%, #ffffff 80%, #dedede 84%, #a1a1a1);\n}\n\n.button-bronze {\n  color: rgba(45, 0, 0, 0.55);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #dea173;\n  box-shadow: 2px 2px 0.5em rgba(122, 55, 34, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #dea173;\n  background: linear-gradient(-72deg, #ca7345, #ffdeca 16%, #ca7345 21%, #ffdeca 24%, #a14521 27%, #ca7345 36%, #ffdeca 45%, #ffdeca 60%, #ca7345 72%, #ffdeca 80%, #ca7345 84%, #732100);\n}\n\n.thirdPlace {\n  color: rgba(45, 0, 0, 0.55);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #dea173;\n  box-shadow: 2px 2px 0.5em rgba(122, 55, 34, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #dea173;\n  background: linear-gradient(-72deg, #ca7345, #ffdeca 16%, #ca7345 21%, #ffdeca 24%, #a14521 27%, #ca7345 36%, #ffdeca 45%, #ffdeca 60%, #ca7345 72%, #ffdeca 80%, #ca7345 84%, #732100);\n}\n\n.button-platinum {\n  color: rgba(0, 0, 0, 0.72);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #cacade;\n  background: linear-gradient(-72deg, #dedeff, #ffffff 16%, #dedeff 21%, #ffffff 24%, #555564 27%, #dedeff 36%, #ffffff 45%, #ffffff 60%, #dedeff 72%, #ffffff 80%, #dedeff 84%, #555564);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

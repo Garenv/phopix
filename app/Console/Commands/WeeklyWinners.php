@@ -57,60 +57,61 @@ class WeeklyWinners extends Command
         $timeStamp                       = $time->toDateTimeString();
 
         // First place data
-        $firstPlaceUserId                = $topThreeWinners[0]->UserID;
-        $firstPlaceEmail                 = $topThreeWinners[0]->email;
-        $firstPlaceLikes                 = $topThreeWinners[0]->likes;
-        $firstPlaceWinnerId              = 'w-' . Str::uuid()->toString();
-        $firstPlaceUrl                   = $topThreeWinners[0]->url;
-        $firstPlacePrizeId               = $prizesData[0]->prizeId;
+        $firstPlaceUserId               = $topThreeWinners[0]->UserID;
+        $firstPlaceLikes                = $topThreeWinners[0]->likes;
+        $firstPlaceWinnerId             = 'w-' . Str::uuid()->toString();
+        $firstPlaceUrl                  = $topThreeWinners[0]->url;
+        $firstPlacePrizeId              = $prizesData[0]->prizeId;
+        $firstPlaceName                 = $topThreeWinners[0]->name;
+
 
         // Second place data
         $secondPlaceUserId              = $topThreeWinners[1]->UserID;
-        $secondPlaceEmail               = $topThreeWinners[1]->email;
         $secondPlaceLikes               = $topThreeWinners[1]->likes;
         $secondPlaceWinnerId            = 'w-' . Str::uuid()->toString();
         $secondPlaceUrl                 = $topThreeWinners[1]->url;
         $secondPlacePrizeId             = $prizesData[1]->prizeId;
+        $secondPlaceName                = $topThreeWinners[1]->name;
 
         // Third place data
         $thirdPlaceUserId               = $topThreeWinners[2]->UserID;
-        $thirdPlaceEmail                = $topThreeWinners[2]->email;
         $thirdPlaceLikes                = $topThreeWinners[2]->likes;
         $thirdPlaceWinnerId             = 'w-' . Str::uuid()->toString();
         $thirdPlaceUrl                  = $topThreeWinners[2]->url;
         $thirdPlacePrizeId              = $prizesData[2]->prizeId;
+        $thirdPlaceName                = $topThreeWinners[2]->name;
 
         $dataFirstPlace = [
             'UserID'                    => $firstPlaceUserId,
-            'email'                     => $firstPlaceEmail,
             'place'                     => "1st Place",
             'likes'                     => $firstPlaceLikes,
             'winnerId'                  => $firstPlaceWinnerId,
             'url'                       => $firstPlaceUrl,
             'prizeId'                   => $firstPlacePrizeId,
-            'timeStamp'                 => $timeStamp
+            'timeStamp'                 => $timeStamp,
+            'name'                      => $firstPlaceName
         ];
 
         $dataSecondPlace = [
             'UserID'                    => $secondPlaceUserId,
-            'email'                     => $secondPlaceEmail,
             'place'                     => "2nd Place",
             'likes'                     => $secondPlaceLikes,
             'winnerId'                  => $secondPlaceWinnerId,
             'url'                       => $secondPlaceUrl,
             'prizeId'                   => $secondPlacePrizeId,
-            'timeStamp'                 => $timeStamp
+            'timeStamp'                 => $timeStamp,
+            'name'                      => $secondPlaceName
         ];
 
         $dataThirdPlace = [
             'UserID'                    => $thirdPlaceUserId,
-            'email'                     => $thirdPlaceEmail,
             'place'                     => "3rd Place",
             'likes'                     => $thirdPlaceLikes,
             'winnerId'                  => $thirdPlaceWinnerId,
             'url'                       => $thirdPlaceUrl,
             'prizeId'                   => $thirdPlacePrizeId,
-            'timeStamp'                 => $timeStamp
+            'timeStamp'                 => $timeStamp,
+            'name'                      => $thirdPlaceName
         ];
 
         // store them in winners table
