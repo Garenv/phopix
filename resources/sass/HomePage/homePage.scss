@@ -239,7 +239,7 @@ h6 span{
     //box-shadow: 0 8px 24px 0 rgba(255,255,255,.2);
 }
 .btn:hover{
-    background-color: #fff;
+    //background-color: #fff;
     //color:#08d;
     //box-shadow: 0 8px 24px 0 rgba(255,255,255,.2);
 }
@@ -374,7 +374,7 @@ section{
 
 
 .homePageHeader {
-    background-color: #fff;
+    background-color: #000000;
     box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
     position: fixed;
     width: 100%;
@@ -386,7 +386,7 @@ section{
     padding: 0;
     list-style: none;
     overflow: hidden;
-    background-color: #fff;
+    //background-color: #fff;
 }
 
 .homePageHeader li a {
@@ -398,7 +398,7 @@ section{
 
 .homePageHeader li a:hover,
 .homePageHeader .menu-btn:hover {
-    background-color: #f4f4f4;
+    //background-color: #f4f4f4;
 }
 
 .homePageHeader .logo {
@@ -423,13 +423,13 @@ section{
     cursor: pointer;
     display: inline-block;
     float: right;
-    padding: 28px 20px;
+    padding: 42px 32px;
     position: relative;
     user-select: none;
 }
 
 .homePageHeader .menu-icon .navicon {
-    background: #333;
+    background: #ffffff;
     display: block;
     height: 2px;
     position: relative;
@@ -439,7 +439,7 @@ section{
 
 .homePageHeader .menu-icon .navicon:before,
 .homePageHeader .menu-icon .navicon:after {
-    background: #333;
+    background: #ffffff;
     content: '';
     display: block;
     height: 100%;
@@ -464,7 +464,8 @@ section{
 
 .homePageHeader .menu-btn:checked ~ .menu {
     max-height: 240px;
-    text-align: center;
+    border-top: 1px solid blue;
+    //text-align: center;
 }
 
 .homePageHeader .menu-btn:checked ~ .menu-icon .navicon {
@@ -486,7 +487,6 @@ section{
 
 .logoHome {
     width: 6rem;
-    background-color: navy;
 }
 
 @media (min-width: 48em) {

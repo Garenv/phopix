@@ -29,12 +29,12 @@ const Navbar = () => {
             <div className="container">
                 <div className="logo-box">
                     <a href="/">
-                        <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixLogo.png" className="phopixLogo" alt="Phopix Logo"/>
+                        <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_logo_large.png" className="phopixLogo" alt="Phopix Logo"/>
                     </a>
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="">Home</a></li>
+                        <li><a href="">This Week's Winners</a></li>
                         <li style={{color: "#000000"}}>Welcome, {name}!</li>
                         <li><a href="#" className="myButton" onClick={logout}>Logout</a></li>
                     </ul>

@@ -123,7 +123,7 @@ const LoginRegister = () => {
             {/*<img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314.jpg" className="img-fluid" alt=""/>*/}
 
             <header className="homePageHeader">
-                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314.jpg" className="logoHome" alt="logo" />
+                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg" className="logoHome" alt="logo" />
                 <input className="menu-btn" type="checkbox" id="menu-btn"/>
                 <label className="menu-icon" htmlFor="menu-btn"><span className="navicon"></span></label>
                 <ul className="menu">
