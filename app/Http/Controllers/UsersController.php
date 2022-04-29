@@ -63,7 +63,7 @@ class UsersController extends Controller
                 return response()->json(["status" => "Failed to delete!", 'UserID' => $userId]);
             }
 
-            return response()->json(["status" => "Successfully deleted!", 'UserID' => $userId]);
+            return response()->json(["message" => "You've deleted your photo", 'UserID' => $userId]);
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());

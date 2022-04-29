@@ -2729,18 +2729,28 @@ var Gallery = function Gallery() {
 
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
       _useState10 = _slicedToArray(_useState9, 2),
-      statusCode = _useState10[0],
-      setStatusCode = _useState10[1];
+      statusDelete = _useState10[0],
+      setStatusDelete = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState12 = _slicedToArray(_useState11, 2),
-      errorClose = _useState12[0],
-      setErrorClose = _useState12[1];
+      statusDeleteMessage = _useState12[0],
+      setStatusDeleteMessage = _useState12[1];
 
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
       _useState14 = _slicedToArray(_useState13, 2),
-      uploadSuccess = _useState14[0],
-      setUploadSuccess = _useState14[1];
+      statusCode = _useState14[0],
+      setStatusCode = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState16 = _slicedToArray(_useState15, 2),
+      errorClose = _useState16[0],
+      setErrorClose = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState18 = _slicedToArray(_useState17, 2),
+      uploadSuccess = _useState18[0],
+      setUploadSuccess = _useState18[1];
 
   var handleClose = function handleClose() {
     return setShow(false);
@@ -2749,20 +2759,20 @@ var Gallery = function Gallery() {
 
   var weeklyDay = today.getDay();
 
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      _useState16 = _slicedToArray(_useState15, 2),
-      showWinners = _useState16[0],
-      setShowWinners = _useState16[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState20 = _slicedToArray(_useState19, 2),
+      showWinners = _useState20[0],
+      setShowWinners = _useState20[1];
 
   var handleCloseWinners = function handleCloseWinners() {
     return setShowWinners(false);
   }; // User clicks for likes
 
 
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
-      _useState18 = _slicedToArray(_useState17, 2),
-      currentUserClicks = _useState18[0],
-      setCurrentUserClicks = _useState18[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
+      _useState22 = _slicedToArray(_useState21, 2),
+      currentUserClicks = _useState22[0],
+      setCurrentUserClicks = _useState22[1];
 
   var closeMessages = function closeMessages() {
     setErrorClose(true);
@@ -2848,9 +2858,20 @@ var Gallery = function Gallery() {
     axios["delete"](url, {
       headers: headers
     }).then(function (resp) {
-      console.log(resp);
+      var okStatus = resp.status;
+      var successMessage = resp.data.message;
+
+      if (okStatus) {
+        setShow(false);
+      }
+
+      setStatusDeleteMessage(successMessage);
+      setStatusDelete(okStatus);
     })["catch"](function (error) {
-      console.log(error);
+      var errorMessage = error.response.data.message;
+      var errorStatus = error.response.status;
+      setStatusMessage(errorMessage);
+      setStatusCode(errorStatus);
     });
   };
 
@@ -2915,8 +2936,20 @@ var Gallery = function Gallery() {
         className: "notification success ".concat(errorClose ? 'closed' : null),
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
           className: "title",
-          children: "Got it!"
+          children: "Success!"
         }), statusMessage, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "close",
+          onClick: closeMessages,
+          children: "X"
+        })]
+      })
+    }) : null, statusDelete === 200 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("section", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "notification error ".concat(errorClose ? 'closed' : null),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "title",
+          children: "Deleted"
+        }), statusDeleteMessage, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
           className: "close",
           onClick: closeMessages,
           children: "X"

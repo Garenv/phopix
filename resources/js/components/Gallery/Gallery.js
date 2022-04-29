@@ -15,6 +15,8 @@ const Gallery = () => {
     const [filePreview, setFilePreview]                           = useState(null);
     const [filePreviewModalStatus, setFilePreviewModalStatus]     = useState(true);
     const [statusMessage, setStatusMessage]                       = useState("");
+    const [statusDelete, setStatusDelete]                         = useState(null);
+    const [statusDeleteMessage, setStatusDeleteMessage]           = useState("");
     const [statusCode, setStatusCode]                             = useState(null);
     const [errorClose, setErrorClose]                             = useState(false);
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
@@ -90,9 +92,21 @@ const Gallery = () => {
 
         axios.delete(url,{headers})
             .then(resp => {
-                console.log(resp);
+                let okStatus       = resp.status;
+                let successMessage = resp.data.message;
+
+                if(okStatus) {
+                    setShow(false);
+                }
+
+                setStatusDeleteMessage(successMessage);
+                setStatusDelete(okStatus);
             }).catch(error => {
-            console.log(error);
+            let errorMessage       = error.response.data.message;
+            let errorStatus        = error.response.status;
+
+            setStatusMessage(errorMessage);
+            setStatusCode(errorStatus);
         });
     }
 
@@ -149,14 +163,18 @@ const Gallery = () => {
         <>
             {location.pathname === '/gallery' ? <Navbar data={data}/> : null }
 
-            {/*{isLoading ? <div><img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" alt="Logo"/></div> : null}*/}
-
-
             { statusCode === 200 ? <section>
-                <div className={`notification success ${errorClose ? 'closed' : null}`}>
-                    <span className="title">Got it!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
-                </div>
-            </section>
+                    <div className={`notification success ${errorClose ? 'closed' : null}`}>
+                        <span className="title">Success!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
+                    </div>
+                </section>
+                : null }
+
+            { statusDelete === 200 ? <section>
+                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                        <span className="title">Deleted</span>{statusDeleteMessage}<span className='close' onClick={closeMessages}>X</span>
+                    </div>
+                </section>
                 : null }
 
             { !filePreviewModalStatus ? <section>
