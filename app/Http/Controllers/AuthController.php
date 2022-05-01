@@ -108,6 +108,7 @@ class AuthController extends Controller
             $userId              = 'u-' . Str::uuid()->toString();
             $data                = $request->all();
             $data['UserID']      = $userId;
+            $name                = $data['name'];
             $age                 = $data['age'];
 
             $locationData        = Location::get();
@@ -124,6 +125,7 @@ class AuthController extends Controller
 
             return response()->json([
                 "status"         => true,
+                "name"           => $name,
                 "UserID"         => $userId,
                 "message"        => "Registered Successfully!",
                 "age"            => $age,
