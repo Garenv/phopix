@@ -175,11 +175,21 @@ class AuthController extends Controller
     {
         $forgotPasswordEmail = $request->input('email');
 
-        $request->validate([
-            'email' => 'required',
+        $validator           = Validator::make($request->all(),[
+            'email'          => 'email'
         ]);
 
+        if($validator->fails()) {
+            return response()->json(['status' => 'failed', 'message' => 'Please enter a valid email address'], 400);
+        }
+
         $token = Str::random(64);
+
+        $checkForUserEmail = User::where('email', '=', $forgotPasswordEmail)->first();
+
+        if(empty($checkForUserEmail)) {
+            return response()->json(['status' => 'failed', 'message' => "We can't find your email in our system!"], 400);
+        }
 
         DB::table('password_resets')->insert([
             'email' => $forgotPasswordEmail,
@@ -191,6 +201,7 @@ class AuthController extends Controller
             $message->to($request->get('email'));
             $message->subject('Reset Password');
         });
+
     }
 
     public function showResetPasswordForm($token)

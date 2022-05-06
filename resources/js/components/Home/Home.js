@@ -7,16 +7,18 @@ const LoginRegister = () => {
     const [email, setEmail]                                         = useState("");
     const [age, setAge]                                             = useState("");
     const [password, setPassword]                                   = useState("");
-    const [forgotPasswordEmail, setForgotPasswordEmailEmail]        = useState("");
+    const [forgotPasswordEmail, setForgotPasswordEmail]             = useState("");
     const [emailError, setEmailError]                               = useState("");
     const [errorStatus, setErrorStatus]                             = useState(null);
+    const [forgotPasswordBtnFlag, setForgotPasswordBtnFlag]         = useState(false);
+    const [forgotPasswordBtnTxt, setForgotPasswordBtnTxt]           = useState("Send Forgot Password Link");
+
 
     // Handles password error upon logging in
     const [passwordError, setPasswordError]                         = useState("");
 
     // Close error
     const [errorClose, setErrorClose]                               = useState(false);
-
 
     const handleClose                                               = () => setShow(false);
     const handleShow                                                = () => setShow(true);
@@ -85,6 +87,11 @@ const LoginRegister = () => {
         });
     };
 
+    const forgotPassWordClicked = () => {
+        setForgotPasswordBtnFlag(true);
+        setForgotPasswordBtnTxt("Sent!");
+    };
+
     const handleForgotPassword = (e) => {
         e.preventDefault();
 
@@ -99,10 +106,6 @@ const LoginRegister = () => {
 
     return (
         <>
-
-
-
-
             { errorStatus === 400 ?
                 <section>
                     <div className={`notification error ${errorClose ? 'closed' : null}`}>
@@ -179,8 +182,10 @@ const LoginRegister = () => {
                                                     </p>
 
                                                     <Modal show={show} onHide={handleClose}>
-                                                        <Modal.Header closeButton className="modalHeader"></Modal.Header>
-                                                        <h1 className="forgotPasswordText">Forgot Password</h1>
+                                                        <Modal.Header closeButton className="modalHeader">
+                                                            <h1 className="forgotPasswordText">Just enter your email and we'll send you a link to reset your password :)</h1>
+                                                        </Modal.Header>
+
                                                         <Modal.Body>
                                                             <form onSubmit={handleForgotPassword} method="POST">
                                                                 <div className="form-group row">
@@ -189,14 +194,14 @@ const LoginRegister = () => {
                                                                         className="form-control"
                                                                         placeholder="Enter your email address"
                                                                         name="email"
-                                                                        onChange={(e) => setForgotPasswordEmailEmail(e.target.value)}
+                                                                        onChange={(e) => setForgotPasswordEmail(e.target.value)}
                                                                         required
                                                                         autoFocus
                                                                     />
                                                                 </div>
                                                                 <div className="text-center sendPasswordResetLinkBtnWrapper">
-                                                                    <button type="submit" className="btn btn-primary sendPasswordResetLinkBtn">
-                                                                        Send Password Reset Link
+                                                                    <button type="submit" className={`${!forgotPasswordBtnFlag ? 'btn' : 'forgotPasswordTextSuccess'} sendPasswordResetLinkBtn`} onClick={forgotPassWordClicked}>
+                                                                        {forgotPasswordBtnTxt}
                                                                     </button>
                                                                 </div>
                                                             </form>
