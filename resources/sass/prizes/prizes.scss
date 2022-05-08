@@ -31,6 +31,20 @@ img {
     padding: 1rem;
 }
 
+.pLogoPrizes {
+    width: 20%;
+    margin: 0 auto;
+    display: block;
+}
+
+@media screen and (max-width: 600px) {
+    .pLogoPrizes {
+        width: 40%;
+        margin: 0 auto;
+        display: block;
+    }
+}
+
 @media (min-width: 40rem) {
     .cards_item {
         width: 50%;
