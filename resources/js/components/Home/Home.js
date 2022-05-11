@@ -133,6 +133,7 @@ const LoginRegister = () => {
                     <li><Link to="/faq"><Button className="faqButton">FAQ</Button></Link></li>
                     <li><Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link></li>
                     <li><Link to="/past-winners"><Button className="prizesButton">Past Winners</Button></Link></li>
+                    <li><Link to="/support"><Button className="prizesButton">Support</Button></Link></li>
                 </ul>
             </header>
 

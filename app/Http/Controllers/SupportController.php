@@ -12,11 +12,10 @@ class SupportController extends Controller
 
     public function support(Request $request)
     {
-//        dd($request->file('file'));
         try {
             $name                        = $request->get('name');
             $email                       = $request->get('email');
-            $file                        = $request->file('file');
+//            $file                        = $request->file('file');
             $messageText                 = $request->get('messageText');
 
             $validator = Validator::make($request->all() , [
@@ -53,19 +52,19 @@ class SupportController extends Controller
                 'messageText'            => $messageText
             ];
 
-            $publicPath                  = public_path('/attachments/');
-            $fileName                    = $file->getClientOriginalName();
-            $attachFile                  = [$publicPath . $fileName];
+//            $publicPath                  = public_path('/attachments/');
+//            $fileName                    = $file->getClientOriginalName();
+//            $attachFile                  = [$publicPath . $fileName];
 
             // Store the upload in the public/attachment folder
-            $file->move($publicPath, $fileName);
+//            $file->move($publicPath, $fileName);
 
-            Mail::send('email.support.support', $data, function($message) use($data, $attachFile) {
+            Mail::send('email.support.support', $data, function($message) use($data) { // ,$attachFile
                 $message->to('garen.vartanian@apexunitedllc.com');
 
-                foreach ($attachFile as $file){
-                    $message->attach($file);
-                }
+//                foreach ($attachFile as $file){
+//                    $message->attach($file);
+//                }
             });
 
             $mailFailures                = Mail::failures();
@@ -75,7 +74,8 @@ class SupportController extends Controller
                 return response()->json(['status' => 'failed', 'message' => 'Message not sent!'], 422);
             }
 
-            view('email.support.support', compact('name', 'email', 'file', 'messageText'));
+            view('email.support.support', compact('name', 'email', 'messageText'));
+//            view('email.support.support', compact('name', 'email', 'file', 'messageText'));
 
             return response()->json(['status' => 'success', 'message' => 'Successfully Sent!']);
 

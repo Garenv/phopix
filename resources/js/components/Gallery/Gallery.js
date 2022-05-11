@@ -78,7 +78,7 @@ const Gallery = () => {
             'likeCount': currentUserClicks
         };
 
-        axios.post(url, data, {headers});
+        axios.put(url, data, {headers});
 
     };
 

@@ -38,6 +38,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('get-user-like',                         [UsersController::class,      'getUserLikes']);
     Route::get('choose-winners',                        [WinnersController::class,    'getTopThreeWinnersFromUploadsTable']);
     Route::get('get-winners',                           [WinnersController::class,    'getTopThreeWinnersFromWinnersTable']);
-    Route::post('post-user-like',                       [UsersController::class,      'incrementDecrementLike']);
+    Route::put('post-user-like',                       [UsersController::class,      'incrementDecrementLike']);
     Route::delete('delete-user-upload',                 [UsersController::class,      'deleteUserUpload']);
 });
