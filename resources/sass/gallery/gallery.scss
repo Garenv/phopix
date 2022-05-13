@@ -118,6 +118,26 @@ h6.you {
     text-align: center;
 }
 
+.btn-delete {
+    border-radius: 4px;
+    height: 44px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 200ms linear;
+    padding: 0 30px;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    -ms-flex-pack: center;
+    text-align: center;
+    border: none;
+    background-color: #ff0000;
+    box-shadow: 0 8px 24px 0 rgba(18, 248, 173,.2);
+    color: #fff;
+}
+
 //.loading {
 //    animation: rotation 2s infinite linear;
 //    display: flex;

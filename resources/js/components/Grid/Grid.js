@@ -14,7 +14,7 @@ const Grid = (props) => {
                     <h2 className="userName">{props.userName} {localStorage.getItem('UserID') === props.userId ? <h6 className="you">(You)</h6> : null}</h2>
                     <span style={{display: 'none'}}>{props.currentUserClicks}</span>
                     <h5 className="likes">Likes: {likes}</h5>
-                    {localStorage.getItem('UserID') === props.userId ? <button className="btn-danger" onClick={() => props.userDelete(props.userId)}>Delete</button> : null}
+                    {localStorage.getItem('UserID') === props.userId ? <button className="btn-delete btn-danger" onClick={() => props.userDelete(props.userId)}>Delete</button> : null}
                 </div>
             </li>
         </>
