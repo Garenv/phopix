@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUploadsRepository;
-use App\Models\Upload;
+use App\Models\Uploads;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +52,7 @@ class FileUploadController extends Controller
             ];
 
             try {
-                Upload::create($data);
+                Uploads::create($data);
             } catch(QueryException $e){
                 $errorCode = $e->errorInfo[1];
 

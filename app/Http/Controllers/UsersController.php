@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUsersRepository;
+use App\Models\Uploads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
@@ -18,33 +20,36 @@ class UsersController extends Controller
         $this->__usersRepository = $usersRepository;
     }
 
-    public function incrementDecrementLike(Request $request)
+    public function handleLike(Request $request)
     {
         try {
-            $userId                                = $request->get('UserID');
-            $likeCount                             = $request->get('likeCount');
-            $getUserLikes                          = $this->__usersRepository->getUserLikes($userId);
-            $userLikes                             = $getUserLikes[0]->likes;
-
-            if($userLikes >= 1) {
-                $userLikes--;
-                $this->__usersRepository->incrementDecrementLike($userId, $userLikes, $likeCount);
-            }
-
-            $userLikes++;
-            $incrementDecrementLike                 = $this->__usersRepository->incrementDecrementLike($userId, $userLikes, $likeCount);
-
-            if(!$incrementDecrementLike) {
-                return [
-                    'status'                        => 'failed',
-                    'message'                       => 'something went wrong!'
-                ];
-            }
+            $userId                                  = $request->get('UserID');
+            Uploads::where(['UserID' => $userId])->update(['likes' => DB::raw('likes + 1')]);
+            $getUserLikes                            = $this->__usersRepository->getUserLikes($userId);
+            $userLikes                               = $getUserLikes[0]->likes;
 
             return [
-                'status'                             => "successful",
                 'UserID'                             => $userId,
-                'incrementDecrementLikes'            => $incrementDecrementLike,
+                'userLikes'                          => $userLikes,
+            ];
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
+        }
+
+    }
+
+    public function handleDislike(Request $request)
+    {
+        try {
+            $userId                                  = $request->get('UserID');
+            Uploads::where(['UserID' => $userId])->update(['likes' => DB::raw('likes - 1')]);
+            $getUserLikes                            = $this->__usersRepository->getUserLikes($userId);
+            $userLikes                               = $getUserLikes[0]->likes;
+
+            return [
+                'UserID'                             => $userId,
+                'userLikes'                          => $userLikes
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());

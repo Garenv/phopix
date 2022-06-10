@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Upload extends Model
+class Uploads extends Model
 {
+
     use HasApiTokens, HasFactory, Notifiable;
 
-    const CREATED_AT = null;
+    // Despite not needed updated_at column, I was forced to include it in the table
+    // Not sure why the below lines didn't let me bypass incrementing likes without
+    // the need of updated_at.  Will need to check why later on down the line.
+    public $timestamps = false;
     const UPDATED_AT = null;
 
     /**
@@ -23,6 +27,8 @@ class Upload extends Model
         'UserID',
         'url',
         'isUploaded',
-        'timeStamp'
+        'timeStamp',
+        'likes',
+        'dislikes'
     ];
 }

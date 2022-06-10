@@ -2769,10 +2769,20 @@ var Gallery = function Gallery() {
   }; // User clicks for likes
 
 
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
       _useState22 = _slicedToArray(_useState21, 2),
       currentUserClicks = _useState22[0],
       setCurrentUserClicks = _useState22[1];
+
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState24 = _slicedToArray(_useState23, 2),
+      liked = _useState24[0],
+      setLiked = _useState24[1];
+
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState26 = _slicedToArray(_useState25, 2),
+      disliked = _useState26[0],
+      setDisliked = _useState26[1];
 
   var closeMessages = function closeMessages() {
     setErrorClose(true);
@@ -2824,28 +2834,72 @@ var Gallery = function Gallery() {
     return _fetchUploads.apply(this, arguments);
   }
 
+  var _useQuery = (0,react_query__WEBPACK_IMPORTED_MODULE_2__.useQuery)('uploads', fetchUploads),
+      data = _useQuery.data,
+      error = _useQuery.error,
+      isError = _useQuery.isError,
+      isLoading = _useQuery.isLoading; // First argument is a string to cache and track the query result
+
+
+  if (isLoading) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "loading"
+    }); // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
+  }
+
+  if (isError) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      children: ["Error! ", error.message]
+    });
+  }
+
   var handleLikesBasedOnUserId = function handleLikesBasedOnUserId(likedPhotoUserId) {
-    if (currentUserClicks > 1) {
+    if (currentUserClicks >= 1) {
       setCurrentUserClicks(currentUserClicks - 1);
-      incrementDecrementLike(likedPhotoUserId);
+      handleDislike(likedPhotoUserId);
     } else {
       setCurrentUserClicks(currentUserClicks + 1);
-      incrementDecrementLike(likedPhotoUserId);
+      handleLike(likedPhotoUserId);
     }
   };
 
-  var incrementDecrementLike = function incrementDecrementLike(likedPhotoUserId) {
-    var url = 'http://localhost/api/post-user-like';
+  var handleLike = function handleLike(likedPhotoUserId) {
+    var url = 'http://localhost/api/like';
     var headers = {
       "Accept": 'application/json',
       "Authorization": "Bearer ".concat(authToken)
     };
     var data = {
-      'UserID': likedPhotoUserId,
-      'likeCount': currentUserClicks
+      'UserID': likedPhotoUserId // 'likeCount': currentUserClicks
+
     };
-    axios.put(url, data, {
+    axios.post(url, data, {
       headers: headers
+    }).then(function (resp) {
+      // setLiked(true);
+      console.log(resp.data); // setUserLike(resp.data.incrementDecrementLikes);
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  };
+
+  var handleDislike = function handleDislike(likedPhotoUserId) {
+    var url = 'http://localhost/api/dislike';
+    var headers = {
+      "Accept": 'application/json',
+      "Authorization": "Bearer ".concat(authToken)
+    };
+    var data = {
+      'UserID': likedPhotoUserId // 'likeCount': currentUserClicks
+
+    };
+    axios.post(url, data, {
+      headers: headers
+    }).then(function (resp) {
+      // setDisliked(true);
+      console.log(resp.data); // setUserLike(resp.data.incrementDecrementLikes);
+    })["catch"](function (err) {
+      console.log(err);
     });
   };
 
@@ -2908,25 +2962,6 @@ var Gallery = function Gallery() {
       setStatusCode(errorStatus);
     });
   };
-
-  var _useQuery = (0,react_query__WEBPACK_IMPORTED_MODULE_2__.useQuery)('uploads', fetchUploads),
-      data = _useQuery.data,
-      error = _useQuery.error,
-      isError = _useQuery.isError,
-      isLoading = _useQuery.isLoading; // First argument is a string to cache and track the query result
-
-
-  if (isLoading) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-      className: "loading"
-    }); // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
-  }
-
-  if (isError) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-      children: ["Error! ", error.message]
-    });
-  }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
     children: [location.pathname === '/gallery' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Navbar_Navbar__WEBPACK_IMPORTED_MODULE_5__["default"], {

@@ -29,7 +29,9 @@ const Gallery = () => {
     const handleCloseWinners                                      = () => setShowWinners(false);
 
     // User clicks for likes
-    const [currentUserClicks, setCurrentUserClicks]               = useState(1);
+    const [currentUserClicks, setCurrentUserClicks]               = useState(null);
+    const [liked, setLiked]               = useState(false);
+    const [disliked, setDisliked]               = useState(false);
 
     const closeMessages = () => {
         setErrorClose(true);
@@ -55,18 +57,29 @@ const Gallery = () => {
         return data;
     }
 
+    const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads); // First argument is a string to cache and track the query result
+
+    if(isLoading){
+        return <div className="loading"></div>
+        // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
+    }
+    if(isError){
+        return <div>Error! {error.message}</div>
+    }
+
     const handleLikesBasedOnUserId = (likedPhotoUserId) => {
-        if(currentUserClicks > 1) {
+        if(currentUserClicks >= 1) {
             setCurrentUserClicks(currentUserClicks - 1);
-            incrementDecrementLike(likedPhotoUserId);
+            handleDislike(likedPhotoUserId);
         } else {
             setCurrentUserClicks(currentUserClicks + 1);
-            incrementDecrementLike(likedPhotoUserId);
+            handleLike(likedPhotoUserId);
         }
+
     };
 
-    const incrementDecrementLike = (likedPhotoUserId) => {
-        const url = 'http://localhost/api/post-user-like';
+    const handleLike = (likedPhotoUserId) => {
+        const url = 'http://localhost/api/like';
 
         const headers = {
             "Accept": 'application/json',
@@ -74,11 +87,43 @@ const Gallery = () => {
         };
 
         let data = {
-            'UserID': likedPhotoUserId,
-            'likeCount': currentUserClicks
+            'UserID': likedPhotoUserId
+            // 'likeCount': currentUserClicks
         };
 
-        axios.put(url, data, {headers});
+        axios.post(url, data, {headers})
+            .then(resp => {
+                // setLiked(true);
+                console.log(resp.data);
+                // setUserLike(resp.data.incrementDecrementLikes);
+            }).catch(err => {
+            console.log(err);
+        });
+
+    };
+
+    const handleDislike = (likedPhotoUserId) => {
+        const url = 'http://localhost/api/dislike';
+
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${authToken}`
+        };
+
+        let data = {
+            'UserID': likedPhotoUserId
+            // 'likeCount': currentUserClicks
+        };
+
+
+        axios.post(url, data, {headers})
+            .then(resp => {
+                // setDisliked(true);
+                console.log(resp.data);
+                // setUserLike(resp.data.incrementDecrementLikes);
+            }).catch(err => {
+            console.log(err);
+        });
 
     };
 
@@ -146,18 +191,6 @@ const Gallery = () => {
             setStatusCode(errorStatus);
         });
     };
-
-
-    const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads); // First argument is a string to cache and track the query result
-
-
-    if(isLoading){
-        return <div className="loading"></div>
-        // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
-    }
-    if(isError){
-        return <div>Error! {error.message}</div>
-    }
 
     return (
         <>
