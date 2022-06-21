@@ -51,7 +51,7 @@ const Gallery = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        const {data} = await axios.get('http://localhost/api/get-user-uploads-data', {headers});
+        const {data} = await axios.get('http://127.0.0.1:8000/api/get-user-uploads-data', {headers});
         return data;
     }
 
@@ -66,7 +66,7 @@ const Gallery = () => {
     };
 
     const incrementDecrementLike = (likedPhotoUserId) => {
-        const url = 'http://localhost/api/post-user-like';
+        const url = 'http://127.0.0.1:8000/api/post-user-like';
 
         const headers = {
             "Accept": 'application/json',
@@ -83,7 +83,7 @@ const Gallery = () => {
     };
 
     const deleteUserUpload = (likedPhotoUserId) => {
-        const url = `http://localhost/api/delete-user-upload?UserID=${likedPhotoUserId}`;
+        const url = `http://127.0.0.1:8000/api/delete-user-upload?UserID=${likedPhotoUserId}`;
 
         const headers = {
             "Accept": 'application/json',
@@ -115,7 +115,7 @@ const Gallery = () => {
     }
 
     const fileUpload = () => {
-        const url = 'http://localhost/api/file-upload';
+        const url = 'http://127.0.0.1:8000/api/file-upload';
 
         let formData = new FormData();
         let imagefile = document.querySelector('#file');
