@@ -28,7 +28,6 @@ class Uploads extends Model
         'url',
         'isUploaded',
         'timeStamp',
-        'likes',
-        'dislikes'
+        'likes'
     ];
 }

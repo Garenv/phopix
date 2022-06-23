@@ -4,7 +4,7 @@ namespace App\Dal\Repositories;
 
 
 use App\Dal\Interfaces\IUsersRepository;
-use App\Models\Upload;
+use App\Models\Uploads;
 use Illuminate\Support\Facades\DB;
 
 class UsersRepository implements IUsersRepository
@@ -36,7 +36,7 @@ class UsersRepository implements IUsersRepository
 
     public function deleteUserUpload($userId)
     {
-        return Upload::where('UserID', $userId)->delete();
+        return Uploads::where('UserID', $userId)->delete();
     }
 
 

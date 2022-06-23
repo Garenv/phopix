@@ -7,7 +7,7 @@ const PastWinners = () => {
     const [statusCode, setStatusCode]               = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost/api/get-all-legacy-winners')
+        axios.get('http://127.0.0.1:8000/api/get-all-legacy-winners')
             .then(resp => {
                 console.log(resp.data);
                 setLegacyWinnersData(resp.data);

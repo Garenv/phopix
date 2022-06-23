@@ -15,7 +15,7 @@ const Navbar = () => {
 
         const data = "";
 
-        axios.post('http://localhost/api/logout', data, {headers})
+        axios.post('http://127.0.0.1:8000/api/logout', data, {headers})
             .then(resp => {
                 localStorage.removeItem('token');
                 history.push('/');

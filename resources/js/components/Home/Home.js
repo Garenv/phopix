@@ -43,7 +43,7 @@ const LoginRegister = () => {
 
         JSON.stringify(dataLogin);
 
-        axios.post('http://localhost/api/login', dataLogin)
+        axios.post('http://127.0.0.1:8000/api/login', dataLogin)
             .then(resp => {
                 console.log(resp);
                 localStorage.setItem('token', resp.data.token);
@@ -72,7 +72,7 @@ const LoginRegister = () => {
 
         JSON.stringify(dataRegister);
 
-        axios.post('http://localhost/api/register', dataRegister)
+        axios.post('http://127.0.0.1:8000/api/register', dataRegister)
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
@@ -101,7 +101,7 @@ const LoginRegister = () => {
 
         console.log(dataRegister)
 
-        axios.post('http://localhost/api/forgot-password', dataRegister);
+        axios.post('http://127.0.0.1:8000/forgot-password', dataRegister);
     };
 
     return (

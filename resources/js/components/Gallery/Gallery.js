@@ -53,13 +53,16 @@ const Gallery = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        const {data} = await axios.get('http://localhost/api/get-user-uploads-data', {headers});
+        const {data} = await axios.get('http://127.0.0.1:8000/api/get-user-uploads-data', {headers});
         return data;
     }
+
+
 
     const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads); // First argument is a string to cache and track the query result
 
     if(isLoading){
+        console.log(data)
         return <div className="loading"></div>
         // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
     }
@@ -79,7 +82,7 @@ const Gallery = () => {
     };
 
     const handleLike = (likedPhotoUserId) => {
-        const url = 'http://localhost/api/like';
+        const url = 'http://127.0.0.1:8000/api/like';
 
         const headers = {
             "Accept": 'application/json',
@@ -103,7 +106,7 @@ const Gallery = () => {
     };
 
     const handleDislike = (likedPhotoUserId) => {
-        const url = 'http://localhost/api/dislike';
+        const url = 'http://127.0.0.1:8000/api/dislike';
 
         const headers = {
             "Accept": 'application/json',
@@ -128,7 +131,7 @@ const Gallery = () => {
     };
 
     const deleteUserUpload = (likedPhotoUserId) => {
-        const url = `http://localhost/api/delete-user-upload?UserID=${likedPhotoUserId}`;
+        const url = `http://127.0.0.1:8000/api/delete-user-upload?UserID=${likedPhotoUserId}`;
 
         const headers = {
             "Accept": 'application/json',
@@ -160,7 +163,7 @@ const Gallery = () => {
     }
 
     const fileUpload = () => {
-        const url = 'http://localhost/api/file-upload';
+        const url = 'http://127.0.0.1:8000/api/file-upload';
 
         let formData = new FormData();
         let imagefile = document.querySelector('#file');

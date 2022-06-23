@@ -8,7 +8,7 @@ const Prizes = () => {
     const [statusCode, setStatusCode]                             = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost/api/prizes')
+        axios.get('http://127.0.0.1:8000/api/prizes')
             .then(resp => {
                 setPrizeData(resp.data);
             }).catch(error => {

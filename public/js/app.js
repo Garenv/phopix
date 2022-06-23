@@ -2351,7 +2351,7 @@ var Navbar = function Navbar() {
       "Authorization": "Bearer ".concat(authToken)
     };
     var data = "";
-    axios.post('http://localhost/api/logout', data, {
+    axios.post('http://127.0.0.1:8000/api/logout', data, {
       headers: headers
     }).then(function (resp) {
       localStorage.removeItem('token');
@@ -2815,7 +2815,7 @@ var Gallery = function Gallery() {
                 "Authorization": "Bearer ".concat(authToken)
               };
               _context.next = 3;
-              return axios.get('http://localhost/api/get-user-uploads-data', {
+              return axios.get('http://127.0.0.1:8000/api/get-user-uploads-data', {
                 headers: headers
               });
 
@@ -2842,6 +2842,7 @@ var Gallery = function Gallery() {
 
 
   if (isLoading) {
+    console.log(data);
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       className: "loading"
     }); // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
@@ -2864,7 +2865,7 @@ var Gallery = function Gallery() {
   };
 
   var handleLike = function handleLike(likedPhotoUserId) {
-    var url = 'http://localhost/api/like';
+    var url = 'http://127.0.0.1:8000/api/like';
     var headers = {
       "Accept": 'application/json',
       "Authorization": "Bearer ".concat(authToken)
@@ -2884,7 +2885,7 @@ var Gallery = function Gallery() {
   };
 
   var handleDislike = function handleDislike(likedPhotoUserId) {
-    var url = 'http://localhost/api/dislike';
+    var url = 'http://127.0.0.1:8000/api/dislike';
     var headers = {
       "Accept": 'application/json',
       "Authorization": "Bearer ".concat(authToken)
@@ -2904,7 +2905,7 @@ var Gallery = function Gallery() {
   };
 
   var deleteUserUpload = function deleteUserUpload(likedPhotoUserId) {
-    var url = "http://localhost/api/delete-user-upload?UserID=".concat(likedPhotoUserId);
+    var url = "http://127.0.0.1:8000/api/delete-user-upload?UserID=".concat(likedPhotoUserId);
     var headers = {
       "Accept": 'application/json',
       "Authorization": "Bearer ".concat(authToken)
@@ -2934,7 +2935,7 @@ var Gallery = function Gallery() {
   };
 
   var fileUpload = function fileUpload() {
-    var url = 'http://localhost/api/file-upload';
+    var url = 'http://127.0.0.1:8000/api/file-upload';
     var formData = new FormData();
     var imagefile = document.querySelector('#file');
     formData.append("image", imagefile.files[0]);
@@ -3298,7 +3299,7 @@ var LoginRegister = function LoginRegister() {
       'password': password
     };
     JSON.stringify(dataLogin);
-    axios.post('http://localhost/api/login', dataLogin).then(function (resp) {
+    axios.post('http://127.0.0.1:8000/api/login', dataLogin).then(function (resp) {
       console.log(resp);
       localStorage.setItem('token', resp.data.token);
       localStorage.setItem('UserID', resp.data.UserID);
@@ -3321,7 +3322,7 @@ var LoginRegister = function LoginRegister() {
       'password': password
     };
     JSON.stringify(dataRegister);
-    axios.post('http://localhost/api/register', dataRegister).then(function (resp) {
+    axios.post('http://127.0.0.1:8000/api/register', dataRegister).then(function (resp) {
       localStorage.setItem('token', resp.data.token);
       localStorage.setItem('UserID', resp.data.UserID);
       localStorage.setItem('name', resp.data.name);
@@ -3345,7 +3346,7 @@ var LoginRegister = function LoginRegister() {
       'email': forgotPasswordEmail
     };
     console.log(dataRegister);
-    axios.post('http://localhost/api/forgot-password', dataRegister);
+    axios.post('http://127.0.0.1:8000/forgot-password', dataRegister);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
@@ -3739,7 +3740,7 @@ var PastWinners = function PastWinners() {
       setStatusCode = _useState4[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    axios.get('http://localhost/api/get-all-legacy-winners').then(function (resp) {
+    axios.get('http://127.0.0.1:8000/api/get-all-legacy-winners').then(function (resp) {
       console.log(resp.data);
       setLegacyWinnersData(resp.data);
     })["catch"](function (error) {
@@ -3844,7 +3845,7 @@ var Prizes = function Prizes() {
       setStatusCode = _useState4[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    axios.get('http://localhost/api/prizes').then(function (resp) {
+    axios.get('http://127.0.0.1:8000/api/prizes').then(function (resp) {
       setPrizeData(resp.data);
     })["catch"](function (error) {
       var errorStatus = error.response.status;

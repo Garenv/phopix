@@ -52,6 +52,7 @@ class WeeklyWinners extends Command
         // Get prize data
         $prizesData                      = $this->__winnersRepository->getPrizeData();
 
+
         // Get timestamp of the time winner got chosen
         $time                            = Carbon::now();
         $timeStamp                       = $time->toDateTimeString();
