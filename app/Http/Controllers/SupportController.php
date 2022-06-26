@@ -15,7 +15,7 @@ class SupportController extends Controller
         try {
             $name                        = $request->get('name');
             $email                       = $request->get('email');
-//            $file                        = $request->file('file');
+            $file                        = $request->file('file');
             $messageText                 = $request->get('messageText');
 
             $validator = Validator::make($request->all() , [
@@ -28,9 +28,9 @@ class SupportController extends Controller
             if($validator->fails()) {
                 $failedRules             = $validator->failed();
 
-                if(isset($failedRules['name']['Max'])) {
-                    return response()->json(['status' => 'failed', 'message' => "Too many characters!"], 422);
-                }
+//                if(isset($failedRules['name']['Max'])) {
+//                    return response()->json(['status' => 'failed', 'message' => "Too many characters!"], 422);
+//                }
 
                 if(isset($failedRules['name']['Required'])) {
                     return response()->json(['status' => 'failed', 'message' => "Don't forget to enter your name!"], 422);
@@ -52,19 +52,18 @@ class SupportController extends Controller
                 'messageText'            => $messageText
             ];
 
-//            $publicPath                  = public_path('/attachments/');
-//            $fileName                    = $file->getClientOriginalName();
-//            $attachFile                  = [$publicPath . $fileName];
+            $publicPath                  = public_path('/attachments/');
+            $fileName                    = $file->getClientOriginalName();
+            $attachFile                  = [$publicPath . $fileName];
 
-            // Store the upload in the public/attachment folder
-//            $file->move($publicPath, $fileName);
+            $file->move($publicPath, $fileName);
 
-            Mail::send('email.support.support', $data, function($message) use($data) { // ,$attachFile
+            Mail::send('email.support.support', $data, function($message) use($data, $attachFile) { // ,$attachFile
                 $message->to('garen.vartanian@apexunitedllc.com');
 
-//                foreach ($attachFile as $file){
-//                    $message->attach($file);
-//                }
+                foreach ($attachFile as $file){
+                    $message->attach($file);
+                }
             });
 
             $mailFailures                = Mail::failures();
@@ -75,7 +74,6 @@ class SupportController extends Controller
             }
 
             view('email.support.support', compact('name', 'email', 'messageText'));
-//            view('email.support.support', compact('name', 'email', 'file', 'messageText'));
 
             return response()->json(['status' => 'success', 'message' => 'Successfully Sent!']);
 

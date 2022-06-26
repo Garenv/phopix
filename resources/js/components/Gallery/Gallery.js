@@ -20,6 +20,7 @@ const Gallery = () => {
     const [statusCode, setStatusCode]                             = useState(null);
     const [errorClose, setErrorClose]                             = useState(false);
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
+    const [userUploadedUrl, setUserUploadedUrl]                   = useState(null);
 
     const handleClose                                             = () => setShow(false);
 
@@ -57,12 +58,9 @@ const Gallery = () => {
         return data;
     }
 
-
-
     const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads); // First argument is a string to cache and track the query result
 
     if(isLoading){
-        console.log(data)
         return <div className="loading"></div>
         // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
     }
@@ -169,6 +167,8 @@ const Gallery = () => {
         let imagefile = document.querySelector('#file');
         formData.append("image", imagefile.files[0]);
 
+        console.log(formData);
+
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
@@ -178,11 +178,13 @@ const Gallery = () => {
             .then(resp => {
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
+                let userUploadedUrl = resp.data.url;
 
                 if(okStatus) {
                     setShow(false);
                 }
 
+                setUserUploadedUrl(userUploadedUrl);
                 setUploadSuccess(okStatus);
                 setStatusMessage(successMessage);
                 setStatusCode(okStatus);
@@ -266,6 +268,7 @@ const Gallery = () => {
                         data.map((photos, index) => {
                             return <Grid
                                 src={photos.url}
+                                newlyUploadedSrc={uploadSuccess}
                                 likes={photos.likes}
                                 currentUserClicks={currentUserClicks}
                                 userName={photos.name}
@@ -278,10 +281,7 @@ const Gallery = () => {
                     }
                 </ul>
             </div>
-
-
         </>
-
     );
 }
 

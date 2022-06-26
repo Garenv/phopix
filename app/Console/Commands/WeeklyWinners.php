@@ -7,6 +7,7 @@ use App\Models\LegacyWinners;
 use App\Models\Winners;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 
 class WeeklyWinners extends Command
@@ -114,6 +115,9 @@ class WeeklyWinners extends Command
             'timeStamp'                 => $timeStamp,
             'name'                      => $thirdPlaceName
         ];
+
+        // store them in Redis
+//        Redis::set("user_data:$firstPlaceUserId", json_encode($dataFirstPlace));
 
         // store them in winners table
         Winners::create($dataFirstPlace);

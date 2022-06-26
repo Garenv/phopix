@@ -10,6 +10,7 @@ const Grid = (props) => {
                 <div>
                     <div className="card_image">
                         <img src={props.src} alt="Photo" className="gallery-img" onClick={() => props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1))}/>
+                        {/*{props.newlyUploadedSrc ? <img src={props.src} alt="Photo" className="gallery-img" onClick={() => props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1))}/> : null}*/}
                     </div>
                     <h2 className="userName">{props.userName} {localStorage.getItem('UserID') === props.userId ? <h6 className="you">(You)</h6> : null}</h2>
                     <span style={{display: 'none'}}>{props.currentUserClicks}</span>

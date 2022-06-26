@@ -22,7 +22,7 @@ const PastWinners = () => {
             <Link to="/">
                 <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png" className="pLogoPrizes" alt="Prize Page Logo"/>
             </Link>
-            <ul className="cards">
+            {/*<ul className="cards">*/}
                 <li className="cards_item">
                     <div className="card">
                         {
@@ -43,7 +43,7 @@ const PastWinners = () => {
                         }
                     </div>
                 </li>
-            </ul>
+            {/*</ul>*/}
         </>
     );
 };

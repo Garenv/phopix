@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "predis/predis": "^2.0",
         "prettus/l5-repository": "^2.7",
         "stevebauman/location": "^6.2"
     },

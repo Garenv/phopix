@@ -2752,6 +2752,11 @@ var Gallery = function Gallery() {
       uploadSuccess = _useState18[0],
       setUploadSuccess = _useState18[1];
 
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState20 = _slicedToArray(_useState19, 2),
+      userUploadedUrl = _useState20[0],
+      setUserUploadedUrl = _useState20[1];
+
   var handleClose = function handleClose() {
     return setShow(false);
   }; // Winner modal content
@@ -2759,30 +2764,30 @@ var Gallery = function Gallery() {
 
   var weeklyDay = today.getDay();
 
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      _useState20 = _slicedToArray(_useState19, 2),
-      showWinners = _useState20[0],
-      setShowWinners = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState22 = _slicedToArray(_useState21, 2),
+      showWinners = _useState22[0],
+      setShowWinners = _useState22[1];
 
   var handleCloseWinners = function handleCloseWinners() {
     return setShowWinners(false);
   }; // User clicks for likes
 
 
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-      _useState22 = _slicedToArray(_useState21, 2),
-      currentUserClicks = _useState22[0],
-      setCurrentUserClicks = _useState22[1];
-
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
       _useState24 = _slicedToArray(_useState23, 2),
-      liked = _useState24[0],
-      setLiked = _useState24[1];
+      currentUserClicks = _useState24[0],
+      setCurrentUserClicks = _useState24[1];
 
   var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState26 = _slicedToArray(_useState25, 2),
-      disliked = _useState26[0],
-      setDisliked = _useState26[1];
+      liked = _useState26[0],
+      setLiked = _useState26[1];
+
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState28 = _slicedToArray(_useState27, 2),
+      disliked = _useState28[0],
+      setDisliked = _useState28[1];
 
   var closeMessages = function closeMessages() {
     setErrorClose(true);
@@ -2842,7 +2847,6 @@ var Gallery = function Gallery() {
 
 
   if (isLoading) {
-    console.log(data);
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       className: "loading"
     }); // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
@@ -2939,6 +2943,7 @@ var Gallery = function Gallery() {
     var formData = new FormData();
     var imagefile = document.querySelector('#file');
     formData.append("image", imagefile.files[0]);
+    console.log(formData);
     var headers = {
       "Accept": 'application/json',
       "Authorization": "Bearer ".concat(authToken)
@@ -2948,11 +2953,13 @@ var Gallery = function Gallery() {
     }).then(function (resp) {
       var okStatus = resp.status;
       var successMessage = resp.data.message;
+      var userUploadedUrl = resp.data.url;
 
       if (okStatus) {
         setShow(false);
       }
 
+      setUserUploadedUrl(userUploadedUrl);
       setUploadSuccess(okStatus);
       setStatusMessage(successMessage);
       setStatusCode(okStatus);
@@ -3079,6 +3086,7 @@ var Gallery = function Gallery() {
         children: data.map(function (photos, index) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Grid_Grid__WEBPACK_IMPORTED_MODULE_4__["default"], {
             src: photos.url,
+            newlyUploadedSrc: uploadSuccess,
             likes: photos.likes,
             currentUserClicks: currentUserClicks,
             userName: photos.name,
@@ -3756,39 +3764,36 @@ var PastWinners = function PastWinners() {
         className: "pLogoPrizes",
         alt: "Prize Page Logo"
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("ul", {
-      className: "cards",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-        className: "cards_item",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "card",
-          children: legacyWinnersData.map(function (winnerData) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                className: "card_image",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                  src: winnerData.url,
-                  className: "giftCards",
-                  alt: "Gift Card Images"
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                className: "card_content ".concat(winnerData.place === "1st Place" ? 'firstPlace' : winnerData.place === "2nd Place" ? 'secondPlace' : winnerData.place === "3rd Place" ? 'thirdPlace' : null),
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-                  className: "card_title",
-                  children: winnerData.name
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-                  className: "card_title",
-                  children: winnerData.place
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
-                  className: "card_title",
-                  children: ["Likes: ", winnerData.likes]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
-                  className: "card_title",
-                  children: ["Prize Won: ", winnerData.prizeName]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {})]
-            });
-          })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+      className: "cards_item",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "card",
+        children: legacyWinnersData.map(function (winnerData) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "card_image",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                src: winnerData.url,
+                className: "giftCards",
+                alt: "Gift Card Images"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "card_content ".concat(winnerData.place === "1st Place" ? 'firstPlace' : winnerData.place === "2nd Place" ? 'secondPlace' : winnerData.place === "3rd Place" ? 'thirdPlace' : null),
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+                className: "card_title",
+                children: winnerData.name
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+                className: "card_title",
+                children: winnerData.place
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+                className: "card_title",
+                children: ["Likes: ", winnerData.likes]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+                className: "card_title",
+                children: ["Prize Won: ", winnerData.prizeName]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {})]
+          });
         })
       })
     })]
@@ -4066,13 +4071,13 @@ var Support = function Support() {
 
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState8 = _slicedToArray(_useState7, 2),
-      emailError = _useState8[0],
-      setErrorMessage = _useState8[1];
+      statusMessage = _useState8[0],
+      setStatusMessage = _useState8[1];
 
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState10 = _slicedToArray(_useState9, 2),
-      errorStatus = _useState10[0],
-      setErrorStatus = _useState10[1];
+      statusCode = _useState10[0],
+      setStatusCode = _useState10[1];
 
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState12 = _slicedToArray(_useState11, 2),
@@ -4087,7 +4092,16 @@ var Support = function Support() {
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState16 = _slicedToArray(_useState15, 2),
       messageText = _useState16[0],
-      setMessageText = _useState16[1]; // Create a reference to the hidden file input element
+      setMessageText = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState18 = _slicedToArray(_useState17, 2),
+      errorClose = _useState18[0],
+      setErrorClose = _useState18[1];
+
+  var closeMessages = function closeMessages() {
+    setErrorClose(true);
+  }; // Create a reference to the hidden file input element
 
 
   var hiddenFileInput = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
@@ -4107,30 +4121,56 @@ var Support = function Support() {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    var data = {
-      'name': name,
-      'email': email,
-      'file': fileContent,
-      'messageText': messageText
-    };
-    console.log(data);
+    var data = new FormData();
+    data.append('name', name);
+    data.append('email', email);
+    data.append('messageText', messageText);
+    data.append('file', fileContent);
     var headers = {
       "Accept": 'application/json'
     };
-    axios.post('http://localhost/api/support', data, {
+    axios.post('http://127.0.0.1:8000/api/support', data, {
       headers: headers
     }).then(function (resp) {
       console.log(resp);
+      var statusMessage = resp.data.message;
+      var statusCode = resp.status;
+      setStatusMessage(statusMessage);
+      setStatusCode(statusCode);
     })["catch"](function (error) {
-      var errorMessage = error.response.data.message;
-      var errorStatus = error.response.status;
-      setErrorMessage(errorMessage);
-      setErrorStatus(errorStatus);
+      var statusMessage = error.response.data.message;
+      var statusCode = error.response.status;
+      setStatusMessage(statusMessage);
+      setStatusCode(statusCode);
     });
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [statusCode === 200 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "notification success ".concat(errorClose ? 'closed' : null),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "title",
+          children: "Success!"
+        }), statusMessage, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "close",
+          onClick: closeMessages,
+          children: "X"
+        })]
+      })
+    }) : null, statusCode === 422 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "notification error ".concat(errorClose ? 'closed' : null),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "title",
+          children: "Failed!"
+        }), statusMessage, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "close",
+          onClick: closeMessages,
+          children: "X"
+        })]
+      })
+    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "background",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "container",
@@ -4180,7 +4220,7 @@ var Support = function Support() {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("form", {
                 onSubmit: handleSubmit,
                 method: "POST",
-                encType: "multipart/form-data/",
+                encType: "multipart/form-data",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "app-form",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -4210,7 +4250,7 @@ var Support = function Support() {
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                     className: "contact-form-group",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-                      htmlFor: "image"
+                      htmlFor: "file"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                       type: "file",
                       id: "file",
@@ -4252,7 +4292,7 @@ var Support = function Support() {
           })]
         })
       })
-    })
+    })]
   });
 };
 
@@ -8957,7 +8997,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".cards_item {\n  margin: 0 auto;\n}\n\n.card_title {\n  color: #000000;\n}\n\n.phopixLogoPastWinners {\n  width: 50%;\n  msrgin: 0 auto;\n  display: flex;\n  margin: 0 auto;\n}\n\n.firstPlace {\n  color: rgba(0, 0, 0, 0.72);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 98, 0, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.34);\n  border: 1px solid #deca73;\n  background: linear-gradient(-72deg, #ffde45, #ffffff 16%, #ffde45 21%, #ffffff 24%, #452100 27%, #ffde45 36%, #ffffff 45%, #ffffff 60%, #ffde45 72%, #ffffff 80%, #ffde45 84%, #452100);\n}\n\n.secondPlace {\n  color: rgba(0, 0, 0, 0.5);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.34);\n  border: 1px solid #dedede;\n  background: linear-gradient(-72deg, #dedede, #ffffff 16%, #dedede 21%, #ffffff 24%, #454545 27%, #dedede 36%, #ffffff 45%, #ffffff 60%, #dedede 72%, #ffffff 80%, #dedede 84%, #a1a1a1);\n}\n\n.button-bronze {\n  color: rgba(45, 0, 0, 0.55);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #dea173;\n  box-shadow: 2px 2px 0.5em rgba(122, 55, 34, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #dea173;\n  background: linear-gradient(-72deg, #ca7345, #ffdeca 16%, #ca7345 21%, #ffdeca 24%, #a14521 27%, #ca7345 36%, #ffdeca 45%, #ffdeca 60%, #ca7345 72%, #ffdeca 80%, #ca7345 84%, #732100);\n}\n\n.thirdPlace {\n  color: rgba(45, 0, 0, 0.55);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #dea173;\n  box-shadow: 2px 2px 0.5em rgba(122, 55, 34, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #dea173;\n  background: linear-gradient(-72deg, #ca7345, #ffdeca 16%, #ca7345 21%, #ffdeca 24%, #a14521 27%, #ca7345 36%, #ffdeca 45%, #ffdeca 60%, #ca7345 72%, #ffdeca 80%, #ca7345 84%, #732100);\n}\n\n.button-platinum {\n  color: rgba(0, 0, 0, 0.72);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #cacade;\n  background: linear-gradient(-72deg, #dedeff, #ffffff 16%, #dedeff 21%, #ffffff 24%, #555564 27%, #dedeff 36%, #ffffff 45%, #ffffff 60%, #dedeff 72%, #ffffff 80%, #dedeff 84%, #555564);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".cards_item {\n  margin: 0 auto;\n}\n\n.card_title {\n  color: #000000;\n}\n\nul {\n  float: none;\n}\n\n.phopixLogoPastWinners {\n  width: 50%;\n  msrgin: 0 auto;\n  display: flex;\n  margin: 0 auto;\n}\n\n.firstPlace {\n  color: rgba(0, 0, 0, 0.72);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 98, 0, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.34);\n  border: 1px solid #deca73;\n  background: linear-gradient(-72deg, #ffde45, #ffffff 16%, #ffde45 21%, #ffffff 24%, #452100 27%, #ffde45 36%, #ffffff 45%, #ffffff 60%, #ffde45 72%, #ffffff 80%, #ffde45 84%, #452100);\n}\n\n.secondPlace {\n  color: rgba(0, 0, 0, 0.5);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.34);\n  border: 1px solid #dedede;\n  background: linear-gradient(-72deg, #dedede, #ffffff 16%, #dedede 21%, #ffffff 24%, #454545 27%, #dedede 36%, #ffffff 45%, #ffffff 60%, #dedede 72%, #ffffff 80%, #dedede 84%, #a1a1a1);\n}\n\n.button-bronze {\n  color: rgba(45, 0, 0, 0.55);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #dea173;\n  box-shadow: 2px 2px 0.5em rgba(122, 55, 34, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #dea173;\n  background: linear-gradient(-72deg, #ca7345, #ffdeca 16%, #ca7345 21%, #ffdeca 24%, #a14521 27%, #ca7345 36%, #ffdeca 45%, #ffdeca 60%, #ca7345 72%, #ffdeca 80%, #ca7345 84%, #732100);\n}\n\n.thirdPlace {\n  color: rgba(45, 0, 0, 0.55);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #dea173;\n  box-shadow: 2px 2px 0.5em rgba(122, 55, 34, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #dea173;\n  background: linear-gradient(-72deg, #ca7345, #ffdeca 16%, #ca7345 21%, #ffdeca 24%, #a14521 27%, #ca7345 36%, #ffdeca 45%, #ffdeca 60%, #ca7345 72%, #ffdeca 80%, #ca7345 84%, #732100);\n}\n\n.button-platinum {\n  color: rgba(0, 0, 0, 0.72);\n  text-decoration: none;\n  font-weight: bold;\n  text-shadow: 1px 1px 0 #ffffff;\n  box-shadow: 2px 2px 0.5em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);\n  border: 1px solid #cacade;\n  background: linear-gradient(-72deg, #dedeff, #ffffff 16%, #dedeff 21%, #ffffff 24%, #555564 27%, #dedeff 36%, #ffffff 45%, #ffffff 60%, #dedeff 72%, #ffffff 80%, #dedeff 84%, #555564);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -6,6 +6,10 @@
     color: #000000;
 }
 
+ul {
+    float: none;
+}
+
 .phopixLogoPastWinners {
     width: 50%;
     msrgin: 0 auto;
@@ -21,8 +25,7 @@
     box-shadow:
         2px 2px 0.5em rgba(122, 98, 0, 0.55),
         inset 1px 1px 0 rgba(255, 255, 255, 0.9),
-        inset -1px -1px 0 rgba(0, 0, 0, 0.34)
-;
+        inset -1px -1px 0 rgba(0, 0, 0, 0.34);
     border: 1px solid #deca73;
     background:
         -moz-linear-gradient(

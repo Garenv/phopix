@@ -6,11 +6,16 @@ const Support = () => {
     const [fileName, setFileName]                                                 = useState("");
     const [fileChosen, setFileChosen]                                             = useState(false);
     const [fileContent, setFileContent]                                           = useState(null);
-    const [emailError, setErrorMessage]                                           = useState("");
-    const [errorStatus, setErrorStatus]                                           = useState(null);
+    const [statusMessage, setStatusMessage]                                       = useState("");
+    const [statusCode, setStatusCode]                                             = useState(null);
     const [name, setName]                                                         = useState("");
     const [email, setEmail]                                                       = useState("");
     const [messageText, setMessageText]                                           = useState("");
+    const [errorClose, setErrorClose]                                             = useState(false);
+
+    const closeMessages = () => {
+        setErrorClose(true);
+    }
 
     // Create a reference to the hidden file input element
     const hiddenFileInput = React.useRef(null);
@@ -31,33 +36,49 @@ const Support = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        let data = {
-            'name' : name,
-            'email' : email,
-            'file'  : fileContent,
-            'messageText' : messageText
-        };
-
-        console.log(data);
+        let data = new FormData();
+        data.append('name', name);
+        data.append('email', email);
+        data.append('messageText', messageText);
+        data.append('file', fileContent);
 
         const headers = {
             "Accept": 'application/json'
         };
 
-        axios.post('http://localhost/api/support', data, {headers})
+        axios.post('http://127.0.0.1:8000/api/support', data, {headers})
             .then(resp => {
                 console.log(resp);
-            }).catch(error => {
-            let errorMessage = error.response.data.message;
-            let errorStatus  = error.response.status;
+                let statusMessage = resp.data.message;
+                let statusCode  = resp.status;
 
-            setErrorMessage(errorMessage);
-            setErrorStatus(errorStatus);
+                setStatusMessage(statusMessage);
+                setStatusCode(statusCode);
+            }).catch(error => {
+            let statusMessage = error.response.data.message;
+            let statusCode  = error.response.status;
+
+            setStatusMessage(statusMessage);
+            setStatusCode(statusCode);
         });
     };
 
     return(
         <>
+            { statusCode === 200 ? <section>
+                    <div className={`notification success ${errorClose ? 'closed' : null}`}>
+                        <span className="title">Success!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
+                    </div>
+                </section>
+                : null }
+
+            { statusCode === 422 ? <section>
+                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                        <span className="title">Failed!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
+                    </div>
+                </section>
+                : null }
+
             <div className="background">
                 <div className="container">
                     <div className="screen">
@@ -83,7 +104,7 @@ const Support = () => {
                                 </div>
                             </div>
                             <div className="screen-body-item">
-                                <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data/">
+                                <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
                                     <div className="app-form">
                                         <div className="contact-form-group">
                                             <label htmlFor="name"/>
@@ -94,7 +115,7 @@ const Support = () => {
                                             <input className="contact-form-control" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
                                         </div>
                                         <div className="contact-form-group">
-                                            <label htmlFor="image"/>
+                                            <label htmlFor="file"/>
                                             <input type="file" id="file" name="file" hidden onChange={handleChange} ref={hiddenFileInput}/>
                                             <button type="button" id="custom-button" onClick={handleClick}>Choose File</button>
                                             <span id="custom-text">{!fileChosen ? "No file chosen, yet" : fileName}</span>
