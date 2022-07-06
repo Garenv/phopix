@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\UsersController;
@@ -20,7 +22,7 @@ use App\Http\Controllers\PrizesController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -31,6 +33,9 @@ Route::post('support',                                  [SupportController::clas
 Route::get('prizes',                                    [PrizesController::class,     'getPrizes']);
 Route::get('get-all-legacy-winners',                    [WinnersController::class,    'getAllWinnersFromLegacyWinnersTable']);
 
+Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
+Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get( 'get-user-uploads-data',                [UsersController::class,      'getUserUploadsData']);
     Route::post('file-upload',                          [FileUploadController::class, 'fileUpload']);
@@ -39,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('choose-winners',                        [WinnersController::class,    'getTopThreeWinnersFromUploadsTable']);
     Route::get('get-winners',                           [WinnersController::class,    'getTopThreeWinnersFromWinnersTable']);
     Route::post('like',                                 [UsersController::class,      'handleLike']);
-    Route::post('dislike',                                 [UsersController::class,      'handleDislike']);
+    Route::post('dislike',                              [UsersController::class,      'handleDislike']);
     Route::delete('delete-user-upload',                 [UsersController::class,      'deleteUserUpload']);
 });
+
