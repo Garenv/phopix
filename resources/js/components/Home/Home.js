@@ -85,6 +85,27 @@ const LoginRegister = () => {
                 setEmailError(errorMessage);
                 setErrorStatus(errorStatus);
         });
+
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        };
+
+        console.log(headers);
+
+        axios.post('http://127.0.0.1:8000/api/email/verification-notification', headers, {})
+            .then(resp => {
+                localStorage.setItem('token', resp.data.token);
+                localStorage.setItem('UserID', resp.data.UserID);
+                localStorage.setItem('name', resp.data.name);
+                history.push('/gallery');
+            }).catch(error => {
+            let errorMessage = error.response.data.message;
+            let errorStatus  = error.response.status;
+
+            setEmailError(errorMessage);
+            setErrorStatus(errorStatus);
+        });
     };
 
     const forgotPassWordClicked = () => {

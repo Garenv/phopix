@@ -20,6 +20,8 @@ const App = () => {
         if(authToken !== null) {
             push('/gallery');
         }
+
+        push('/');
     }, [push, authToken]);
 
     return (

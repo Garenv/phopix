@@ -117,7 +117,7 @@ class WeeklyWinners extends Command
         ];
 
         // store them in Redis
-//        Redis::set("user_data:$firstPlaceUserId", json_encode($dataFirstPlace));
+        // Redis::set("user_data:$firstPlaceUserId", json_encode($dataFirstPlace));
 
         // store them in winners table
         Winners::create($dataFirstPlace);

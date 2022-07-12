@@ -2523,6 +2523,8 @@ var App = function App() {
     if (authToken !== null) {
       push('/gallery');
     }
+
+    push('/');
   }, [push, authToken]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_query__WEBPACK_IMPORTED_MODULE_5__.QueryClientProvider, {
@@ -2704,8 +2706,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Gallery = function Gallery() {
-  var authToken = localStorage.getItem('token');
-  var today = new Date(); // Preview modal content
+  var authToken = localStorage.getItem('token'); // Preview modal content
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2752,42 +2753,28 @@ var Gallery = function Gallery() {
       uploadSuccess = _useState18[0],
       setUploadSuccess = _useState18[1];
 
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-      _useState20 = _slicedToArray(_useState19, 2),
-      userUploadedUrl = _useState20[0],
-      setUserUploadedUrl = _useState20[1];
-
   var handleClose = function handleClose() {
     return setShow(false);
   }; // Winner modal content
 
 
+  var today = new Date();
   var weeklyDay = today.getDay();
 
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      _useState22 = _slicedToArray(_useState21, 2),
-      showWinners = _useState22[0],
-      setShowWinners = _useState22[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState20 = _slicedToArray(_useState19, 2),
+      showWinners = _useState20[0],
+      setShowWinners = _useState20[1];
 
   var handleCloseWinners = function handleCloseWinners() {
     return setShowWinners(false);
-  }; // User clicks for likes
+  }; // User clicks likes
 
 
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-      _useState24 = _slicedToArray(_useState23, 2),
-      currentUserClicks = _useState24[0],
-      setCurrentUserClicks = _useState24[1];
-
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-      _useState26 = _slicedToArray(_useState25, 2),
-      liked = _useState26[0],
-      setLiked = _useState26[1];
-
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-      _useState28 = _slicedToArray(_useState27, 2),
-      disliked = _useState28[0],
-      setDisliked = _useState28[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState22 = _slicedToArray(_useState21, 2),
+      currentUserClicks = _useState22[0],
+      setCurrentUserClicks = _useState22[1];
 
   var closeMessages = function closeMessages() {
     setErrorClose(true);
@@ -3331,6 +3318,22 @@ var LoginRegister = function LoginRegister() {
     };
     JSON.stringify(dataRegister);
     axios.post('http://127.0.0.1:8000/api/register', dataRegister).then(function (resp) {
+      localStorage.setItem('token', resp.data.token);
+      localStorage.setItem('UserID', resp.data.UserID);
+      localStorage.setItem('name', resp.data.name);
+      history.push('/gallery');
+    })["catch"](function (error) {
+      var errorMessage = error.response.data.message;
+      var errorStatus = error.response.status;
+      setEmailError(errorMessage);
+      setErrorStatus(errorStatus);
+    });
+    var headers = {
+      "Accept": 'application/json',
+      "Authorization": "Bearer ".concat(localStorage.getItem('token'))
+    };
+    console.log(headers);
+    axios.post('http://127.0.0.1:8000/api/email/verification-notification', headers, {}).then(function (resp) {
       localStorage.setItem('token', resp.data.token);
       localStorage.setItem('UserID', resp.data.UserID);
       localStorage.setItem('name', resp.data.name);

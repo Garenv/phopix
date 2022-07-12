@@ -8,7 +8,6 @@ import SelectedWinners from "../SelectedWinners/SelectedWinners";
 
 const Gallery = () => {
     let authToken                                                 = localStorage.getItem('token');
-    let today                                                     = new Date();
 
     // Preview modal content
     const [show, setShow]                                         = useState(false);
@@ -20,19 +19,17 @@ const Gallery = () => {
     const [statusCode, setStatusCode]                             = useState(null);
     const [errorClose, setErrorClose]                             = useState(false);
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
-    const [userUploadedUrl, setUserUploadedUrl]                   = useState(null);
 
     const handleClose                                             = () => setShow(false);
 
     // Winner modal content
+    let today                                                     = new Date();
     const weeklyDay                                               = today.getDay();
     const [showWinners, setShowWinners]                           = useState(true);
     const handleCloseWinners                                      = () => setShowWinners(false);
 
-    // User clicks for likes
+    // User clicks likes
     const [currentUserClicks, setCurrentUserClicks]               = useState(null);
-    const [liked, setLiked]               = useState(false);
-    const [disliked, setDisliked]               = useState(false);
 
     const closeMessages = () => {
         setErrorClose(true);
