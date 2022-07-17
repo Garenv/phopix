@@ -2521,10 +2521,10 @@ var App = function App() {
   var queryClient = new react_query__WEBPACK_IMPORTED_MODULE_5__.QueryClient();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (authToken !== null) {
-      push('/gallery');
+      return push('/gallery');
     }
 
-    push('/');
+    return push('/');
   }, [push, authToken]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_query__WEBPACK_IMPORTED_MODULE_5__.QueryClientProvider, {

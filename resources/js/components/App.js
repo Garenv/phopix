@@ -18,10 +18,10 @@ const App = () => {
 
     useEffect(() => {
         if(authToken !== null) {
-            push('/gallery');
+            return push('/gallery');
         }
 
-        push('/');
+        return push('/');
     }, [push, authToken]);
 
     return (
