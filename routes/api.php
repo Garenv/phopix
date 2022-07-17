@@ -3,13 +3,13 @@
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WinnersController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\PrizesController;
+use App\Http\Controllers\FaqController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +32,7 @@ Route::post('forgot-password',                          [AuthController::class, 
 Route::post('support',                                  [SupportController::class,    'support']);
 Route::get('prizes',                                    [PrizesController::class,     'getPrizes']);
 Route::get('get-all-legacy-winners',                    [WinnersController::class,    'getAllWinnersFromLegacyWinnersTable']);
+Route::get('get-faq',                                   [FaqController::class,        'getFaq']);
 
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');

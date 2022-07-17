@@ -3,7 +3,6 @@
 namespace App\Dal\Repositories;
 
 use App\Dal\Interfaces\IWinnersRepository;
-use App\Models\LegacyWinners;
 use App\Models\Prizes;
 use Illuminate\Support\Facades\DB;
 
