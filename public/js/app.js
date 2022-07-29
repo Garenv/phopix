@@ -2744,6 +2744,26 @@ var Gallery = function Gallery() {
       uploadSuccess = _useState18[0],
       setUploadSuccess = _useState18[1];
 
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState20 = _slicedToArray(_useState19, 2),
+      isLikedClicked = _useState20[0],
+      setIsLikeClicked = _useState20[1];
+
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState22 = _slicedToArray(_useState21, 2),
+      isDislikeClicked = _useState22[0],
+      setIsDislikeClicked = _useState22[1];
+
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState24 = _slicedToArray(_useState23, 2),
+      userLikes = _useState24[0],
+      setUserLikes = _useState24[1];
+
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState26 = _slicedToArray(_useState25, 2),
+      userDislikes = _useState26[0],
+      setUserDislikes = _useState26[1];
+
   var handleClose = function handleClose() {
     return setShow(false);
   }; // Winner modal content
@@ -2752,20 +2772,20 @@ var Gallery = function Gallery() {
   var today = new Date();
   var weeklyDay = today.getDay();
 
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      _useState20 = _slicedToArray(_useState19, 2),
-      showWinners = _useState20[0],
-      setShowWinners = _useState20[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState28 = _slicedToArray(_useState27, 2),
+      showWinners = _useState28[0],
+      setShowWinners = _useState28[1];
 
   var handleCloseWinners = function handleCloseWinners() {
     return setShowWinners(false);
   }; // User clicks likes
 
 
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-      _useState22 = _slicedToArray(_useState21, 2),
-      currentUserClicks = _useState22[0],
-      setCurrentUserClicks = _useState22[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState30 = _slicedToArray(_useState29, 2),
+      currentUserClicks = _useState30[0],
+      setCurrentUserClicks = _useState30[1];
 
   var closeMessages = function closeMessages() {
     setErrorClose(true);
@@ -2839,9 +2859,11 @@ var Gallery = function Gallery() {
   var handleLikesBasedOnUserId = function handleLikesBasedOnUserId(likedPhotoUserId) {
     if (currentUserClicks >= 1) {
       setCurrentUserClicks(currentUserClicks - 1);
+      setIsDislikeClicked(true);
       handleDislike(likedPhotoUserId);
     } else {
       setCurrentUserClicks(currentUserClicks + 1);
+      setIsLikeClicked(true);
       handleLike(likedPhotoUserId);
     }
   };
@@ -2860,7 +2882,8 @@ var Gallery = function Gallery() {
       headers: headers
     }).then(function (resp) {
       // setLiked(true);
-      console.log(resp.data); // setUserLike(resp.data.incrementDecrementLikes);
+      console.log(resp.data);
+      setUserLikes(resp.data.userLikes); // setUserLike(resp.data.incrementDecrementLikes);
     })["catch"](function (err) {
       console.log(err);
     });
@@ -2880,7 +2903,8 @@ var Gallery = function Gallery() {
       headers: headers
     }).then(function (resp) {
       // setDisliked(true);
-      console.log(resp.data); // setUserLike(resp.data.incrementDecrementLikes);
+      console.log(resp.data);
+      setUserLikes(resp.data.userLikes); // setUserLike(resp.data.incrementDecrementLikes);
     })["catch"](function (err) {
       console.log(err);
     });
@@ -3070,6 +3094,9 @@ var Gallery = function Gallery() {
             userName: photos.name,
             onClick: handleLikesBasedOnUserId,
             userDelete: deleteUserUpload,
+            isLikedClicked: isLikedClicked,
+            isDislikeClicked: isDislikeClicked,
+            userLikes: userLikes,
             userId: photos.UserID
           }, index);
         })
@@ -3120,6 +3147,12 @@ var Grid = function Grid(props) {
       likes = _useState2[0],
       setLikes = _useState2[1];
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      likeValue = _useState4[0],
+      setLikeValue = _useState4[1]; // console.log(props);
+
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
       className: "cards_item",
@@ -3131,7 +3164,7 @@ var Grid = function Grid(props) {
             alt: "Photo",
             className: "gallery-img",
             onClick: function onClick() {
-              return props.onClick(props.userId, props.currentUserClicks > 1 ? setLikes(props.likes) : setLikes(props.likes + 1));
+              return props.onClick(props.userId, props.isLikedClicked ? setLikeValue(props.user) : setLikes(props.likes + 1));
             }
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {

@@ -19,6 +19,10 @@ const Gallery = () => {
     const [statusCode, setStatusCode]                             = useState(null);
     const [errorClose, setErrorClose]                             = useState(false);
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
+    const [isLikedClicked, setIsLikeClicked]                      = useState(false);
+    const [isDislikeClicked, setIsDislikeClicked]                 = useState(false);
+    const [userLikes, setUserLikes]                               = useState(null);
+    const [userDislikes, setUserDislikes]                         = useState(null);
 
     const handleClose                                             = () => setShow(false);
 
@@ -68,9 +72,11 @@ const Gallery = () => {
     const handleLikesBasedOnUserId = (likedPhotoUserId) => {
         if(currentUserClicks >= 1) {
             setCurrentUserClicks(currentUserClicks - 1);
+            setIsDislikeClicked(true);
             handleDislike(likedPhotoUserId);
         } else {
             setCurrentUserClicks(currentUserClicks + 1);
+            setIsLikeClicked(true);
             handleLike(likedPhotoUserId);
         }
 
@@ -93,6 +99,7 @@ const Gallery = () => {
             .then(resp => {
                 // setLiked(true);
                 console.log(resp.data);
+                setUserLikes(resp.data.userLikes);
                 // setUserLike(resp.data.incrementDecrementLikes);
             }).catch(err => {
             console.log(err);
@@ -118,6 +125,7 @@ const Gallery = () => {
             .then(resp => {
                 // setDisliked(true);
                 console.log(resp.data);
+                setUserLikes(resp.data.userLikes);
                 // setUserLike(resp.data.incrementDecrementLikes);
             }).catch(err => {
             console.log(err);
@@ -272,6 +280,9 @@ const Gallery = () => {
                                 key={index}
                                 onClick={handleLikesBasedOnUserId}
                                 userDelete={deleteUserUpload}
+                                isLikedClicked={isLikedClicked}
+                                isDislikeClicked={isDislikeClicked}
+                                userLikes={userLikes}
                                 userId={photos.UserID}
                             />
                         })
