@@ -2761,8 +2761,8 @@ var Gallery = function Gallery() {
 
   var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
       _useState26 = _slicedToArray(_useState25, 2),
-      userDislikes = _useState26[0],
-      setUserDislikes = _useState26[1];
+      userUploadedUrl = _useState26[0],
+      setUserUploadedUrl = _useState26[1];
 
   var handleClose = function handleClose() {
     return setShow(false);
@@ -2956,6 +2956,9 @@ var Gallery = function Gallery() {
       var okStatus = resp.status;
       var successMessage = resp.data.message;
       var userUploadedUrl = resp.data.url;
+      console.log("okStatus", okStatus);
+      console.log("successMessage", successMessage);
+      console.log("userUploadedUrl", userUploadedUrl);
 
       if (okStatus) {
         setShow(false);
@@ -2966,8 +2969,11 @@ var Gallery = function Gallery() {
       setStatusMessage(successMessage);
       setStatusCode(okStatus);
     })["catch"](function (error) {
+      console.log("error", error);
       var errorMessage = error.response.data.message;
       var errorStatus = error.response.status;
+      console.log("errorMessage", errorMessage);
+      console.log("errorStatus", errorStatus);
       setStatusMessage(errorMessage);
       setStatusCode(errorStatus);
     });

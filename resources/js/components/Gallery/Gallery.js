@@ -22,7 +22,7 @@ const Gallery = () => {
     const [isLikedClicked, setIsLikeClicked]                      = useState(false);
     const [isDislikeClicked, setIsDislikeClicked]                 = useState(false);
     const [userLikes, setUserLikes]                               = useState(null);
-    const [userDislikes, setUserDislikes]                         = useState(null);
+    const [userUploadedUrl, setUserUploadedUrl]                   = useState(null);
 
     const handleClose                                             = () => setShow(false);
 
@@ -185,6 +185,10 @@ const Gallery = () => {
                 let successMessage = resp.data.message;
                 let userUploadedUrl = resp.data.url;
 
+                console.log("okStatus", okStatus);
+                console.log("successMessage", successMessage);
+                console.log("userUploadedUrl", userUploadedUrl);
+
                 if(okStatus) {
                     setShow(false);
                 }
@@ -194,8 +198,12 @@ const Gallery = () => {
                 setStatusMessage(successMessage);
                 setStatusCode(okStatus);
             }).catch(error => {
+                console.log("error", error);
             let errorMessage       = error.response.data.message;
             let errorStatus        = error.response.status;
+
+            console.log("errorMessage", errorMessage);
+            console.log("errorStatus", errorStatus);
 
             setStatusMessage(errorMessage);
             setStatusCode(errorStatus);
