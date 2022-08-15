@@ -2712,7 +2712,8 @@ var Gallery = function Gallery() {
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
       _useState6 = _slicedToArray(_useState5, 2),
       filePreviewModalStatus = _useState6[0],
-      setFilePreviewModalStatus = _useState6[1];
+      setFilePreviewModalStatus = _useState6[1]; // Status codes
+
 
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState8 = _slicedToArray(_useState7, 2),
@@ -2742,7 +2743,8 @@ var Gallery = function Gallery() {
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
       _useState18 = _slicedToArray(_useState17, 2),
       uploadSuccess = _useState18[0],
-      setUploadSuccess = _useState18[1];
+      setUploadSuccess = _useState18[1]; // Likes/dislikes
+
 
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState20 = _slicedToArray(_useState19, 2),
@@ -2759,11 +2761,6 @@ var Gallery = function Gallery() {
       userLikes = _useState24[0],
       setUserLikes = _useState24[1];
 
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-      _useState26 = _slicedToArray(_useState25, 2),
-      userUploadedUrl = _useState26[0],
-      setUserUploadedUrl = _useState26[1];
-
   var handleClose = function handleClose() {
     return setShow(false);
   }; // Winner modal content
@@ -2772,20 +2769,20 @@ var Gallery = function Gallery() {
   var today = new Date();
   var weeklyDay = today.getDay();
 
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      _useState28 = _slicedToArray(_useState27, 2),
-      showWinners = _useState28[0],
-      setShowWinners = _useState28[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState26 = _slicedToArray(_useState25, 2),
+      showWinners = _useState26[0],
+      setShowWinners = _useState26[1];
 
   var handleCloseWinners = function handleCloseWinners() {
     return setShowWinners(false);
   }; // User clicks likes
 
 
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-      _useState30 = _slicedToArray(_useState29, 2),
-      currentUserClicks = _useState30[0],
-      setCurrentUserClicks = _useState30[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+      _useState28 = _slicedToArray(_useState27, 2),
+      currentUserClicks = _useState28[0],
+      setCurrentUserClicks = _useState28[1];
 
   var closeMessages = function closeMessages() {
     setErrorClose(true);
@@ -2945,7 +2942,6 @@ var Gallery = function Gallery() {
     var formData = new FormData();
     var imagefile = document.querySelector('#file');
     formData.append("image", imagefile.files[0]);
-    console.log(formData);
     var headers = {
       "Accept": 'application/json',
       "Authorization": "Bearer ".concat(authToken)
@@ -2955,25 +2951,17 @@ var Gallery = function Gallery() {
     }).then(function (resp) {
       var okStatus = resp.status;
       var successMessage = resp.data.message;
-      var userUploadedUrl = resp.data.url;
-      console.log("okStatus", okStatus);
-      console.log("successMessage", successMessage);
-      console.log("userUploadedUrl", userUploadedUrl);
 
       if (okStatus) {
         setShow(false);
       }
 
-      setUserUploadedUrl(userUploadedUrl);
       setUploadSuccess(okStatus);
       setStatusMessage(successMessage);
       setStatusCode(okStatus);
     })["catch"](function (error) {
-      console.log("error", error);
       var errorMessage = error.response.data.message;
       var errorStatus = error.response.status;
-      console.log("errorMessage", errorMessage);
-      console.log("errorStatus", errorStatus);
       setStatusMessage(errorMessage);
       setStatusCode(errorStatus);
     });

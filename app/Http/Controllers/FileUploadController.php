@@ -7,6 +7,7 @@ use App\Models\Uploads;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redis;
@@ -49,11 +50,12 @@ class FileUploadController extends Controller
                 'UserID'      => $userId,
                 'isUploaded'  => true,
                 'timeStamp'   => $timeStamp,
-                'message'     => 'Successfully uploaded photo! 🙂'
+
             ];
 
             try {
-                Uploads::create($data);
+                $insertUploadDataAndGetUploadId = DB::table('uploads')->insertGetId($data);
+                Redis::set("uploadId:$insertUploadDataAndGetUploadId", json_encode($data));
             } catch(QueryException $e){
                 $errorCode = $e->errorInfo[1];
 
@@ -63,7 +65,7 @@ class FileUploadController extends Controller
                 }
             }
 
-            return $data;
+            return response()->json(['message' => 'Successfully uploaded photo! 🙂']);
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());

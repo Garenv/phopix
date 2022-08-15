@@ -13,16 +13,19 @@ const Gallery = () => {
     const [show, setShow]                                         = useState(false);
     const [filePreview, setFilePreview]                           = useState(null);
     const [filePreviewModalStatus, setFilePreviewModalStatus]     = useState(true);
+
+    // Status codes
     const [statusMessage, setStatusMessage]                       = useState("");
     const [statusDelete, setStatusDelete]                         = useState(null);
     const [statusDeleteMessage, setStatusDeleteMessage]           = useState("");
     const [statusCode, setStatusCode]                             = useState(null);
     const [errorClose, setErrorClose]                             = useState(false);
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
+
+    // Likes/dislikes
     const [isLikedClicked, setIsLikeClicked]                      = useState(false);
     const [isDislikeClicked, setIsDislikeClicked]                 = useState(false);
     const [userLikes, setUserLikes]                               = useState(null);
-    const [userUploadedUrl, setUserUploadedUrl]                   = useState(null);
 
     const handleClose                                             = () => setShow(false);
 
@@ -172,8 +175,6 @@ const Gallery = () => {
         let imagefile = document.querySelector('#file');
         formData.append("image", imagefile.files[0]);
 
-        console.log(formData);
-
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
@@ -183,27 +184,17 @@ const Gallery = () => {
             .then(resp => {
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
-                let userUploadedUrl = resp.data.url;
-
-                console.log("okStatus", okStatus);
-                console.log("successMessage", successMessage);
-                console.log("userUploadedUrl", userUploadedUrl);
 
                 if(okStatus) {
                     setShow(false);
                 }
 
-                setUserUploadedUrl(userUploadedUrl);
                 setUploadSuccess(okStatus);
                 setStatusMessage(successMessage);
                 setStatusCode(okStatus);
             }).catch(error => {
-                console.log("error", error);
             let errorMessage       = error.response.data.message;
             let errorStatus        = error.response.status;
-
-            console.log("errorMessage", errorMessage);
-            console.log("errorStatus", errorStatus);
 
             setStatusMessage(errorMessage);
             setStatusCode(errorStatus);
