@@ -183,13 +183,13 @@ const Gallery = () => {
             .then(resp => {
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
-                let userUploadedUrl = resp.data.url;
+                // let userUploadedUrl = resp.data.url;
 
                 if(okStatus) {
                     setShow(false);
                 }
 
-                setUserUploadedUrl(userUploadedUrl);
+                // setUserUploadedUrl(userUploadedUrl);
                 setUploadSuccess(okStatus);
                 setStatusMessage(successMessage);
                 setStatusCode(okStatus);

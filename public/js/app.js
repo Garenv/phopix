@@ -2954,14 +2954,13 @@ var Gallery = function Gallery() {
       headers: headers
     }).then(function (resp) {
       var okStatus = resp.status;
-      var successMessage = resp.data.message;
-      var userUploadedUrl = resp.data.url;
+      var successMessage = resp.data.message; // let userUploadedUrl = resp.data.url;
 
       if (okStatus) {
         setShow(false);
-      }
+      } // setUserUploadedUrl(userUploadedUrl);
 
-      setUserUploadedUrl(userUploadedUrl);
+
       setUploadSuccess(okStatus);
       setStatusMessage(successMessage);
       setStatusCode(okStatus);

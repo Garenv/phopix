@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUploadsRepository;
+use App\Models\LegacyUploads;
 use App\Models\Uploads;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,11 +50,12 @@ class FileUploadController extends Controller
                 'UserID'      => $userId,
                 'isUploaded'  => true,
                 'timeStamp'   => $timeStamp,
-                'message'     => 'Successfully uploaded photo! 🙂'
+//                'message'     => 'Successfully uploaded photo! 🙂'
             ];
 
             try {
                 Uploads::create($data);
+                LegacyUploads::create($data);
             } catch(QueryException $e){
                 $errorCode = $e->errorInfo[1];
 
@@ -70,9 +72,5 @@ class FileUploadController extends Controller
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
 
-    }
-
-    public function getUploads()
-    {
     }
 }
