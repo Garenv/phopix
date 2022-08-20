@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUploadsRepository;
+use App\Models\LegacyUploads;
 use App\Models\Uploads;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,13 +50,14 @@ class FileUploadController extends Controller
                 'url'         => $url,
                 'UserID'      => $userId,
                 'isUploaded'  => true,
-                'timeStamp'   => $timeStamp,
-
+                'timeStamp'   => $timeStamp
             ];
+
 
             try {
                 $insertUploadDataAndGetUploadId = DB::table('uploads')->insertGetId($data);
                 Redis::set("uploadId:$insertUploadDataAndGetUploadId", json_encode($data));
+                LegacyUploads::create($data);
             } catch(QueryException $e){
                 $errorCode = $e->errorInfo[1];
 
@@ -72,9 +74,5 @@ class FileUploadController extends Controller
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
 
-    }
-
-    public function getUploads()
-    {
     }
 }
