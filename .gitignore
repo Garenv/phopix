@@ -3,6 +3,9 @@
 /public/storage
 /storage/*.key
 /public
+/public/js/*
+/public/css/*
+/public/fonts
 /vendor
 .env
 .env.backup

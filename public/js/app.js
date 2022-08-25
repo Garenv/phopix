@@ -2949,6 +2949,7 @@ var Gallery = function Gallery() {
     axios.post(url, formData, {
       headers: headers
     }).then(function (resp) {
+      console.log(resp);
       var okStatus = resp.status;
       var successMessage = resp.data.message;
 
@@ -3059,7 +3060,7 @@ var Gallery = function Gallery() {
           children: "Upload!"
         })]
       })]
-    }), weeklyDay === 6 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }), weeklyDay === 7 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
       show: showWinners,
       onHide: handleCloseWinners,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h1", {

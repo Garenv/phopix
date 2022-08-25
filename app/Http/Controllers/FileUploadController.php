@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUploadsRepository;
 use App\Models\LegacyUploads;
-use App\Models\Uploads;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,44 +30,46 @@ class FileUploadController extends Controller
     {
 
         try {
-            $path             = env('AWS_S3_PATH');
-            $file             = $request->file('image');
-            $imgName          = $file->getClientOriginalName();
-            $bucket           = env('AWS_BUCKET');
-            $region           = env('AWS_REGION');
-            $url              = "https://{$bucket}.s3.{$region}.amazonaws.com{$path}{$imgName}";
-            $userId           = Auth::user()['UserID'];
-            $time             = Carbon::now();
-            $timeStamp        = $time->toDateTimeString();
+            $path                     = env('AWS_S3_PATH');
+            $file                     = $request->file('image');
+            $imgName                  = $file->getClientOriginalName();
+            $bucket                   = env('AWS_BUCKET');
+            $region                   = env('AWS_REGION');
+            $url                      = "https://{$bucket}.s3.{$region}.amazonaws.com{$path}{$imgName}";
+            $userId                   = Auth::user()['UserID'];
+            $time                     = Carbon::now();
+            $timeStamp                = $time->toDateTimeString();
+            $weekday                  = date("l");
 
-            $file->storeAs(
-                $path, // Folder
-                $imgName, // Name of image
-                's3' // Disk Name
-            );
+            $getAllUploadsData        = $this->__uploadsRepository->getAllUploadsData();
+            $isUploadsTableEmpty      = $getAllUploadsData->isEmpty();
+            $checkIfUserHasUploaded   = $this->__uploadsRepository->checkIfUserHasUploaded($userId);
 
             $data = [
-                'url'         => $url,
-                'UserID'      => $userId,
-                'isUploaded'  => true,
-                'timeStamp'   => $timeStamp
+                'url'                 => $url,
+                'UserID'              => $userId,
+                'isUploaded'          => true,
+                'timeStamp'           => $timeStamp
             ];
 
-
-            try {
-                $insertUploadDataAndGetUploadId = DB::table('uploads')->insertGetId($data);
-                Redis::set("uploadId:$insertUploadDataAndGetUploadId", json_encode($data));
-                LegacyUploads::create($data);
-            } catch(QueryException $e){
-                $errorCode = $e->errorInfo[1];
-
-                // If duplicate entry
-                if($errorCode == 1062) {
-                    return response()->json(['status' => 'failed', 'message' => 'You\'ve already uploaded a photo!'], 500);
-                }
+            // If the uploads table is empty OR if there doesn't exist an upload record for the user at all
+            // then carry out DB insertion/Redis Set/Store upload in S3 procedure
+            if($isUploadsTableEmpty || $checkIfUserHasUploaded->isEmpty()) {
+                $this->insertSetStoreAsset($file, $path, $imgName, $data);
+                return 0;
             }
 
-            return response()->json(['message' => 'Successfully uploaded photo! 🙂']);
+            $existingUploadedTimestamp = $checkIfUserHasUploaded[0]->timeStamp;
+
+            // If it's NOT Wednesday AND the user has NOT uploaded any photo this week,
+            // then carry out DB insertion/Redis Set/Store upload in S3 procedure
+            // see this for more info: https://stackoverflow.com/a/30556359
+            if($weekday !== 'Wednesday' && (date("W") !== date("W", strtotime($existingUploadedTimestamp)))) {
+                $this->insertSetStoreAsset($file, $path, $imgName, $data);
+                return 0;
+            }
+
+            return response()->json(['status' => 'failed', 'message' => "You have already uploaded a photo this week!"], 500);
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -75,4 +77,18 @@ class FileUploadController extends Controller
         }
 
     }
+
+    public function insertSetStoreAsset($file, $path, $imgName, $data) {
+        $file->storeAs(
+            $path, // Folder
+            $imgName, // Name of image
+            's3' // Disk Name
+        );
+
+        $insertUploadDataAndGetUploadId = DB::table('uploads')->insertGetId($data);
+        LegacyUploads::create($data);
+        Redis::set("uploadId:$insertUploadDataAndGetUploadId", json_encode($data));
+        return response()->json(['status' => 'success', 'message' => 'Successfully uploaded your photo!'], 200);
+    }
+
 }

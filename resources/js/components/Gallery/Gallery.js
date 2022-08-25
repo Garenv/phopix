@@ -182,12 +182,16 @@ const Gallery = () => {
 
         axios.post(url, formData, {headers})
             .then(resp => {
+
+                console.log(resp);
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
 
                 if(okStatus) {
                     setShow(false);
                 }
+
+
 
                 setUploadSuccess(okStatus);
                 setStatusMessage(successMessage);
