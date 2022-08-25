@@ -56,7 +56,8 @@ class FileUploadController extends Controller
             // then carry out DB insertion/Redis Set/Store upload in S3 procedure
             if($isUploadsTableEmpty || $checkIfUserHasUploaded->isEmpty()) {
                 $this->insertSetStoreAsset($file, $path, $imgName, $data);
-                return 0;
+                $data['message'] = "You've successfully uploaded a photo!";
+                return response()->json($data);
             }
 
             $existingUploadedTimestamp = $checkIfUserHasUploaded[0]->timeStamp;
@@ -66,7 +67,8 @@ class FileUploadController extends Controller
             // see this for more info: https://stackoverflow.com/a/30556359
             if($weekday !== 'Wednesday' && (date("W") !== date("W", strtotime($existingUploadedTimestamp)))) {
                 $this->insertSetStoreAsset($file, $path, $imgName, $data);
-                return 0;
+                $data['message'] = "You've successfully uploaded a photo!";
+                return response()->json($data);
             }
 
             return response()->json(['status' => 'failed', 'message' => "You have already uploaded a photo this week!"], 500);
@@ -88,7 +90,6 @@ class FileUploadController extends Controller
         $insertUploadDataAndGetUploadId = DB::table('uploads')->insertGetId($data);
         LegacyUploads::create($data);
         Redis::set("uploadId:$insertUploadDataAndGetUploadId", json_encode($data));
-        return response()->json(['status' => 'success', 'message' => 'Successfully uploaded your photo!'], 200);
     }
 
 }
