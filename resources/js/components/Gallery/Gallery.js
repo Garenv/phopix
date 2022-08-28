@@ -155,6 +155,11 @@ const Gallery = () => {
 
                 setStatusDeleteMessage(successMessage);
                 setStatusDelete(okStatus);
+
+                setTimeout(() => {
+                    setStatusDelete(false);
+                },5000);
+
             }).catch(error => {
             let errorMessage       = error.response.data.message;
             let errorStatus        = error.response.status;
@@ -185,6 +190,7 @@ const Gallery = () => {
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
 
+                console.log(resp);
                 if(okStatus) {
                     setShow(false);
                 }
@@ -192,6 +198,11 @@ const Gallery = () => {
                 setUploadSuccess(okStatus);
                 setStatusMessage(successMessage);
                 setStatusCode(okStatus);
+
+                setTimeout(() => {
+                    setStatusCode(false);
+                },5000);
+
             }).catch(error => {
             let errorMessage       = error.response.data.message;
             let errorStatus        = error.response.status;
@@ -254,7 +265,7 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal>
 
-            {weeklyDay === 7 ? <Modal show={showWinners} onHide={handleCloseWinners}>
+            {weeklyDay === 1 ? <Modal show={showWinners} onHide={handleCloseWinners}>
                 <h1>This Week's Top 3 Winners!</h1>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
