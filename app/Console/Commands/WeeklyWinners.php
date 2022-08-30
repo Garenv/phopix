@@ -7,7 +7,6 @@ use App\Models\LegacyWinners;
 use App\Models\Winners;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 
 class WeeklyWinners extends Command
@@ -38,7 +37,7 @@ class WeeklyWinners extends Command
     public function __construct(IWinnersRepository $winnersRepository)
     {
         parent::__construct();
-        $this->__winnersRepository = $winnersRepository;
+        $this->__winnersRepository      = $winnersRepository;
     }
 
     /**
@@ -48,15 +47,16 @@ class WeeklyWinners extends Command
     public function handle()
     {
         // Get top three winners by joining uploads and users tables
-        $topThreeWinners                 = $this->__winnersRepository->getTopThreeWinnersFromUploadsTable();
+        $topThreeWinners                = $this->__winnersRepository->getTopThreeWinnersFromUploadsTable();
+
+        dd($topThreeWinners);
 
         // Get prize data
-        $prizesData                      = $this->__winnersRepository->getPrizeData();
-
+        $prizesData                     = $this->__winnersRepository->getPrizeData();
 
         // Get timestamp of the time winner got chosen
-        $time                            = Carbon::now();
-        $timeStamp                       = $time->toDateTimeString();
+        $time                           = Carbon::now();
+        $timeStamp                      = $time->toDateTimeString();
 
         // First place data
         $firstPlaceUserId               = $topThreeWinners[0]->UserID;
@@ -65,7 +65,6 @@ class WeeklyWinners extends Command
         $firstPlaceUrl                  = $topThreeWinners[0]->url;
         $firstPlacePrizeId              = $prizesData[0]->prizeId;
         $firstPlaceName                 = $topThreeWinners[0]->name;
-
 
         // Second place data
         $secondPlaceUserId              = $topThreeWinners[1]->UserID;
@@ -81,7 +80,7 @@ class WeeklyWinners extends Command
         $thirdPlaceWinnerId             = 'w-' . Str::uuid()->toString();
         $thirdPlaceUrl                  = $topThreeWinners[2]->url;
         $thirdPlacePrizeId              = $prizesData[2]->prizeId;
-        $thirdPlaceName                = $topThreeWinners[2]->name;
+        $thirdPlaceName                 = $topThreeWinners[2]->name;
 
         $dataFirstPlace = [
             'UserID'                    => $firstPlaceUserId,

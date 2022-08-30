@@ -16,9 +16,11 @@ class WinnersRepository implements IWinnersRepository
 
     public function getTopThreeWinnersFromUploadsTable()
     {
+        // See https://stackoverflow.com/a/54619338 for reference
         return DB::table('uploads')
-            ->select('users.name', 'uploads.likes', 'uploads.url', 'uploads.UserID', 'users.email')
+            ->select('users.name', 'uploads.likes', 'uploads.url', 'uploads.UserID', 'users.email', 'uploads.timestamp')
             ->join('users', 'users.UserID', '=', 'uploads.UserID')
+            ->whereRaw("`uploads`.`timeStamp` >= curdate() - INTERVAL DAYOFWEEK(curdate()) +6 DAY and `uploads`.`timeStamp` < curdate() - INTERVAL DAYOFWEEK(curdate()) -1 DAY")
             ->orderBy('likes', 'desc')
             ->limit(3)
             ->get();

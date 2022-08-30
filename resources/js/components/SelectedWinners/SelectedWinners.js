@@ -11,7 +11,7 @@ const SelectedWinners = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        const {data} = await axios.get('http://localhost/api/get-winners', {headers});
+        const {data} = await axios.get('http://127.0.0.1:8000/api/get-winners', {headers});
         return data;
     }
 
