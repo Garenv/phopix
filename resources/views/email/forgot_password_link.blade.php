@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Forgot Password Reset</title>
 
     <style>
@@ -26,8 +27,9 @@
         }
 
         .logo {
-            margin: 0 auto;
-            display: flex;
+            width: 50%;
+            margin: 0 auto !important;
+            display: block;
         }
 
         .input-container {
@@ -140,7 +142,7 @@
         {{csrf_field()}}
         <input type="hidden" name="token" value="{{ $token }}">
         <a href="{{ route('routes') }}">
-            <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/user/phopixLogo_v2.png" class="logo" alt="Phopixel Logo">
+            <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png" class="logo" alt="Phopixel Logo">
         </a>
         @if(session()->has('success'))
             <h3 class="success">{{ session()->get('success') }}</h3>
@@ -158,11 +160,6 @@
             <h3 class="error">{{ session()->get('invalidToken') }} <a href="#">customer support</a></h3>
         @endif
 
-        <div class="input-container ic1">
-            <input id="firstname" class="input" type="text" name="email" placeholder=" " />
-            <div class="cut"></div>
-            <label for="Email" class="placeholder">Email</label>
-        </div>
         <div class="input-container ic2">
             <input id="lastname" class="input" type="password" name="password" placeholder=" " />
             <div class="cut"></div>

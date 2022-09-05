@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Facade\FlareClient\Http\Response;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -202,6 +203,8 @@ class AuthController extends Controller
             $message->subject('Reset Password');
         });
 
+        return response()->json(['status' => 'success', 'message' => "Successfully sent password reset email"], 400);
+
     }
 
     public function showResetPasswordForm($token)
@@ -211,44 +214,46 @@ class AuthController extends Controller
 
     public function submitResetPasswordForm(Request $request)
     {
+
         try {
+            $token                      = $request->get('token');
+
             $validator = Validator::make($request->all(), [
-                'email'                               => 'required|email|exists:users,email',
-                'password'                            => 'required|min:6',
-                'password_confirmation'               => 'required|min:6|same:password'
+                'token'                 => 'required|string',
+                'password'              => 'required|min:6',
+                'password_confirmation' => 'required|min:6|same:password'
             ]);
 
+            $passwordReset              = DB::table('password_resets')->where(['token' => $token])->first();
+
+            if (!$passwordReset) {
+                return response()->json( [
+                    'error'             => true,
+                    'message'           => 'This Password Reset token is invalid.'
+                ], 404);
+            }
+
             if($validator->fails()) {
-                $failedRules                          = $validator->failed();
+                $failedRules            = $validator->failed();
 
                 if(isset($failedRules['password_confirmation']['Same'])) {
                     return Redirect::back()->with('passwordNotMatching', "The entered passwords don't match!");
                 }
-
-                if(isset($failedRules['email']['Exists'])) {
-                    return Redirect::back()->with('failed', "We can't find that account!");
-                }
-
             }
 
-            $email                                       = $request->get('email');
-            $token                                       = $request->get('token');
-            $password                                    = $request->get('password');
+            $userEmail                  = DB::table('password_resets')->where( 'token', $passwordReset->token )->pluck('email');
+            $user                       = User::where('email', $userEmail)->first();
 
-            $data = [
-                'email'                                  => $email,
-                'token'                                  => $token
-            ];
-
-            $updatePassword = DB::table('password_resets')->where($data)->first();
-
-            if(!$updatePassword){
-                return Redirect::back()->with("invalidToken", "Something went wrong, please contact");
+            if (!$user) {
+                return response()->json( [
+                    'error'             => true,
+                    'message'           => 'We cannot find this account in our system!'
+                ], 404);
             }
 
-            User::where('email', $email)->update(['password' => Hash::make($password)]);
-
-            DB::table('password_resets')->where(['email' => $email])->delete();
+            $user->password             = bcrypt($request->password);
+            $user->save();
+            DB::table('password_resets')->where(['token' => $token])->delete();
 
             return Redirect::back()->with('success', "Successfully updated your account password!");
 

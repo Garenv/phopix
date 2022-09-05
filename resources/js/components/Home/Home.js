@@ -116,13 +116,13 @@ const LoginRegister = () => {
     const handleForgotPassword = (e) => {
         e.preventDefault();
 
-        let dataRegister = {
+        let dataForgotPassword = {
             'email': forgotPasswordEmail,
         };
 
-        console.log(dataRegister)
+        console.log(dataForgotPassword);
 
-        axios.post('http://127.0.0.1:8000/forgot-password', dataRegister);
+        axios.post('http://127.0.0.1:8000/forgot-password', dataForgotPassword);
     };
 
     return (
