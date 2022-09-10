@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Facade\FlareClient\Http\Response;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -203,7 +202,7 @@ class AuthController extends Controller
             $message->subject('Reset Password');
         });
 
-        return response()->json(['status' => 'success', 'message' => "Successfully sent password reset email"], 400);
+        return response()->json(['status' => 'success', 'message' => "Successfully sent password reset email"], 200);
 
     }
 

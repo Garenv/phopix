@@ -335,6 +335,26 @@ section{
     background-color: #00FF00;
 }
 
+.forgotPasswordTextFailed {
+    border-radius: 4px;
+    height: 44px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 200ms linear;
+    padding: 0 30px;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    -ms-flex-pack: center;
+    text-align: center;
+    border: none;
+    color: #fff;
+    background-color: red;
+}
+
+
 .sendPasswordResetLinkBtnWrapper {
     padding-top: 1rem;
 }

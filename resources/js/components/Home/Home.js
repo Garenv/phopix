@@ -12,7 +12,8 @@ const LoginRegister = () => {
     const [errorStatus, setErrorStatus]                             = useState(null);
     const [forgotPasswordBtnFlag, setForgotPasswordBtnFlag]         = useState(false);
     const [forgotPasswordBtnTxt, setForgotPasswordBtnTxt]           = useState("Send Forgot Password Link");
-
+    const [forgotPasswordStatus, setForgotPasswordStatus]           = useState(null);
+    const [forgotPasswordStatusStyle, setForgotPasswordStatusStyle]           = useState(null);
 
     // Handles password error upon logging in
     const [passwordError, setPasswordError]                         = useState("");
@@ -110,19 +111,32 @@ const LoginRegister = () => {
 
     const forgotPassWordClicked = () => {
         setForgotPasswordBtnFlag(true);
-        setForgotPasswordBtnTxt("Sent!");
+        return "forgotPasswordTextFailed"
     };
 
     const handleForgotPassword = (e) => {
         e.preventDefault();
+        setForgotPasswordBtnTxt('Sending...');
 
         let dataForgotPassword = {
-            'email': forgotPasswordEmail,
+            'email': forgotPasswordEmail
         };
 
-        console.log(dataForgotPassword);
+        axios.post('http://127.0.0.1:8000/api/forgot-password', dataForgotPassword)
+            .then(resp => {
+                let okStatus = resp.status;
 
-        axios.post('http://127.0.0.1:8000/forgot-password', dataForgotPassword);
+                setForgotPasswordStatus(okStatus);
+                setForgotPasswordStatusStyle('forgotPasswordTextSuccess');
+                setForgotPasswordBtnTxt('Sent!');
+
+            }).catch(error => {
+            let failedStatus = error.response.status;
+
+            setForgotPasswordStatus(failedStatus);
+            setForgotPasswordStatusStyle('forgotPasswordTextFailed');
+            setForgotPasswordBtnTxt('Something went wrong!!');
+        });
     };
 
     return (
@@ -142,9 +156,6 @@ const LoginRegister = () => {
                     </div>
                 </section>
                 : null }
-
-            {/*<img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixLogo_v2.png" className="phopixLogo" alt=""/>*/}
-            {/*<img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314.jpg" className="img-fluid" alt=""/>*/}
 
             <header className="homePageHeader">
                 <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg" className="logoHome" alt="logo" />
@@ -222,7 +233,7 @@ const LoginRegister = () => {
                                                                     />
                                                                 </div>
                                                                 <div className="text-center sendPasswordResetLinkBtnWrapper">
-                                                                    <button type="submit" className={`${!forgotPasswordBtnFlag ? 'btn' : 'forgotPasswordTextSuccess'} sendPasswordResetLinkBtn`} onClick={forgotPassWordClicked}>
+                                                                    <button type="submit" className={`${!forgotPasswordBtnFlag ? 'btn' : forgotPasswordStatusStyle} sendPasswordResetLinkBtn`} onClick={forgotPassWordClicked}>
                                                                         {forgotPasswordBtnTxt}
                                                                     </button>
                                                                 </div>
