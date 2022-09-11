@@ -12,8 +12,7 @@ const LoginRegister = () => {
     const [errorStatus, setErrorStatus]                             = useState(null);
     const [forgotPasswordBtnFlag, setForgotPasswordBtnFlag]         = useState(false);
     const [forgotPasswordBtnTxt, setForgotPasswordBtnTxt]           = useState("Send Forgot Password Link");
-    const [forgotPasswordStatus, setForgotPasswordStatus]           = useState(null);
-    const [forgotPasswordStatusStyle, setForgotPasswordStatusStyle]           = useState(null);
+    const [forgotPasswordStatusStyle, setForgotPasswordStatusStyle] = useState(null);
 
     // Handles password error upon logging in
     const [passwordError, setPasswordError]                         = useState("");
@@ -50,6 +49,7 @@ const LoginRegister = () => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
                 localStorage.setItem('name', resp.data.name);
+
                 history.push('/gallery');
             }).catch(error => {
             let errorMessage = error.response.data.message;
@@ -78,6 +78,7 @@ const LoginRegister = () => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
                 localStorage.setItem('name', resp.data.name);
+
                 history.push('/gallery');
             }).catch(error => {
                 let errorMessage = error.response.data.message;
@@ -92,13 +93,12 @@ const LoginRegister = () => {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         };
 
-        console.log(headers);
-
         axios.post('http://127.0.0.1:8000/api/email/verification-notification', headers, {})
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
                 localStorage.setItem('name', resp.data.name);
+
                 history.push('/gallery');
             }).catch(error => {
             let errorMessage = error.response.data.message;
@@ -111,7 +111,6 @@ const LoginRegister = () => {
 
     const forgotPassWordClicked = () => {
         setForgotPasswordBtnFlag(true);
-        return "forgotPasswordTextFailed"
     };
 
     const handleForgotPassword = (e) => {
@@ -124,18 +123,26 @@ const LoginRegister = () => {
 
         axios.post('http://127.0.0.1:8000/api/forgot-password', dataForgotPassword)
             .then(resp => {
-                let okStatus = resp.status;
+                let successMessage = resp.data.message;
 
-                setForgotPasswordStatus(okStatus);
                 setForgotPasswordStatusStyle('forgotPasswordTextSuccess');
-                setForgotPasswordBtnTxt('Sent!');
+                setForgotPasswordBtnTxt(successMessage);
+
+                setTimeout(() => {
+                    setForgotPasswordStatusStyle('btn sendPasswordResetLinkBtn');
+                    setForgotPasswordBtnTxt("Send Forgot Password Link");
+                },5000);
 
             }).catch(error => {
-            let failedStatus = error.response.status;
+            let failureMessage = error.response.data.message;
 
-            setForgotPasswordStatus(failedStatus);
             setForgotPasswordStatusStyle('forgotPasswordTextFailed');
-            setForgotPasswordBtnTxt('Something went wrong!!');
+            setForgotPasswordBtnTxt(failureMessage);
+
+            setTimeout(() => {
+                setForgotPasswordStatusStyle('btn sendPasswordResetLinkBtn');
+                setForgotPasswordBtnTxt("Send Forgot Password Link");
+            },5000);
         });
     };
 
@@ -307,7 +314,6 @@ const LoginRegister = () => {
             </div>
         </>
     );
-
 }
 
 export default LoginRegister;

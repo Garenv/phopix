@@ -202,7 +202,7 @@ class AuthController extends Controller
             $message->subject('Reset Password');
         });
 
-        return response()->json(['status' => 'success', 'message' => "Successfully sent password reset email"], 200);
+        return response()->json(['status' => 'success', 'message' => "Successfully sent password reset email"]);
 
     }
 
