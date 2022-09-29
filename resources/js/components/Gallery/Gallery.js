@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useQuery } from 'react-query';
 import { Button, Image, Modal } from "react-bootstrap";
 import '../../../sass/gallery/gallery.scss';
@@ -8,6 +8,8 @@ import SelectedWinners from "../SelectedWinners/SelectedWinners";
 
 const Gallery = () => {
     let authToken                                                 = localStorage.getItem('token');
+
+    const [gridData, setGridData]                                 = useState([]);
 
     // Preview modal content
     const [show, setShow]                                         = useState(false);
@@ -22,11 +24,6 @@ const Gallery = () => {
     const [errorClose, setErrorClose]                             = useState(false);
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
 
-    // Likes/dislikes
-    const [isLikedClicked, setIsLikeClicked]                      = useState(false);
-    const [isDislikeClicked, setIsDislikeClicked]                 = useState(false);
-    const [userLikes, setUserLikes]                               = useState(null);
-
     const handleClose                                             = () => setShow(false);
 
     // Winner modal content
@@ -36,7 +33,7 @@ const Gallery = () => {
     const handleCloseWinners                                      = () => setShowWinners(false);
 
     // User clicks likes
-    const [currentUserClicks, setCurrentUserClicks]               = useState(null);
+    const [userLikedPhotos, setUserLikedPhotos]                   = useState({});
 
     const closeMessages = () => {
         setErrorClose(true);
@@ -52,37 +49,37 @@ const Gallery = () => {
         setShow(true);
     };
 
-    async function fetchUploads(){
+    useEffect(() => {
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
         };
 
-        const {data} = await axios.get('http://127.0.0.1:8000/api/get-user-uploads-data', {headers});
-        return data;
-    }
+        axios.get('http://127.0.0.1:8000/api/get-user-uploads-data', {headers})
+            .then(resp => {
+                setGridData(resp.data);
+            }).catch(err => {
+            console.log(err);
+        });
 
-    const { data, error, isError, isLoading } = useQuery('uploads', fetchUploads); // First argument is a string to cache and track the query result
-
-    if(isLoading){
-        return <div className="loading"></div>
-        // return <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_600x370.jpg" className="img-fluid loading" alt="Logo"/>;
-    }
-    if(isError){
-        return <div>Error! {error.message}</div>
-    }
+    }, [])
 
     const handleLikesBasedOnUserId = (likedPhotoUserId) => {
-        if(currentUserClicks >= 1) {
-            setCurrentUserClicks(currentUserClicks - 1);
-            setIsDislikeClicked(true);
+        if(userLikedPhotos[likedPhotoUserId]) {
+            // dislike
+            delete userLikedPhotos[likedPhotoUserId];
+
+            gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
             handleDislike(likedPhotoUserId);
         } else {
-            setCurrentUserClicks(currentUserClicks + 1);
-            setIsLikeClicked(true);
+            // like
+            userLikedPhotos[likedPhotoUserId] = true;
+
+            gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
             handleLike(likedPhotoUserId);
         }
-
+        // Spread the userLikedPhotos to create a new object and force a rendering
+        setUserLikedPhotos({...userLikedPhotos});
     };
 
     const handleLike = (likedPhotoUserId) => {
@@ -95,15 +92,11 @@ const Gallery = () => {
 
         let data = {
             'UserID': likedPhotoUserId
-            // 'likeCount': currentUserClicks
         };
 
         axios.post(url, data, {headers})
             .then(resp => {
-                // setLiked(true);
                 console.log(resp.data);
-                setUserLikes(resp.data.userLikes);
-                // setUserLike(resp.data.incrementDecrementLikes);
             }).catch(err => {
             console.log(err);
         });
@@ -120,16 +113,11 @@ const Gallery = () => {
 
         let data = {
             'UserID': likedPhotoUserId
-            // 'likeCount': currentUserClicks
         };
-
 
         axios.post(url, data, {headers})
             .then(resp => {
-                // setDisliked(true);
                 console.log(resp.data);
-                setUserLikes(resp.data.userLikes);
-                // setUserLike(resp.data.incrementDecrementLikes);
             }).catch(err => {
             console.log(err);
         });
@@ -213,7 +201,7 @@ const Gallery = () => {
 
     return (
         <>
-            {location.pathname === '/gallery' ? <Navbar data={data}/> : null }
+            {location.pathname === '/gallery' ? <Navbar data={gridData}/> : null }
 
             { statusCode === 200 ? <section>
                     <div className={`notification success ${errorClose ? 'closed' : null}`}>
@@ -275,23 +263,17 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal> : null}
 
-
             <div className="main">
                 <ul className="cards">
                     {
-                        data.map((photos, index) => {
+                        gridData.map((photos, index) => {
                             return <Grid
-                                src={photos.url}
-                                newlyUploadedSrc={uploadSuccess}
-                                likes={photos.likes}
-                                currentUserClicks={currentUserClicks}
-                                userName={photos.name}
                                 key={index}
+                                src={photos.url}
+                                likes={photos.likes}
+                                userName={photos.name}
                                 onClick={handleLikesBasedOnUserId}
                                 userDelete={deleteUserUpload}
-                                isLikedClicked={isLikedClicked}
-                                isDislikeClicked={isDislikeClicked}
-                                userLikes={userLikes}
                                 userId={photos.UserID}
                             />
                         })
