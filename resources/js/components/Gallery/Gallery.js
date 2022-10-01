@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { useQuery } from 'react-query';
 import { Button, Image, Modal } from "react-bootstrap";
 import '../../../sass/gallery/gallery.scss';
 import Grid from "../Grid/Grid";
@@ -263,23 +262,19 @@ const Gallery = () => {
                 </Modal.Footer>
             </Modal> : null}
 
-            <div className="main">
-                <ul className="cards">
-                    {
-                        gridData.map((photos, index) => {
-                            return <Grid
-                                key={index}
-                                src={photos.url}
-                                likes={photos.likes}
-                                userName={photos.name}
-                                onClick={handleLikesBasedOnUserId}
-                                userDelete={deleteUserUpload}
-                                userId={photos.UserID}
-                            />
-                        })
-                    }
-                </ul>
-            </div>
+            {
+                gridData.map((photos, index) => {
+                    return <Grid
+                        key={index}
+                        src={photos.url}
+                        likes={photos.likes}
+                        userName={photos.name}
+                        onClick={handleLikesBasedOnUserId}
+                        userDelete={deleteUserUpload}
+                        userId={photos.UserID}
+                    />
+                })
+            }
         </>
     );
 }
