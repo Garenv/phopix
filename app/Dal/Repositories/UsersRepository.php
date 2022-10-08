@@ -31,6 +31,7 @@ class UsersRepository implements IUsersRepository
         return DB::table('uploads')
             ->select('uploads.url', 'uploads.likes', 'users.UserID', 'users.name')
             ->join('users', 'users.UserID', '=', 'uploads.UserID')
+            ->orderBy('uploads.timeStamp', 'desc')
             ->get();
     }
 
