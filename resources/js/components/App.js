@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, useHistory} from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
 import ReactDOM from 'react-dom';
 import '../../sass/HomePage/homePage.scss';
 import Home from "./Home/Home";
@@ -10,6 +11,8 @@ import FaqComp from "./Faq/FaqComp";
 import Prizes from "./Prizes/Prizes"
 import PageNotFound from "./PageNotFound/PageNotFound";
 import PastWinners from "./PastWinners/PastWinners";
+
+// import PrizeStatus from "./Pages/PrizeStatus/PrizeStatus";
 
 const App = () => {
     let { push }      = useHistory();
@@ -41,8 +44,6 @@ const App = () => {
     );
 }
 
-export default App;
-
-if (document.getElementById('example')) {
-    ReactDOM.render(<Router><App/></Router>, document.getElementById('example'));
-}
+const container = document.getElementById('example');
+const root = createRoot(container);
+root.render(<Router><App/></Router>);

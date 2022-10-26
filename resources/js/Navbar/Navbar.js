@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../sass/navbar/navbar.scss';
-import {useHistory} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, useHistory} from "react-router-dom";
+import PrizeStatus from "../components/Pages/PrizeStatus/PrizeStatus";
 
 const Navbar = () => {
     let authToken     = localStorage.getItem('token');
@@ -32,13 +33,19 @@ const Navbar = () => {
                         <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_logo_large.png" className="phopixLogo" alt="Phopix Logo"/>
                     </a>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="">This Week's Winners</a></li>
-                        <li style={{color: "#000000"}}>Welcome, {name}!</li>
-                        <li><a href="#" className="myButton" onClick={logout}>Logout</a></li>
-                    </ul>
-                </nav>
+                    <nav>
+                        <ul>
+                            <li style={{color: "#000000"}}>Welcome, {name}!</li>
+                            <li>
+                                <Link to="/prizeStatus">Prize Status</Link>
+                            </li>
+                            <li>
+                                <Link to="/gallery">Gallery</Link>
+                            </li>
+
+                            <li><a href="#" className="myButton" onClick={logout}>Logout</a></li>
+                        </ul>
+                    </nav>
             </div>
         </div>
     );
