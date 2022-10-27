@@ -1,12 +1,11 @@
 import React from 'react';
 import '../../sass/navbar/navbar.scss';
-import {BrowserRouter as Router, Switch, Route, Link, useHistory} from "react-router-dom";
-import PrizeStatus from "../components/Pages/PrizeStatus/PrizeStatus";
+import {Link, useHistory} from "react-router-dom";
 
 const Navbar = () => {
     let authToken     = localStorage.getItem('token');
     let name          = localStorage.getItem('name');
-    let history = useHistory();
+    let history       = useHistory();
 
     const logout      = () => {
         const headers = {
@@ -43,7 +42,7 @@ const Navbar = () => {
                                 <Link to="/gallery">Gallery</Link>
                             </li>
 
-                            <li><a href="#" className="myButton" onClick={logout}>Logout</a></li>
+                            <li><a href="/" className="myButton" onClick={logout}>Logout</a></li>
                         </ul>
                     </nav>
             </div>

@@ -1,0 +1,140 @@
+@charset "utf-8";
+
+@charset "utf-8";
+/* CSS Document */
+
+/* ---------- FONTAWESOME ---------- */
+/* ---------- https://fortawesome.github.com/Font-Awesome/ ---------- */
+/* ---------- http://weloveiconfonts.com/ ---------- */
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+/* ---------- ERIC MEYER'S RESET CSS ---------- */
+/* ---------- https://meyerweb.com/eric/tools/css/reset/ ---------- */
+
+@import url(https://meyerweb.com/eric/tools/css/reset/reset.css);
+
+/* ---------- ERIC MEYER'S RESET CSS ---------- */
+/* ---------- https://meyerweb.com/eric/tools/css/reset/ ---------- */
+
+@import url(https://meyerweb.com/eric/tools/css/reset/reset.css);
+
+
+/* ---------- GENERAL ---------- */
+
+body {
+    background-color: #cbd0d4;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    line-height: 1.5em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clearfix { *zoom: 1; } /* For IE 6/7 */
+.clearfix:before, .clearfix:after {
+    display: table;
+    content: "";
+}
+.clearfix:after { clear: both; }
+
+/* ---------- ACCOUNT SETUP ---------- */
+
+.account-setup {
+    margin: 50px auto;
+    width: 400px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    padding: 10px;
+    background-color: #333748;
+}
+
+
+.status-progress {
+    background-color: #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    height: 6px;
+    margin: 9px 0;
+    position: relative;
+    width: 100%;
+}
+
+.status-progress ul {
+    position: absolute;
+    top: -11px;
+}
+
+.status-progress li {
+    float: left;
+    margin: 0 72px;
+}
+
+.status-progress li:first-child {
+    margin-left: 0;
+}
+
+.status-progress li:last-child {
+    margin-right: 0;
+}
+
+.status-progress a {
+    background-color: #439ec4;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    border: 2px solid #eee;
+    color: #fff;
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    text-align: center;
+    width: 24px;
+}
+
+.status-progress .current {
+    background-color: #43c47a;
+}
+
+.status-progress .progress-info {
+    background-color: #1f222c;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #ccc;
+    display: block;
+    font-size: 12px;
+    height: 32px;
+    left: -68px;
+    line-height: 32px;
+    position: absolute;
+    top: -48px;
+    width: 160px;
+}
+
+.status-progress .progress-info:after {
+    background: #1f222c;
+    content: '';
+    display: block;
+    height: 8px;
+    left: 76px;
+    position: absolute;
+    top: 28px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 8px;
+}
+
+
+
+.progress {
+    color: #FFFFFF;
+    display: block;
+    font-size: 48px;
+    height: 50px;
+    margin: 20px auto 30px auto;
+    text-align: center;
+}

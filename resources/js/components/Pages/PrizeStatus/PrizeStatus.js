@@ -1,16 +1,18 @@
 import React from "react";
+import '../../../../sass/pages/PrizeStatus/prizeStatus.scss';
 
 const PrizeStatus = () => {
     return (
-        <div className="container text-center">
-            <h1>Prize Status</h1>
-
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio mollitia
-                in minima architecto odit sunt enim quidem blanditiis voluptates,
-                provident veritatis labore. Natus pariatur eos at nemo, officia
-                voluptatibus accusamus.
-            </p>
+        <div className="account-setup">
+            <div className="progress"><i className="fa fa-spinner fa-spin"></i></div>
+            <div className="status-progress">
+                <ul className="clearfix">
+                    <li><a href="#" className="current">1<span className="progress-info">Prize Pending</span></a>
+                    </li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                </ul>
+            </div>
         </div>
     );
 }

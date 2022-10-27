@@ -6,6 +6,7 @@ import Navbar from "../../Navbar/Navbar";
 import SelectedWinners from "../SelectedWinners/SelectedWinners";
 import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 import { BrowserRouter as Router, Switch, Route, useHistory} from 'react-router-dom';
+import Home from "../Home/Home";
 
 const Gallery = () => {
     let authToken                                                 = localStorage.getItem('token');
@@ -226,8 +227,10 @@ const Gallery = () => {
                     </section>
                     : null }
 
+                <input type="file" id="file"/>
                 <div className="fileUpload text-center">
                     <input type="file" id="file" onChange={getcreatedPhotoUrl}/>
+
                     <label htmlFor="file" className="btn-1">
                         <span>Upload</span>
                     </label>
