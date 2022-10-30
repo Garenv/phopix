@@ -11,6 +11,7 @@ import FaqComp from "./Faq/FaqComp";
 import Prizes from "./Prizes/Prizes"
 import PageNotFound from "./PageNotFound/PageNotFound";
 import PastWinners from "./PastWinners/PastWinners";
+import Grid from "./Grid/Grid";
 
 // import PrizeStatus from "./Pages/PrizeStatus/PrizeStatus";
 
@@ -32,7 +33,7 @@ const App = () => {
             <Router>
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route path="/gallery" component={Gallery} />
+                    <Route path="/gallery" component={Grid} />
                     <Route path="/support" component={Support} />
                     <Route path='/faq' component={FaqComp} />
                     <Route path='/prizes' component={Prizes} />

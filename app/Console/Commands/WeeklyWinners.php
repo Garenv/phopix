@@ -49,8 +49,6 @@ class WeeklyWinners extends Command
         // Get top three winners by joining uploads and users tables
         $topThreeWinners                = $this->__winnersRepository->getTopThreeWinnersFromUploadsTable();
 
-        dd($topThreeWinners);
-
         // Get prize data
         $prizesData                     = $this->__winnersRepository->getPrizeData();
 
