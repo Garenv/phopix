@@ -250,7 +250,7 @@ const Grid = () => {
                 </Modal.Footer>
             </Modal>
 
-            {weeklyDay === 1 ? <Modal show={showWinners} onHide={handleCloseWinners}>
+            {weeklyDay === 3 ? <Modal show={showWinners} onHide={handleCloseWinners}>
                 <h1>This Week's Top 3 Winners!</h1>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
@@ -262,46 +262,24 @@ const Grid = () => {
             </Modal> : null}
 
 
-            <ul className="image-list-small">
-                <li>
-                    {
-                        gridData.map((photos, index) => {
-                            return (
-                                <>
-                                    <img src={photos.url} alt="Photo" onClick={() => handleLikesBasedOnUserId(photos.UserID)}/>
-                                    <div className="details">
-                                        <h3>{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</h3>
-                                        <p className="image-author">❤️ {photos.likes}</p>
-                                        {localStorage.getItem('UserID') === photos.UserID ? <button className="btn-delete btn-danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</button> : null}
-                                    </div>
-                                </>
-                            )
-                        })
-                    }
-                </li>
-            </ul>
-
-            {/*<div className="section">*/}
-            {/*    <div className="container">*/}
-            {/*        <div className="grid-row">*/}
-            {/*            <div className="grid-item">*/}
-            {/*                {*/}
-            {/*                    gridData.map((photos, index) => {*/}
-            {/*                        return (*/}
-            {/*                            <>*/}
-            {/*                                <img src={photos.url} alt="Photo" onClick={() => handleLikesBasedOnUserId(photos.UserID)}/>*/}
-            {/*                                <h2>{photos.name} {localStorage.getItem('UserID') === photos.UserID ?*/}
-            {/*                                <h6 className="you">(You)</h6> : null}</h2>*/}
-            {/*                                <h5>❤️ {photos.likes}</h5>*/}
-            {/*                                {localStorage.getItem('UserID') === photos.UserID ? <button className="btn-delete btn-danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</button> : null}*/}
-            {/*                            </>*/}
-            {/*                        )*/}
-            {/*                    })*/}
-            {/*                }*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+            <section className="gallery">
+                <div className="container">
+                    <div className="img-container">
+                        {
+                            gridData.map((photos, index) => {
+                                return (
+                                    <>
+                                        <img src={photos.url} alt="Photo" className="gallery-img" onClick={() => handleLikesBasedOnUserId(photos.UserID)}/>
+                                        <span>{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                        <span className="image-author">❤️ {photos.likes}</span>
+                                        {/*{localStorage.getItem('UserID') === photos.UserID ? <button className="btn-delete btn-danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</button> : null}*/}
+                                    </>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+            </section>
         </>
     )
 }

@@ -30,7 +30,8 @@ const App = () => {
 
     return (
         <>
-            <Router>
+            {/*https://stackoverflow.com/a/63597919*/}
+            <QueryClientProvider client={queryClient}>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/gallery" component={Grid} />
@@ -40,7 +41,7 @@ const App = () => {
                     <Route path='/past-winners' component={PastWinners} />
                     <Route path= "*" component={PageNotFound} />
                 </Switch>
-            </Router>
+            </QueryClientProvider>
         </>
     );
 }
