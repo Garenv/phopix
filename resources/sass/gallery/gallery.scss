@@ -75,7 +75,7 @@ h1 {
 
 .img-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    //grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 20px;
 }
 
@@ -95,5 +95,17 @@ h1 {
 .img-container .gallery-img:hover {
     filter: blur(0);
     transform: scale(1);
+}
+
+.userDetails {
+    text-align: center;
+    background: #ffffff;
+    position: relative;
+    top: -1.35rem;
+    height: 105%;
+}
+
+.likesAmt, .you, .name {
+    color: #000000;
 }
 

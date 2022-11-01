@@ -269,10 +269,14 @@ const Grid = () => {
                             gridData.map((photos, index) => {
                                 return (
                                     <>
-                                        <img src={photos.url} alt="Photo" className="gallery-img" onClick={() => handleLikesBasedOnUserId(photos.UserID)}/>
-                                        <span>{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
-                                        <span className="image-author">❤️ {photos.likes}</span>
-                                        {/*{localStorage.getItem('UserID') === photos.UserID ? <button className="btn-delete btn-danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</button> : null}*/}
+                                        <img src={photos.url} alt="Photo" className="gallery-img"/>
+                                        {/*<div className="userDetails">*/}
+                                        {/*    <span>{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>*/}
+                                        <div className="userDetails">
+                                            <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                            {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
+                                        </div>
+                                        {/*</div>*/}
                                     </>
                                 )
                             })
