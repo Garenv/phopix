@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import ReactDOM from 'react-dom';
 import '../../sass/HomePage/homePage.scss';
 import Home from "./Home/Home";
-import Gallery from "./Gallery/Gallery";
+import Main from "./Main/Main";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Support from "./Support/Support";
 import FaqComp from "./Faq/FaqComp";

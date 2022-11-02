@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Grid from "../Grid/Grid";
 
-const Gallery = () => {
+const Main = () => {
     return (
         <>
             <Router>
@@ -9,13 +9,10 @@ const Gallery = () => {
                     <Route path="/gallery">
                         <Grid />
                     </Route>
-                    {/*<Route path="/prizeStatus">*/}
-                    {/*    <PrizeStatus />*/}
-                    {/*</Route>*/}
                 </Switch>
             </Router>
         </>
     );
 }
 
-export default Gallery;
+export default Main;

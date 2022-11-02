@@ -199,7 +199,7 @@ const Grid = () => {
 
     return (
         <>
-            {location.pathname === '/gallery' ? <Navbar data={gridData}/> : null }
+            {location.pathname === '/gallery' ? <Navbar/> : null }
 
             { statusCode === 200 ? <section>
                     <div className={`notification success ${errorClose ? 'closed' : null}`}>
@@ -270,13 +270,11 @@ const Grid = () => {
                                 return (
                                     <>
                                         <img src={photos.url} alt="Photo" className="gallery-img"/>
-                                        {/*<div className="userDetails">*/}
-                                        {/*    <span>{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>*/}
+
                                         <div className="userDetails">
                                             <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
                                             {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
                                         </div>
-                                        {/*</div>*/}
                                     </>
                                 )
                             })
