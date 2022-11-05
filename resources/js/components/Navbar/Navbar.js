@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../sass/navbar/navbar.scss';
+import '../../../sass/navbar/navbar.scss';
 import {Link, useHistory} from "react-router-dom";
 
 const Navbar = () => {
@@ -41,7 +41,6 @@ const Navbar = () => {
                             <li>
                                 <Link to="/gallery">Gallery</Link>
                             </li>
-
                             <li><a href="/" className="myButton" onClick={logout}>Logout</a></li>
                         </ul>
                     </nav>

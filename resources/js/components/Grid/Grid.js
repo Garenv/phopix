@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Image, Modal } from "react-bootstrap";
 import '../../../sass/gallery/gallery.scss';
-import Navbar from "../../Navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 import SelectedWinners from "../SelectedWinners/SelectedWinners";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 
 const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');
@@ -199,6 +206,8 @@ const Grid = () => {
 
     return (
         <>
+            <Router>
+
             {location.pathname === '/gallery' ? <Navbar/> : null }
 
             { statusCode === 200 ? <section>
@@ -260,28 +269,34 @@ const Grid = () => {
                     <Button variant="secondary" onClick={handleCloseWinners}>Close</Button>
                 </Modal.Footer>
             </Modal> : null}
+                <Switch>
+                    <Route path="/gallery">
+                        <section className="gallery">
+                            <div className="container">
+                                <div className="img-container">
+                                    {
+                                        gridData.map((photos, index) => {
+                                            return (
+                                                <>
+                                                    <img src={photos.url} alt="Photo" className="gallery-img"/>
 
-
-            <section className="gallery">
-                <div className="container">
-                    <div className="img-container">
-                        {
-                            gridData.map((photos, index) => {
-                                return (
-                                    <>
-                                        <img src={photos.url} alt="Photo" className="gallery-img"/>
-
-                                        <div className="userDetails">
-                                            <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
-                                            {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
-                                        </div>
-                                    </>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-            </section>
+                                                    <div className="userDetails">
+                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                                        {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
+                                                    </div>
+                                                </>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </section>
+                    </Route>
+                    <Route path="/prizeStatus">
+                        <PrizeStatus/>
+                    </Route>
+                </Switch>
+            </Router>
         </>
     )
 }
