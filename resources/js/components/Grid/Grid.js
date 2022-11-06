@@ -6,10 +6,10 @@ import SelectedWinners from "../SelectedWinners/SelectedWinners";
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
+import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 
 const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');
@@ -208,69 +208,70 @@ const Grid = () => {
         <>
             <Router>
 
-            {location.pathname === '/gallery' ? <Navbar/> : null }
+                {location.pathname === '/gallery' ? <Navbar/> : null }
 
-            { statusCode === 200 ? <section>
-                    <div className={`notification success ${errorClose ? 'closed' : null}`}>
-                        <span className="title">Success!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
-                    </div>
-                </section>
-                : null }
-
-            { statusDelete === 200 ? <section>
-                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                        <span className="title">Deleted</span>{statusDeleteMessage}<span className='close' onClick={closeMessages}>X</span>
-                    </div>
-                </section>
-                : null }
-
-            { !filePreviewModalStatus ? <section>
-                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                        <span className="title">Error</span>{statusMessage}<span className='close' onClick={closeMessages}>X</span>
-                    </div>
-                </section>
-                : null }
-
-            <div className="fileUpload text-center">
-                <input type="file" id="file" onChange={getcreatedPhotoUrl}/>
-                <label htmlFor="file" className="btn-1">
-                    <span>Upload</span>
-                </label>
-                &nbsp;
-                <Button variant="primary" onClick={handleShowPreviewModal}>Preview before Uploading!</Button>
-            </div>
-
-            <Modal show={show} onHide={handleClose} className={uploadSuccess === 200 ? "hideModal" : ""}>
-                { statusCode === 500 ?
-                    <section>
-                        <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                            <span className="title">Error</span>{statusMessage}<span className='close' onClick={closeMessages}>X</span>
-                        </div>
-                    </section>
-                    : null }
-                <h1>Would you like to upload this photo?</h1>
-                <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>
-                    <Image fluid src={filePreview}/>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    <Button variant="primary" onClick={fileUpload}>Upload!</Button>
-                </Modal.Footer>
-            </Modal>
-
-            {weeklyDay === 3 ? <Modal show={showWinners} onHide={handleCloseWinners}>
-                <h1>This Week's Top 3 Winners!</h1>
-                <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>
-                    <SelectedWinners/>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseWinners}>Close</Button>
-                </Modal.Footer>
-            </Modal> : null}
                 <Switch>
                     <Route path="/gallery">
+                        { statusCode === 200 ? <section>
+                                <div className={`notification success ${errorClose ? 'closed' : null}`}>
+                                    <span className="title">Success!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
+                                </div>
+                            </section>
+                            : null }
+
+                        { statusDelete === 200 ? <section>
+                                <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                                    <span className="title">Deleted</span>{statusDeleteMessage}<span className='close' onClick={closeMessages}>X</span>
+                                </div>
+                            </section>
+                            : null }
+
+                        { !filePreviewModalStatus ? <section>
+                                <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                                    <span className="title">Error</span>{statusMessage}<span className='close' onClick={closeMessages}>X</span>
+                                </div>
+                            </section>
+                            : null }
+
+                        <div className="fileUpload text-center">
+                            <input type="file" id="file" onChange={getcreatedPhotoUrl}/>
+                            <label htmlFor="file" className="btn-1">
+                                <span>Upload</span>
+                            </label>
+                            &nbsp;
+                            <Button variant="primary" onClick={handleShowPreviewModal}>Preview before Uploading!</Button>
+                        </div>
+
+                        <Modal show={show} onHide={handleClose} className={uploadSuccess === 200 ? "hideModal" : ""}>
+                            { statusCode === 500 ?
+                                <section>
+                                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
+                                        <span className="title">Error</span>{statusMessage}<span className='close' onClick={closeMessages}>X</span>
+                                    </div>
+                                </section>
+                                : null }
+                            <h1>Would you like to upload this photo?</h1>
+                            <Modal.Header closeButton></Modal.Header>
+                            <Modal.Body>
+                                <Image fluid src={filePreview}/>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>Close</Button>
+                                <Button variant="primary" onClick={fileUpload}>Upload!</Button>
+                            </Modal.Footer>
+                        </Modal>
+
+                        {weeklyDay === 3 ? <Modal show={showWinners} onHide={handleCloseWinners}>
+                            <h1>This Week's Top 3 Winners!</h1>
+                            <Modal.Header closeButton></Modal.Header>
+                            <Modal.Body>
+                                <SelectedWinners/>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseWinners}>Close</Button>
+                            </Modal.Footer>
+                        </Modal> : null}
+
                         <section className="gallery">
                             <div className="container">
                                 <div className="img-container">
@@ -292,8 +293,13 @@ const Grid = () => {
                             </div>
                         </section>
                     </Route>
+
                     <Route path="/prizeStatus">
                         <PrizeStatus/>
+                    </Route>
+
+                    <Route path="/yourPrizes">
+                        <YourPrizes/>
                     </Route>
                 </Switch>
             </Router>

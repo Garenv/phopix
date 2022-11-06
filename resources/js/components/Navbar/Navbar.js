@@ -41,6 +41,9 @@ const Navbar = () => {
                             <li>
                                 <Link to="/gallery">Gallery</Link>
                             </li>
+                            <li>
+                                <Link to="/yourPrizes">Your Prizes</Link>
+                            </li>
                             <li><a href="/" className="myButton" onClick={logout}>Logout</a></li>
                         </ul>
                     </nav>

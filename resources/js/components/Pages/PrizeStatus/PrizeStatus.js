@@ -7,4 +7,3 @@ const PrizeStatus = () => {
 }
 
 export default PrizeStatus;
-
