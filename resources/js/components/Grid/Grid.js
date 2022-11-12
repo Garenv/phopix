@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Image, Modal } from "react-bootstrap";
+import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 import '../../../sass/gallery/gallery.scss';
 import Navbar from "../Navbar/Navbar";
 import SelectedWinners from "../SelectedWinners/SelectedWinners";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
 import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 
@@ -301,6 +297,8 @@ const Grid = () => {
                     <Route path="/yourPrizes">
                         <YourPrizes/>
                     </Route>
+
+                    {/*<Route path= "*" component={PageNotFound} />*/}
                 </Switch>
             </Router>
         </>
