@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Image, Modal } from "react-bootstrap";
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import '../../../sass/gallery/gallery.scss';
 import Navbar from "../Navbar/Navbar";
-import SelectedWinners from "../SelectedWinners/SelectedWinners";
 import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 
@@ -18,20 +19,11 @@ const Grid = () => {
     const [filePreviewModalStatus, setFilePreviewModalStatus]     = useState(true);
 
     // Status codes
-    const [statusMessage, setStatusMessage]                       = useState("");
-    const [statusDelete, setStatusDelete]                         = useState(null);
-    const [statusDeleteMessage, setStatusDeleteMessage]           = useState("");
-    const [statusCode, setStatusCode]                             = useState(null);
+
     const [errorClose, setErrorClose]                             = useState(false);
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
 
     const handleClose                                             = () => setShow(false);
-
-    // Winner modal content
-    let today                                                     = new Date();
-    const weeklyDay                                               = today.getDay();
-    const [showWinners, setShowWinners]                           = useState(true);
-    const handleCloseWinners                                      = () => setShowWinners(false);
 
     // User clicks likes
     const [userLikedPhotos, setUserLikedPhotos]                   = useState({});
@@ -43,7 +35,12 @@ const Grid = () => {
     const handleShowPreviewModal = () => {
         if(filePreview === null) {
             setFilePreviewModalStatus(false);
-            setStatusMessage("Nothing to preview!");
+
+            toast.error("Nothing to preview!", {
+                closeOnClick: false,
+                closeButton: false,
+                autoClose: 600
+            });
             return false;
         }
 
@@ -58,6 +55,7 @@ const Grid = () => {
 
         axios.get('http://127.0.0.1:8000/api/get-user-uploads-data', {headers})
             .then(resp => {
+                console.log(resp.data);
                 setGridData(resp.data);
             }).catch(err => {
             console.log(err);
@@ -65,25 +63,37 @@ const Grid = () => {
 
     }, [])
 
-    const handleLikesBasedOnUserId = (likedPhotoUserId) => {
+    const handleLikesBasedOnUserId = (likedPhotoUserId, userName) => {
         if(userLikedPhotos[likedPhotoUserId]) {
             // dislike
             delete userLikedPhotos[likedPhotoUserId];
 
             gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
-            handleDislike(likedPhotoUserId);
+            handleDislike(likedPhotoUserId, userName);
+
+            toast.error(`You disliked ${userName}'s photo!`, {
+                closeOnClick: false,
+                progress: false,
+                closeButton: false
+            });
         } else {
             // like
             userLikedPhotos[likedPhotoUserId] = true;
 
             gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
-            handleLike(likedPhotoUserId);
+            handleLike(likedPhotoUserId, userName);
+
+            toast.success(`You liked ${userName}'s photo!`, {
+                closeOnClick: false,
+                progress: false,
+                closeButton: false
+            });
         }
         // Spread the userLikedPhotos to create a new object and force a rendering
         setUserLikedPhotos({...userLikedPhotos});
     };
 
-    const handleLike = (likedPhotoUserId) => {
+    const handleLike = (likedPhotoUserId, userName) => {
         const url = 'http://127.0.0.1:8000/api/like';
 
         const headers = {
@@ -92,7 +102,8 @@ const Grid = () => {
         };
 
         let data = {
-            'UserID': likedPhotoUserId
+            'UserID': likedPhotoUserId,
+            'userName' : userName
         };
 
         axios.post(url, data, {headers})
@@ -104,7 +115,7 @@ const Grid = () => {
 
     };
 
-    const handleDislike = (likedPhotoUserId) => {
+    const handleDislike = (likedPhotoUserId, userName) => {
         const url = 'http://127.0.0.1:8000/api/dislike';
 
         const headers = {
@@ -113,7 +124,8 @@ const Grid = () => {
         };
 
         let data = {
-            'UserID': likedPhotoUserId
+            'UserID': likedPhotoUserId,
+            'userName' : userName
         };
 
         axios.post(url, data, {headers})
@@ -142,19 +154,29 @@ const Grid = () => {
                     setShow(false);
                 }
 
-                setStatusDeleteMessage(successMessage);
-                setStatusDelete(okStatus);
+                toast.success(successMessage, {
+                    closeOnClick: false,
+                    closeButton: false,
+                    autoClose: 1400
+                });
 
                 setTimeout(() => {
-                    setStatusDelete(false);
-                },5000);
+                    window.location.reload(false);
+                },1400);
 
             }).catch(error => {
             let errorMessage       = error.response.data.message;
-            let errorStatus        = error.response.status;
 
-            setStatusMessage(errorMessage);
-            setStatusCode(errorStatus);
+            toast.error(errorMessage, {
+                closeOnClick: false,
+                closeButton: false,
+                autoClose: 1400
+            });
+
+            setTimeout(() => {
+                window.location.reload(false);
+            },1400);
+
         });
     }
 
@@ -183,20 +205,25 @@ const Grid = () => {
                     setShow(false);
                 }
 
-                setUploadSuccess(okStatus);
-                setStatusMessage(successMessage);
-                setStatusCode(okStatus);
+                toast.success(successMessage, {
+                    closeOnClick: false,
+                    closeButton: false,
+                    autoClose: 1400,
+                });
 
                 setTimeout(() => {
-                    setStatusCode(false);
-                },5000);
+                    window.location.reload(false);
+                },1400);
 
             }).catch(error => {
             let errorMessage       = error.response.data.message;
-            let errorStatus        = error.response.status;
 
-            setStatusMessage(errorMessage);
-            setStatusCode(errorStatus);
+            toast.error(errorMessage, {
+                closeOnClick: false,
+                closeButton: false,
+                autoClose: 1400
+            });
+
         });
     };
 
@@ -208,27 +235,6 @@ const Grid = () => {
 
                 <Switch>
                     <Route path="/gallery">
-                        { statusCode === 200 ? <section>
-                                <div className={`notification success ${errorClose ? 'closed' : null}`}>
-                                    <span className="title">Success!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
-                                </div>
-                            </section>
-                            : null }
-
-                        { statusDelete === 200 ? <section>
-                                <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                                    <span className="title">Deleted</span>{statusDeleteMessage}<span className='close' onClick={closeMessages}>X</span>
-                                </div>
-                            </section>
-                            : null }
-
-                        { !filePreviewModalStatus ? <section>
-                                <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                                    <span className="title">Error</span>{statusMessage}<span className='close' onClick={closeMessages}>X</span>
-                                </div>
-                            </section>
-                            : null }
-
                         <div className="fileUpload text-center">
                             <input type="file" id="file" onChange={getcreatedPhotoUrl}/>
                             <label htmlFor="file" className="btn-1">
@@ -239,13 +245,6 @@ const Grid = () => {
                         </div>
 
                         <Modal show={show} onHide={handleClose} className={uploadSuccess === 200 ? "hideModal" : ""}>
-                            { statusCode === 500 ?
-                                <section>
-                                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                                        <span className="title">Error</span>{statusMessage}<span className='close' onClick={closeMessages}>X</span>
-                                    </div>
-                                </section>
-                                : null }
                             <h1>Would you like to upload this photo?</h1>
                             <Modal.Header closeButton></Modal.Header>
                             <Modal.Body>
@@ -257,17 +256,6 @@ const Grid = () => {
                             </Modal.Footer>
                         </Modal>
 
-                        {weeklyDay === 3 ? <Modal show={showWinners} onHide={handleCloseWinners}>
-                            <h1>This Week's Top 3 Winners!</h1>
-                            <Modal.Header closeButton></Modal.Header>
-                            <Modal.Body>
-                                <SelectedWinners/>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="secondary" onClick={handleCloseWinners}>Close</Button>
-                            </Modal.Footer>
-                        </Modal> : null}
-
                         <section className="gallery">
                             <div className="container">
                                 <div className="img-container">
@@ -276,9 +264,12 @@ const Grid = () => {
                                             return (
                                                 <>
                                                     <img src={photos.url} alt="Photo" className="gallery-img"/>
-
+                                                    <ToastContainer
+                                                        hideProgressBar
+                                                        closeButton={false}
+                                                    />
                                                     <div className="userDetails">
-                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID, photos.name)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
                                                         {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
                                                     </div>
                                                 </>
@@ -306,6 +297,3 @@ const Grid = () => {
 }
 
 export default Grid;
-
-
-

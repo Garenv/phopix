@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../sass/Support/support.scss';
+import {toast, ToastContainer} from "react-toastify";
 
 const Support = () => {
     const [fileName, setFileName]                                                 = useState("");
@@ -50,16 +51,20 @@ const Support = () => {
             .then(resp => {
                 console.log(resp);
                 let statusMessage = resp.data.message;
-                let statusCode  = resp.status;
 
-                setStatusMessage(statusMessage);
-                setStatusCode(statusCode);
+                toast.success(statusMessage, {
+                    closeOnClick: false,
+                    closeButton: false,
+                    autoClose: 1400,
+                });
             }).catch(error => {
-            let statusMessage = error.response.data.message;
-            let statusCode  = error.response.status;
+            let errorMessage       = error.response.data.message;
 
-            setStatusMessage(statusMessage);
-            setStatusCode(statusCode);
+            toast.error(errorMessage, {
+                closeOnClick: false,
+                closeButton: false,
+                autoClose: 1400
+            });
         });
     };
 
@@ -78,6 +83,11 @@ const Support = () => {
                     </div>
                 </section>
                 : null }
+
+            <ToastContainer
+                hideProgressBar
+                closeButton={false}
+            />
 
             <div className="background">
                 <div className="container">

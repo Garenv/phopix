@@ -9,10 +9,10 @@ const FaqComp = () => {
 
     useEffect(() => {
         const url = 'http://127.0.0.1:8000/api/get-faq';
+
         axios.get(url)
             .then(resp => {
-                let data = resp.data;
-                setFaqData(data);
+                setFaqData(resp.data);
             }).catch(err => {
             console.log(err);
         });
@@ -26,7 +26,7 @@ const FaqComp = () => {
     return (
         <div className="container">
             <Link to="/">
-                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixLogo_v2.png" className="phopixLogo" alt=""/>
+                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png" className="phopixLogo" alt=""/>
             </Link>
             <Faq data={data} />
         </div>

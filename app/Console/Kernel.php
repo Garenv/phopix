@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('weekly:winners')->timezone('America/New_York')->weeklyOn(3, '23:59:59');
+        $schedule->command('weekly:winners')->timezone('America/New_York')->weeklyOn(5);
         $schedule->command('truncate:winners')->timezone('America/New_York')->weekly()->weekdays()->when(function () {
             // Truncate winners table every other Wednesday
             // see https://stackoverflow.com/a/55832938 for reference
