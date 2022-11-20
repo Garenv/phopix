@@ -12,6 +12,8 @@ const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');
 
     const [gridData, setGridData]                                 = useState([]);
+    const [liked, setLiked]                                       = useState(0);
+    const [disliked, setDisliked]                                 = useState(0);
 
     // Preview modal content
     const [show, setShow]                                         = useState(false);
@@ -32,21 +34,6 @@ const Grid = () => {
         setErrorClose(true);
     }
 
-    const handleShowPreviewModal = () => {
-        if(filePreview === null) {
-            setFilePreviewModalStatus(false);
-
-            toast.error("Nothing to preview!", {
-                closeOnClick: false,
-                closeButton: false,
-                autoClose: 600
-            });
-            return false;
-        }
-
-        setShow(true);
-    };
-
     useEffect(() => {
         const headers = {
             "Accept": 'application/json',
@@ -63,12 +50,27 @@ const Grid = () => {
 
     }, [])
 
+    const handleShowPreviewModal = () => {
+        if(filePreview === null) {
+            setFilePreviewModalStatus(false);
+
+            toast.error("Nothing to preview!", {
+                closeOnClick: false,
+                closeButton: false,
+                autoClose: 600
+            });
+            return false;
+        }
+
+        setShow(true);
+    };
+
     const handleLikesBasedOnUserId = (likedPhotoUserId, userName) => {
         if(userLikedPhotos[likedPhotoUserId]) {
             // dislike
             delete userLikedPhotos[likedPhotoUserId];
-
             gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
+            setDisliked(disliked + 1);
             handleDislike(likedPhotoUserId, userName);
 
             toast.error(`You disliked ${userName}'s photo!`, {
@@ -79,8 +81,8 @@ const Grid = () => {
         } else {
             // like
             userLikedPhotos[likedPhotoUserId] = true;
-
             gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
+            setLiked(liked + 1);
             handleLike(likedPhotoUserId, userName);
 
             toast.success(`You liked ${userName}'s photo!`, {
@@ -103,7 +105,8 @@ const Grid = () => {
 
         let data = {
             'UserID': likedPhotoUserId,
-            'userName' : userName
+            'userName' : userName,
+            'liked' : liked
         };
 
         axios.post(url, data, {headers})
@@ -125,7 +128,8 @@ const Grid = () => {
 
         let data = {
             'UserID': likedPhotoUserId,
-            'userName' : userName
+            'userName' : userName,
+            'disliked' : disliked
         };
 
         axios.post(url, data, {headers})

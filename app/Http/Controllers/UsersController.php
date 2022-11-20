@@ -23,10 +23,13 @@ class UsersController extends Controller
     public function handleLike(Request $request)
     {
         try {
+            dd($request->all());
             $userId                                  = $request->get('UserID');
+            $liked                                   = $request->get('liked');
             Uploads::where(['UserID' => $userId])->update(['likes' => DB::raw('likes + 1')]);
             $getUserLikes                            = $this->__usersRepository->getUserLikes($userId);
             $userLikes                               = $getUserLikes[0]->likes;
+
 
             return [
                 'UserID'                             => $userId,
@@ -42,7 +45,9 @@ class UsersController extends Controller
     public function handleDislike(Request $request)
     {
         try {
+            dd($request->all());
             $userId                                  = $request->get('UserID');
+            $disliked                                = $request->get('disliked');
             Uploads::where(['UserID' => $userId])->update(['likes' => DB::raw('likes - 1')]);
             $getUserLikes                            = $this->__usersRepository->getUserLikes($userId);
             $userLikes                               = $getUserLikes[0]->likes;
