@@ -23,17 +23,19 @@ class UsersController extends Controller
     public function handleLike(Request $request)
     {
         try {
-            dd($request->all());
+//            dd($request->all());
             $userId                                  = $request->get('UserID');
             $liked                                   = $request->get('liked');
-            Uploads::where(['UserID' => $userId])->update(['likes' => DB::raw('likes + 1')]);
+            Uploads::where(['UserID' => $userId])->update(
+                ['likes' => DB::raw('likes + 1'), 'liked' => $liked ?? 0]
+            );
             $getUserLikes                            = $this->__usersRepository->getUserLikes($userId);
             $userLikes                               = $getUserLikes[0]->likes;
-
 
             return [
                 'UserID'                             => $userId,
                 'userLikes'                          => $userLikes,
+                'liked'                              => $liked
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -45,16 +47,19 @@ class UsersController extends Controller
     public function handleDislike(Request $request)
     {
         try {
-            dd($request->all());
+//            dd($request->all());
             $userId                                  = $request->get('UserID');
             $disliked                                = $request->get('disliked');
-            Uploads::where(['UserID' => $userId])->update(['likes' => DB::raw('likes - 1')]);
+            Uploads::where(['UserID' => $userId])->update(
+                ['likes' => DB::raw('likes - 1'), 'liked' => $disliked ?? 0]
+            );
             $getUserLikes                            = $this->__usersRepository->getUserLikes($userId);
             $userLikes                               = $getUserLikes[0]->likes;
 
             return [
                 'UserID'                             => $userId,
-                'userLikes'                          => $userLikes
+                'userLikes'                          => $userLikes,
+                'liked'                              => $disliked
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());

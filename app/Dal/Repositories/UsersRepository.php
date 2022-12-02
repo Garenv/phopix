@@ -29,7 +29,7 @@ class UsersRepository implements IUsersRepository
     public function getUploads()
     {
         return DB::table('uploads')
-            ->select('uploads.url', 'uploads.likes', 'users.UserID', 'users.name')
+            ->select('uploads.url', 'uploads.likes', 'users.UserID', 'users.name', 'uploads.liked')
             ->join('users', 'users.UserID', '=', 'uploads.UserID')
             ->orderBy('uploads.timeStamp', 'desc')
             ->get();
