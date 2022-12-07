@@ -92,9 +92,7 @@ const Grid = () => {
         setStorageItem(storageKey, newList)
     };
 
-    const handleLikesBasedOnUserId = (likedPhotoUserId, userName) => {
-        console.log(likedPhotoUserId);
-
+    const handleLikesBasedOnUserId = (likedPhotoUserId, userName, likedPhotoId) => {
         // Get value or define empty
         const likedStored = localStorage.getItem("likedIds") || "[]";
         // Convert string into array
@@ -104,7 +102,7 @@ const Grid = () => {
             // dislike
             delete userLikedPhotos[likedPhotoUserId];
             gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
-            handleDislike(likedPhotoUserId, userName);
+            handleDislike(likedPhotoUserId, userName, likedPhotoId);
 
             toast.error(`You disliked ${userName}'s photo!`, {
                 closeOnClick: false,
@@ -115,7 +113,7 @@ const Grid = () => {
             // like
             userLikedPhotos[likedPhotoUserId] = true;
             gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
-            handleLike(likedPhotoUserId, userName);
+            handleLike(likedPhotoUserId, userName, likedPhotoId);
 
             toast.success(`You liked ${userName}'s photo!`, {
                 closeOnClick: false,
@@ -131,7 +129,7 @@ const Grid = () => {
         setUserLikedPhotos({...userLikedPhotos});
     };
 
-    const handleLike = (likedPhotoUserId, userName) => {
+    const handleLike = (likedPhotoUserId, userName, likedPhotoId) => {
         const url = 'http://127.0.0.1:8000/api/like';
 
         const headers = {
@@ -142,7 +140,7 @@ const Grid = () => {
         let data = {
             'UserID': likedPhotoUserId,
             'userName' : userName,
-            'liked' : liked
+            'likedPhotoId' : likedPhotoId
         };
 
         axios.post(url, data, {headers})
@@ -160,7 +158,7 @@ const Grid = () => {
 
     };
 
-    const handleDislike = (likedPhotoUserId, userName) => {
+    const handleDislike = (likedPhotoUserId, userName, likedPhotoId) => {
         const url = 'http://127.0.0.1:8000/api/dislike';
 
         const headers = {
@@ -171,7 +169,7 @@ const Grid = () => {
         let data = {
             'UserID': likedPhotoUserId,
             'userName' : userName,
-            'disliked' : disliked
+            'likedPhotoId' : likedPhotoId
         };
 
         axios.post(url, data, {headers})
@@ -263,9 +261,9 @@ const Grid = () => {
                     autoClose: 1400,
                 });
 
-                setTimeout(() => {
-                    window.location.reload(false);
-                },1400);
+                // setTimeout(() => {
+                //     window.location.reload(false);
+                // },1400);
 
             }).catch(error => {
             let errorMessage       = error.response.data.message;
@@ -321,7 +319,7 @@ const Grid = () => {
                                                         closeButton={false}
                                                     />
                                                     <div className="userDetails">
-                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID, photos.name)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID, photos.name, photos.photo_id)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
                                                         {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
                                                     </div>
                                                 </>

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class FileUploadController extends Controller
 {
@@ -40,6 +41,7 @@ class FileUploadController extends Controller
             $time                     = Carbon::now();
             $timeStamp                = $time->toDateTimeString();
             $weekday                  = date("l");
+            $photoId                  = 'p-' . Str::uuid()->toString();
 
             $getAllUploadsData        = $this->__uploadsRepository->getAllUploadsData();
             $isUploadsTableEmpty      = $getAllUploadsData->isEmpty();
@@ -49,7 +51,8 @@ class FileUploadController extends Controller
                 'url'                 => $url,
                 'UserID'              => $userId,
                 'isUploaded'          => true,
-                'timeStamp'           => $timeStamp
+                'timeStamp'           => $timeStamp,
+                'photo_id'            => $photoId
             ];
 
             // If the uploads table is empty OR if there doesn't exist an upload record for the user at all

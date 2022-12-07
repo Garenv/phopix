@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Dal\Interfaces\IUsersRepository;
 use App\Models\Uploads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -23,19 +24,21 @@ class UsersController extends Controller
     public function handleLike(Request $request)
     {
         try {
-//            dd($request->all());
-            $userId                                  = $request->get('UserID');
-            $liked                                   = $request->get('liked');
-            Uploads::where(['UserID' => $userId])->update(
-                ['likes' => DB::raw('likes + 1'), 'liked' => $liked ?? 0]
-            );
-            $getUserLikes                            = $this->__usersRepository->getUserLikes($userId);
+            $loggedInUserId                          = Auth::user()['UserID'];
+            $likedUserId                             = $request->get('UserID');
+            $likedPhotoId                            = $request->get('likedPhotoId');
+//            $getLoggedInUserLikedPhotoData           = $this->__usersRepository->getLoggedInUserLikedPhotoData($loggedInUserId);
+            $this->__usersRepository->insertUserLikesData($loggedInUserId, $likedPhotoId);
+
+
+            $this->__usersRepository->handleLike($likedUserId);
+
+            $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
             $userLikes                               = $getUserLikes[0]->likes;
 
             return [
-                'UserID'                             => $userId,
-                'userLikes'                          => $userLikes,
-                'liked'                              => $liked
+                'UserID'                             => $likedUserId,
+                'userLikes'                          => $userLikes
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -47,19 +50,19 @@ class UsersController extends Controller
     public function handleDislike(Request $request)
     {
         try {
-//            dd($request->all());
-            $userId                                  = $request->get('UserID');
-            $disliked                                = $request->get('disliked');
-            Uploads::where(['UserID' => $userId])->update(
-                ['likes' => DB::raw('likes - 1'), 'liked' => $disliked ?? 0]
-            );
-            $getUserLikes                            = $this->__usersRepository->getUserLikes($userId);
+            $loggedInUserId                          = Auth::user()['UserID'];
+            $likedUserId                             = $request->get('UserID');
+            $likedPhotoId                            = $request->get('likedPhotoId');
+//            $getLoggedInUserLikedPhotoData           = $this->__usersRepository->getLoggedInUserLikedPhotoData($loggedInUserId);
+            $this->__usersRepository->insertDisLikesData($loggedInUserId, $likedPhotoId);
+
+            $this->__usersRepository->handleDislike($likedUserId);
+            $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
             $userLikes                               = $getUserLikes[0]->likes;
 
             return [
-                'UserID'                             => $userId,
-                'userLikes'                          => $userLikes,
-                'liked'                              => $disliked
+                'UserID'                             => $likedUserId,
+                'userLikes'                          => $userLikes
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
