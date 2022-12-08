@@ -10,7 +10,7 @@ interface IUsersRepository
     public function handleLike($likedUserId);
     public function handleDislike($likedUserId);
     public function getLoggedInUserLikedPhotoData($loggedInUserId);
-    public function insertUserLikesData($loggedInUserId, $likedPhotoId);
-    public function insertDisLikesData($loggedInUserId, $likedPhotoId);
+    public function createUpdateUserLikesData($loggedInUserId, $likedPhotoId);
+    public function updateDisklikesData($loggedInUserId, $likedPhotoId);
 
 }

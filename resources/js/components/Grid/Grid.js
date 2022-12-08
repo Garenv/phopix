@@ -12,8 +12,6 @@ const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');
 
     const [gridData, setGridData]                                 = useState([]);
-    const [liked, setLiked]                                       = useState(0);
-    const [disliked, setDisliked]                                 = useState(0);
 
     // Preview modal content
     const [show, setShow]                                         = useState(false);
@@ -48,7 +46,7 @@ const Grid = () => {
             console.log(err);
         });
 
-    }, [])
+    }, []);
 
     const handleShowPreviewModal = () => {
         if(filePreview === null) {
@@ -65,39 +63,7 @@ const Grid = () => {
         setShow(true);
     };
 
-    // when repeating strings in code, it's useful to set them
-    // as variables so your autocomplete and linter can help you out
-    const likedStorageKey = 'likedUserIds';
-    const dislikedStorageKey = 'dislikedUserIds';
-
-    // using JSON is a little easier than manually building and splitting the list
-    const storageListOrDefault = (key) => JSON.parse(localStorage.getItem(key)) || [];
-
-    const setStorageItem = (key, list) => localStorage.setItem(key, JSON.stringify(list));
-
-    // if an item is in the list, remove it
-    const removeFromOppositeList = (storageKey, toRemove) => {
-        const vals = storageListOrDefault(storageKey)
-        setStorageItem(storageKey, vals.filter((id) => id !== toRemove))
-    };
-
-    const toggleInList = (storageKey, toAdd) => {
-        const vals = storageListOrDefault(storageKey)
-        // here we filter the old list, assuming you want your like/dislike
-        // buttons to have a 'neutral' state.
-        // if the array already includes the item and you're toggling to a neutral
-        // state, we remove the id
-        // if the list doesn't include the id, we concat the id to the array, and sort
-        const newList = vals.includes(toAdd) ? vals.filter((x) => x === toAdd) : [...vals, toAdd].sort()
-        setStorageItem(storageKey, newList)
-    };
-
     const handleLikesBasedOnUserId = (likedPhotoUserId, userName, likedPhotoId) => {
-        // Get value or define empty
-        const likedStored = localStorage.getItem("likedIds") || "[]";
-        // Convert string into array
-        let likedArray = JSON.parse(likedStored);
-
         if(userLikedPhotos[likedPhotoUserId]) {
             // dislike
             delete userLikedPhotos[likedPhotoUserId];
@@ -121,10 +87,6 @@ const Grid = () => {
                 closeButton: false
             });
         }
-        // Spread the userLikedPhotos to create a new object and force a rendering
-        // Convert to string to store in localStorage
-        const stringLiked = JSON.stringify(likedArray);
-        localStorage.setItem("likedIds", stringLiked);
 
         setUserLikedPhotos({...userLikedPhotos});
     };
@@ -146,12 +108,6 @@ const Grid = () => {
         axios.post(url, data, {headers})
             .then(resp => {
                 console.log(resp.data);
-
-                if (likedPhotoUserId) {
-                    removeFromOppositeList(dislikedStorageKey, likedPhotoUserId)
-                    toggleInList(likedStorageKey, likedPhotoUserId)
-                }
-
             }).catch(err => {
             console.log(err);
         });
@@ -175,12 +131,6 @@ const Grid = () => {
         axios.post(url, data, {headers})
             .then(resp => {
                 console.log(resp.data);
-
-                if (likedPhotoUserId) {
-                    removeFromOppositeList(likedStorageKey, likedPhotoUserId)
-                    toggleInList(dislikedStorageKey, likedPhotoUserId)
-                }
-
             }).catch(err => {
             console.log(err);
         });

@@ -27,8 +27,7 @@ class UsersController extends Controller
             $loggedInUserId                          = Auth::user()['UserID'];
             $likedUserId                             = $request->get('UserID');
             $likedPhotoId                            = $request->get('likedPhotoId');
-//            $getLoggedInUserLikedPhotoData           = $this->__usersRepository->getLoggedInUserLikedPhotoData($loggedInUserId);
-            $this->__usersRepository->insertUserLikesData($loggedInUserId, $likedPhotoId);
+            $createUpdateUserLikesData               = $this->__usersRepository->createUpdateUserLikesData($loggedInUserId, $likedPhotoId);
 
 
             $this->__usersRepository->handleLike($likedUserId);
@@ -38,7 +37,9 @@ class UsersController extends Controller
 
             return [
                 'UserID'                             => $likedUserId,
-                'userLikes'                          => $userLikes
+                'userLikes'                          => $userLikes,
+                'photo_id'                           => $createUpdateUserLikesData['photo_id'],
+                'is_liked'                           => $createUpdateUserLikesData['is_liked']
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -53,8 +54,7 @@ class UsersController extends Controller
             $loggedInUserId                          = Auth::user()['UserID'];
             $likedUserId                             = $request->get('UserID');
             $likedPhotoId                            = $request->get('likedPhotoId');
-//            $getLoggedInUserLikedPhotoData           = $this->__usersRepository->getLoggedInUserLikedPhotoData($loggedInUserId);
-            $this->__usersRepository->insertDisLikesData($loggedInUserId, $likedPhotoId);
+            $updateDisklikesData                     = $this->__usersRepository->updateDisklikesData($loggedInUserId, $likedPhotoId);
 
             $this->__usersRepository->handleDislike($likedUserId);
             $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
@@ -62,7 +62,9 @@ class UsersController extends Controller
 
             return [
                 'UserID'                             => $likedUserId,
-                'userLikes'                          => $userLikes
+                'userLikes'                          => $userLikes,
+                'photo_id'                           => $updateDisklikesData['photo_id'],
+                'is_liked'                           => $updateDisklikesData['is_liked']
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());

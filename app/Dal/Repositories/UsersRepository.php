@@ -57,17 +57,18 @@ class UsersRepository implements IUsersRepository
         Uploads::where(['UserID' => $likedUserId])->update(['likes' => DB::raw('likes - 1')]);
     }
 
-    public function insertUserLikesData($loggedInUserId, $likedPhotoId)
+    public function createUpdateUserLikesData($loggedInUserId, $likedPhotoId)
     {
         return UserLikes::updateOrCreate(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId], ['is_liked' => 1]);
     }
 
-    public function insertDisLikesData($loggedInUserId, $likedPhotoId)
+    public function updateDisklikesData($loggedInUserId, $likedPhotoId)
     {
         return UserLikes::where(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId, 'is_liked' => 1])->update(['is_liked' => 0]);
     }
 
-    public function getUserFinalData() {
+    public function getUserFinalData()
+    {
         return DB::table('user_likes')
             ->select( 'uploads.UserID', 'uploads.photo_id', 'user_likes.user_id','user_likes.photo_id')
             ->join('uploads', 'uploads.UserID', '=', 'user_likes.user_id')
