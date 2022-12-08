@@ -29,9 +29,7 @@ class UsersController extends Controller
             $likedPhotoId                            = $request->get('likedPhotoId');
             $createUpdateUserLikesData               = $this->__usersRepository->createUpdateUserLikesData($loggedInUserId, $likedPhotoId);
 
-
             $this->__usersRepository->handleLike($likedUserId);
-
             $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
             $userLikes                               = $getUserLikes[0]->likes;
 
