@@ -59,27 +59,12 @@ class UsersRepository implements IUsersRepository
 
     public function insertUserLikesData($loggedInUserId, $likedPhotoId)
     {
-        $didUserLikePhoto = UserLikes::where(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId, 'is_liked' => 1])->exists();
-
-        if(!$didUserLikePhoto) {
-            UserLikes::create([
-                'user_id' => $loggedInUserId,
-                'photo_id' => $likedPhotoId,
-                'is_liked' => 1
-            ]);
-        }
-
-        UserLikes::where(['user_id' => $likedPhotoId, 'photo_id' => $likedPhotoId, 'is_liked' => 1])->update(['is_liked' => 1]);
-
-
+        return UserLikes::updateOrCreate(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId], ['is_liked' => 1]);
     }
 
-    public function insertDisLikesData($loggedInUserId, $likedPhotoId) {
-        $didUserDislikePhoto = UserLikes::where(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId, 'is_liked' => 1])->exists();
-
-        if($didUserDislikePhoto) {
-            UserLikes::where(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId, 'is_liked' => 1])->update(['is_liked' => 0]);
-        }
+    public function insertDisLikesData($loggedInUserId, $likedPhotoId)
+    {
+        return UserLikes::where(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId, 'is_liked' => 1])->update(['is_liked' => 0]);
     }
 
     public function getUserFinalData() {
