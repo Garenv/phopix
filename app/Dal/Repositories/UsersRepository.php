@@ -64,7 +64,7 @@ class UsersRepository implements IUsersRepository
 
     public function updateDisklikesData($loggedInUserId, $likedPhotoId)
     {
-        return UserLikes::where(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId, 'is_liked' => 1])->update(['is_liked' => 0]);
+        return UserLikes::updateOrCreate(['user_id' => $loggedInUserId, 'photo_id' => $likedPhotoId, 'is_liked' => 1], ['is_liked' => 0]);
     }
 
     public function getUserFinalData()
