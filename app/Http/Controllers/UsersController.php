@@ -35,8 +35,9 @@ class UsersController extends Controller
 
             return [
                 'UserID'                             => $likedUserId,
+                'loggedInUserId'                     => $loggedInUserId,
+                'likedPhotoId'                       => $likedPhotoId,
                 'userLikes'                          => $userLikes,
-                'photo_id'                           => $createUpdateUserLikesData['photo_id'],
                 'is_liked'                           => $createUpdateUserLikesData['is_liked']
             ];
         } catch (\Exception $e) {
@@ -51,8 +52,8 @@ class UsersController extends Controller
         try {
             $loggedInUserId                          = Auth::user()['UserID'];
             $likedUserId                             = $request->get('UserID');
-            $likedPhotoId                            = $request->get('likedPhotoId');
-            $updateDisklikesData                     = $this->__usersRepository->updateDisklikesData($loggedInUserId, $likedPhotoId);
+            $dislikedPhotoId                         = $request->get('dislikedPhotoId');
+            $updateDisklikesData                     = $this->__usersRepository->updateDisklikesData($loggedInUserId, $dislikedPhotoId);
 
             $this->__usersRepository->handleDislike($likedUserId);
             $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
@@ -60,8 +61,9 @@ class UsersController extends Controller
 
             return [
                 'UserID'                             => $likedUserId,
+                'loggedInUserId'                     => $loggedInUserId,
+                'dislikedPhotoId'                    => $dislikedPhotoId,
                 'userLikes'                          => $userLikes,
-                'photo_id'                           => $updateDisklikesData['photo_id'],
                 'is_liked'                           => $updateDisklikesData['is_liked']
             ];
         } catch (\Exception $e) {

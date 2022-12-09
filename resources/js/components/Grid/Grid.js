@@ -19,7 +19,6 @@ const Grid = () => {
     const [filePreviewModalStatus, setFilePreviewModalStatus]     = useState(true);
 
     // Status codes
-
     const [errorClose, setErrorClose]                             = useState(false);
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
 
@@ -27,6 +26,7 @@ const Grid = () => {
 
     // User clicks likes
     const [userLikedPhotos, setUserLikedPhotos]                   = useState({});
+
 
     const closeMessages = () => {
         setErrorClose(true);
@@ -63,7 +63,7 @@ const Grid = () => {
         setShow(true);
     };
 
-    const handleLikesBasedOnUserId = (likedPhotoUserId, userName, likedPhotoId) => {
+    const handleLikesBasedOnUserId = (likedPhotoUserId, userName, likedPhotoId, is_liked) => {
         if(userLikedPhotos[likedPhotoUserId]) {
             // dislike
             delete userLikedPhotos[likedPhotoUserId];
@@ -108,6 +108,8 @@ const Grid = () => {
         axios.post(url, data, {headers})
             .then(resp => {
                 console.log(resp.data);
+                // setLikedData(resp.data);
+
             }).catch(err => {
             console.log(err);
         });
@@ -125,12 +127,13 @@ const Grid = () => {
         let data = {
             'UserID': likedPhotoUserId,
             'userName' : userName,
-            'likedPhotoId' : likedPhotoId
+            'dislikedPhotoId' : likedPhotoId
         };
 
         axios.post(url, data, {headers})
             .then(resp => {
                 console.log(resp.data);
+                // setDislikedData(resp.data);
             }).catch(err => {
             console.log(err);
         });
@@ -227,6 +230,10 @@ const Grid = () => {
         });
     };
 
+    const finalData = () => {
+
+    };
+
     return (
         <>
             <Router>
@@ -261,6 +268,7 @@ const Grid = () => {
                                 <div className="img-container">
                                     {
                                         gridData.map((photos, index) => {
+                                            console.log(photos.is_liked)
                                             return (
                                                 <>
                                                     <img src={photos.url} alt="Photo" className="gallery-img"/>
@@ -269,7 +277,7 @@ const Grid = () => {
                                                         closeButton={false}
                                                     />
                                                     <div className="userDetails">
-                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID, photos.name, photos.photo_id)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
                                                         {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
                                                     </div>
                                                 </>
