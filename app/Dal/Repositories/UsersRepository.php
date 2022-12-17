@@ -28,13 +28,15 @@ class UsersRepository implements IUsersRepository
             ->get();
     }
 
-    public function getUploads()
+    public function getUploads($loggedInUserId)
     {
         return DB::table('uploads')
-            ->select('uploads.url', 'uploads.likes', 'users.UserID', 'users.name', 'uploads.photo_id', 'user_likes.is_liked', 'user_likes.user_id')
-            ->leftJoin('user_likes', 'uploads.photo_id', '=', 'user_likes.photo_id')
-            ->rightJoin('users', 'users.UserID', '=', 'uploads.UserID')
-            ->where('uploads.url', '<>' ,null)
+            ->select('uploads.url', 'uploads.likes', 'users.name', 'users.UserID', 'uploads.photo_id', 'user_likes.is_liked')
+            ->join('users', 'users.UserID', '=', 'uploads.UserID')
+            ->join('user_likes', function ($q) use ($loggedInUserId) {
+                $q->where('user_likes.user_id', '=', "$loggedInUserId")
+                    ->on('user_likes.photo_id', '=', 'uploads.photo_id');
+            })
             ->orderBy('uploads.timeStamp', 'desc')
             ->get();
     }
@@ -67,6 +69,11 @@ class UsersRepository implements IUsersRepository
     public function updateDisklikesData($loggedInUserId, $dislikedPhotoId)
     {
         return UserLikes::updateOrCreate(['user_id' => $loggedInUserId, 'photo_id' => $dislikedPhotoId, 'is_liked' => 1], ['is_liked' => 0]);
+    }
+
+    public function getDataFromUserLikesTable($loggedInUserId)
+    {
+        return UserLikes::where(['user_id' => $loggedInUserId])->get();
     }
 
     public function getUserFinalData()

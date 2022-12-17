@@ -47,5 +47,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('like',                                 [UsersController::class,      'handleLike']);
     Route::post('dislike',                              [UsersController::class,      'handleDislike']);
     Route::delete('delete-user-upload',                 [UsersController::class,      'deleteUserUpload']);
+    Route::get('get-data-from-userlikes-table',         [UsersController::class,      'getDataFromUserLikesTable']);
 });
 

@@ -26,6 +26,8 @@ const Grid = () => {
 
     // User clicks likes
     const [userLikedPhotos, setUserLikedPhotos]                   = useState({});
+    const [dataFromUserLikesTable, setDataFromUserLikesTable]                       = useState(null);
+    const [userDislikedData, setUserDislikedData]                 = useState(null);
 
 
     const closeMessages = () => {
@@ -42,6 +44,14 @@ const Grid = () => {
             .then(resp => {
                 console.log(resp.data);
                 setGridData(resp.data);
+            }).catch(err => {
+            console.log(err);
+        });
+
+        axios.get('http://127.0.0.1:8000/api/get-data-from-userlikes-table', {headers})
+            .then(resp => {
+                console.log(resp.data);
+                setDataFromUserLikesTable(resp.data);
             }).catch(err => {
             console.log(err);
         });
@@ -64,7 +74,10 @@ const Grid = () => {
     };
 
     const handleLikesBasedOnUserId = (likedPhotoUserId, userName, likedPhotoId, is_liked) => {
+
+
         if(userLikedPhotos[likedPhotoUserId]) {
+
             // dislike
             delete userLikedPhotos[likedPhotoUserId];
             gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
@@ -107,9 +120,9 @@ const Grid = () => {
 
         axios.post(url, data, {headers})
             .then(resp => {
-                console.log(resp.data);
-                // setLikedData(resp.data);
-
+                // console.log(resp.data);
+                setDataFromUserLikesTable(resp.data);
+                // console.log(resp.data.loggedInUserId, resp.data.createUpdateUserLikesData.user_id);
             }).catch(err => {
             console.log(err);
         });
@@ -132,8 +145,9 @@ const Grid = () => {
 
         axios.post(url, data, {headers})
             .then(resp => {
-                console.log(resp.data);
-                // setDislikedData(resp.data);
+                // console.log(resp.data);
+                setUserDislikedData(resp.data);
+                // console.log(resp.data.loggedInUserId, resp.data.updateDisklikesData.user_id);
             }).catch(err => {
             console.log(err);
         });
@@ -230,10 +244,6 @@ const Grid = () => {
         });
     };
 
-    const finalData = () => {
-
-    };
-
     return (
         <>
             <Router>
@@ -268,7 +278,6 @@ const Grid = () => {
                                 <div className="img-container">
                                     {
                                         gridData.map((photos, index) => {
-                                            console.log(photos.is_liked)
                                             return (
                                                 <>
                                                     <img src={photos.url} alt="Photo" className="gallery-img"/>
@@ -277,7 +286,7 @@ const Grid = () => {
                                                         closeButton={false}
                                                     />
                                                     <div className="userDetails">
-                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant="success" onClick={() => handleLikesBasedOnUserId(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>Like</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant={photos.is_liked ? `danger` : 'success'} onClick={() => handleLikesBasedOnUserId(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>{photos.is_liked ? `Dislike` : 'Like'}</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
                                                         {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
                                                     </div>
                                                 </>

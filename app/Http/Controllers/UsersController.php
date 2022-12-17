@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Dal\Interfaces\IUsersRepository;
-use App\Models\Uploads;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
@@ -33,12 +31,15 @@ class UsersController extends Controller
             $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
             $userLikes                               = $getUserLikes[0]->likes;
 
+//            $getDataFromUserLikesTable = $this->__usersRepository->getDataFromUserLikesTable($loggedInUserId);
+
             return [
                 'UserID'                             => $likedUserId,
                 'loggedInUserId'                     => $loggedInUserId,
                 'likedPhotoId'                       => $likedPhotoId,
                 'userLikes'                          => $userLikes,
-                'is_liked'                           => $createUpdateUserLikesData['is_liked']
+                'createUpdateUserLikesData'          => $createUpdateUserLikesData,
+//                'getDataFromUserLikesTable'          => $getDataFromUserLikesTable
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -59,12 +60,15 @@ class UsersController extends Controller
             $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
             $userLikes                               = $getUserLikes[0]->likes;
 
+//            $getDataFromUserLikesTable = $this->__usersRepository->getDataFromUserLikesTable($loggedInUserId);
+
             return [
                 'UserID'                             => $likedUserId,
                 'loggedInUserId'                     => $loggedInUserId,
                 'dislikedPhotoId'                    => $dislikedPhotoId,
                 'userLikes'                          => $userLikes,
-                'is_liked'                           => $updateDisklikesData['is_liked']
+                'updateDisklikesData'                => $updateDisklikesData,
+//                'getDataFromUserLikesTable'          => $getDataFromUserLikesTable
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -93,12 +97,21 @@ class UsersController extends Controller
 
     public function getUserUploadsData()
     {
-        return $this->__usersRepository->getUploads();
+        $loggedInUserId = Auth::user()['UserID'];
+
+        return $this->__usersRepository->getUploads($loggedInUserId);
     }
 
     public function getUserLikes($userId)
     {
         return $this->__usersRepository->getUserLikes($userId);
+    }
+
+    public function getDataFromUserLikesTable()
+    {
+        $loggedInUserId = Auth::user()['UserID'];
+
+        return $this->__usersRepository->getDataFromUserLikesTable($loggedInUserId);
     }
 
 }
