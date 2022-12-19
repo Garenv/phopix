@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { Button, Image, Modal } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,11 +23,16 @@ const Grid = () => {
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
 
     const handleClose                                             = () => setShow(false);
+    let existingLikedPhotos = useRef({});
 
     // User clicks likes
-    const [userLikedPhotos, setUserLikedPhotos]                   = useState({});
-    const [dataFromUserLikesTable, setDataFromUserLikesTable]                       = useState(null);
+    const [userLikedPhotos, setUserLikedPhotos]                   = useState(existingLikedPhotos.current);
+    const [dataFromUserLikesTable, setDataFromUserLikesTable]     = useState(null);
     const [userDislikedData, setUserDislikedData]                 = useState(null);
+
+    const [userClickedLike, setUserClickedLike]                                         = useState(false);
+    const [userClickedDislike, setUserClickedDisliked]                                         = useState(false);
+
 
 
     const closeMessages = () => {
@@ -73,36 +78,35 @@ const Grid = () => {
         setShow(true);
     };
 
-    const handleLikesBasedOnUserId = (likedPhotoUserId, userName, likedPhotoId, is_liked) => {
-
-
-        if(userLikedPhotos[likedPhotoUserId]) {
-
-            // dislike
-            delete userLikedPhotos[likedPhotoUserId];
-            gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
-            handleDislike(likedPhotoUserId, userName, likedPhotoId);
-
-            toast.error(`You disliked ${userName}'s photo!`, {
-                closeOnClick: false,
-                progress: false,
-                closeButton: false
-            });
-        } else {
-            // like
-            userLikedPhotos[likedPhotoUserId] = true;
-            gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
-            handleLike(likedPhotoUserId, userName, likedPhotoId);
-
-            toast.success(`You liked ${userName}'s photo!`, {
-                closeOnClick: false,
-                progress: false,
-                closeButton: false
-            });
-        }
-
-        setUserLikedPhotos({...userLikedPhotos});
-    };
+    // const handleLikesBasedOnUserId = (likedPhotoUserId, userName, likedPhotoId) => {
+    //     if(userLikedPhotos[likedPhotoUserId]) {
+    //
+    //         // dislike
+    //         delete userLikedPhotos[likedPhotoUserId];
+    //         gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
+    //         handleDislike(likedPhotoUserId, userName, likedPhotoId);
+    //
+    //         toast.error(`You disliked ${userName}'s photo!`, {
+    //             closeOnClick: false,
+    //             progress: false,
+    //             closeButton: false
+    //         });
+    //     } else {
+    //         // like
+    //         userLikedPhotos[likedPhotoUserId] = true;
+    //         gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
+    //         handleLike(likedPhotoUserId, userName, likedPhotoId);
+    //         console.log("disliked", data);
+    //
+    //         toast.success(`You liked ${userName}'s photo!`, {
+    //             closeOnClick: false,
+    //             progress: false,
+    //             closeButton: false
+    //         });
+    //     }
+    //
+    //     setUserLikedPhotos({...userLikedPhotos});
+    // };
 
     const handleLike = (likedPhotoUserId, userName, likedPhotoId) => {
         const url = 'http://127.0.0.1:8000/api/like';
@@ -118,6 +122,15 @@ const Grid = () => {
             'likedPhotoId' : likedPhotoId
         };
 
+        userLikedPhotos[likedPhotoUserId] = true;
+        gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
+
+        toast.success(`You liked ${userName}'s photo!`, {
+            closeOnClick: false,
+            progress: false,
+            closeButton: false
+        });
+
         axios.post(url, data, {headers})
             .then(resp => {
                 // console.log(resp.data);
@@ -126,6 +139,11 @@ const Grid = () => {
             }).catch(err => {
             console.log(err);
         });
+
+
+        setUserClickedDisliked(true);
+        setUserLikedPhotos({...userLikedPhotos});
+
 
     };
 
@@ -143,6 +161,16 @@ const Grid = () => {
             'dislikedPhotoId' : likedPhotoId
         };
 
+        // dislike
+        delete userLikedPhotos[likedPhotoUserId];
+        gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
+
+        toast.error(`You disliked ${userName}'s photo!`, {
+            closeOnClick: false,
+            progress: false,
+            closeButton: false
+        });
+
         axios.post(url, data, {headers})
             .then(resp => {
                 // console.log(resp.data);
@@ -151,6 +179,9 @@ const Grid = () => {
             }).catch(err => {
             console.log(err);
         });
+
+        setUserClickedLike(true);
+        setUserLikedPhotos({...userLikedPhotos});
 
     };
 
@@ -286,7 +317,13 @@ const Grid = () => {
                                                         closeButton={false}
                                                     />
                                                     <div className="userDetails">
-                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/><Button variant={photos.is_liked ? `danger` : 'success'} onClick={() => handleLikesBasedOnUserId(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>{photos.is_liked ? `Dislike` : 'Like'}</Button><br/><span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/>
+                                                        {!photos.is_liked && userClickedLike ?
+                                                            <Button variant="success" onClick={() => handleLike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>Like</Button> :
+                                                            <Button variant="danger" onClick={() => handleDislike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>Dislike</Button>
+                                                        }
+                                                            <br/>
+                                                            <span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
                                                         {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
                                                     </div>
                                                 </>

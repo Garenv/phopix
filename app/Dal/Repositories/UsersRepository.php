@@ -32,8 +32,8 @@ class UsersRepository implements IUsersRepository
     {
         return DB::table('uploads')
             ->select('uploads.url', 'uploads.likes', 'users.name', 'users.UserID', 'uploads.photo_id', 'user_likes.is_liked')
-            ->join('users', 'users.UserID', '=', 'uploads.UserID')
-            ->join('user_likes', function ($q) use ($loggedInUserId) {
+            ->leftJoin('users', 'users.UserID', '=', 'uploads.UserID')
+            ->leftJoin('user_likes', function ($q) use ($loggedInUserId) {
                 $q->where('user_likes.user_id', '=', "$loggedInUserId")
                     ->on('user_likes.photo_id', '=', 'uploads.photo_id');
             })
