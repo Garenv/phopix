@@ -23,17 +23,9 @@ const Grid = () => {
     const [uploadSuccess, setUploadSuccess]                       = useState(null);
 
     const handleClose                                             = () => setShow(false);
-    let existingLikedPhotos = useRef({});
 
     // User clicks likes
-    const [userLikedPhotos, setUserLikedPhotos]                   = useState(existingLikedPhotos.current);
-    const [dataFromUserLikesTable, setDataFromUserLikesTable]     = useState(null);
-    const [userDislikedData, setUserDislikedData]                 = useState(null);
-
-    const [userClickedLike, setUserClickedLike]                                         = useState(false);
-    const [userClickedDislike, setUserClickedDisliked]                                         = useState(false);
-
-
+    const [userLikedPhotos, setUserLikedPhotos]                   = useState({});
 
     const closeMessages = () => {
         setErrorClose(true);
@@ -49,14 +41,6 @@ const Grid = () => {
             .then(resp => {
                 console.log(resp.data);
                 setGridData(resp.data);
-            }).catch(err => {
-            console.log(err);
-        });
-
-        axios.get('http://127.0.0.1:8000/api/get-data-from-userlikes-table', {headers})
-            .then(resp => {
-                console.log(resp.data);
-                setDataFromUserLikesTable(resp.data);
             }).catch(err => {
             console.log(err);
         });
@@ -78,36 +62,6 @@ const Grid = () => {
         setShow(true);
     };
 
-    // const handleLikesBasedOnUserId = (likedPhotoUserId, userName, likedPhotoId) => {
-    //     if(userLikedPhotos[likedPhotoUserId]) {
-    //
-    //         // dislike
-    //         delete userLikedPhotos[likedPhotoUserId];
-    //         gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
-    //         handleDislike(likedPhotoUserId, userName, likedPhotoId);
-    //
-    //         toast.error(`You disliked ${userName}'s photo!`, {
-    //             closeOnClick: false,
-    //             progress: false,
-    //             closeButton: false
-    //         });
-    //     } else {
-    //         // like
-    //         userLikedPhotos[likedPhotoUserId] = true;
-    //         gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
-    //         handleLike(likedPhotoUserId, userName, likedPhotoId);
-    //         console.log("disliked", data);
-    //
-    //         toast.success(`You liked ${userName}'s photo!`, {
-    //             closeOnClick: false,
-    //             progress: false,
-    //             closeButton: false
-    //         });
-    //     }
-    //
-    //     setUserLikedPhotos({...userLikedPhotos});
-    // };
-
     const handleLike = (likedPhotoUserId, userName, likedPhotoId) => {
         const url = 'http://127.0.0.1:8000/api/like';
 
@@ -124,6 +78,7 @@ const Grid = () => {
 
         userLikedPhotos[likedPhotoUserId] = true;
         gridData.find(photo => photo.UserID === likedPhotoUserId).likes++;
+        gridData.find(photo => photo.UserID === likedPhotoUserId).is_liked = 1;
 
         toast.success(`You liked ${userName}'s photo!`, {
             closeOnClick: false,
@@ -133,18 +88,12 @@ const Grid = () => {
 
         axios.post(url, data, {headers})
             .then(resp => {
-                // console.log(resp.data);
-                setDataFromUserLikesTable(resp.data);
-                // console.log(resp.data.loggedInUserId, resp.data.createUpdateUserLikesData.user_id);
+                console.log(resp.data);
             }).catch(err => {
             console.log(err);
         });
 
-
-        setUserClickedDisliked(true);
         setUserLikedPhotos({...userLikedPhotos});
-
-
     };
 
     const handleDislike = (likedPhotoUserId, userName, likedPhotoId) => {
@@ -164,6 +113,7 @@ const Grid = () => {
         // dislike
         delete userLikedPhotos[likedPhotoUserId];
         gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
+        gridData.find(photo => photo.UserID === likedPhotoUserId).is_liked = 0;
 
         toast.error(`You disliked ${userName}'s photo!`, {
             closeOnClick: false,
@@ -173,14 +123,11 @@ const Grid = () => {
 
         axios.post(url, data, {headers})
             .then(resp => {
-                // console.log(resp.data);
-                setUserDislikedData(resp.data);
-                // console.log(resp.data.loggedInUserId, resp.data.updateDisklikesData.user_id);
+                console.log(resp.data);
             }).catch(err => {
             console.log(err);
         });
 
-        setUserClickedLike(true);
         setUserLikedPhotos({...userLikedPhotos});
 
     };
@@ -318,7 +265,7 @@ const Grid = () => {
                                                     />
                                                     <div className="userDetails">
                                                         <span className="likesAmt">❤️ {photos.likes}</span><br/>
-                                                        {!photos.is_liked && userClickedLike ?
+                                                        {!photos.is_liked ?
                                                             <Button variant="success" onClick={() => handleLike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>Like</Button> :
                                                             <Button variant="danger" onClick={() => handleDislike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>Dislike</Button>
                                                         }
