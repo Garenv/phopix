@@ -9,7 +9,7 @@ const PageNotFound = () => {
                 <div className="containerPageNotFound">
                     <h2 className="pageNotFound">404</h2>
                     <h3 className="oopsPageNotFound">Oops, looks like the page you've navigated to cannot be found!</h3>
-                    <Link to="/"><button className="btn mt-4">Go Home</button></Link>
+                    <Link to={localStorage.getItem('token') ? "/gallery" : "/"}><button className="btn mt-4">Go Back</button></Link>
                 </div>
             </div>
         </>
