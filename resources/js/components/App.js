@@ -1,5 +1,3 @@
-import * as React from 'react';
-import { StyledEngineProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import '../../sass/HomePage/homePage.scss';
@@ -32,12 +30,4 @@ const App = () => {
 
 const container = document.getElementById('example');
 const root = createRoot(container);
-root.render(
-    <React.StrictMode>
-        <StyledEngineProvider injectFirst>
-            <Router>
-                <App/>
-            </Router>
-        </StyledEngineProvider>
-    </React.StrictMode>
-);
+root.render(<Router><App/></Router>);

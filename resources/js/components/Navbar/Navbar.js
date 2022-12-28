@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
+import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 
 const pages = ['Prize Status', 'Your Prizes'];
 const settings = ['Profile', 'Account', 'Gallery', 'Logout'];
@@ -23,14 +25,28 @@ function Navbar() {
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
+
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
+
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const pageSelection = (page) => {
+        switch (page) {
+            case "Prize Status":
+                return "/prizeStatus";
+            case "Your Prizes":
+                return "/yourPrizes";
+            default:
+                return "Not Found";
+        }
     };
 
     return (
@@ -88,7 +104,13 @@ function Navbar() {
 
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                    <Typography
+                                        textAlign="center"
+                                        component={RouterLink}
+                                        to={pageSelection(page)}
+                                    >
+                                        {page}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -118,6 +140,8 @@ function Navbar() {
                                 key={page}
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
+                                component={RouterLink}
+                                to={pageSelection(page)}
                             >
                                 {page}
                             </Button>
