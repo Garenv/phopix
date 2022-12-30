@@ -12,15 +12,20 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
-import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
+import {Link as RouterLink, Redirect, useHistory} from "react-router-dom";
+
+// import {useHistory} from "react-router-dom";
 
 const pages = ['Prize Status', 'Your Prizes'];
 const settings = ['Profile', 'Account', 'Gallery', 'Logout'];
 
+
 function Navbar() {
+    let authToken     = localStorage.getItem('token');
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    let history = useHistory();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -49,6 +54,22 @@ function Navbar() {
         }
     };
 
+    const logout = () => {
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${authToken}`
+        };
+
+        const data = "";
+
+        axios.post('http://127.0.0.1:8000/api/logout', data, {headers})
+            .then(resp => {
+                localStorage.clear('token');
+            }).catch(err => {
+            console.log(err);
+        });
+    }
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -69,7 +90,8 @@ function Navbar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Phopix
+                        {/*https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_logo_large.png*/}
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -132,7 +154,7 @@ function Navbar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Phopix
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -170,11 +192,11 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                        <a href="/" className="myButton" onClick={logout}>
+                            <Button onClick={logout} variant="text">
+                               Logout
+                            </Button>
+                        </a>
                         </Menu>
                     </Box>
                 </Toolbar>
