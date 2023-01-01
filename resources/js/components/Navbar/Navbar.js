@@ -12,13 +12,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import {Link as RouterLink, Redirect, useHistory} from "react-router-dom";
+import {Link as RouterLink, Route, useHistory} from "react-router-dom";
+import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
+import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 
 // import {useHistory} from "react-router-dom";
 
 const pages = ['Prize Status', 'Your Prizes'];
 const settings = ['Profile', 'Account', 'Gallery', 'Logout'];
-
 
 function Navbar() {
     let authToken     = localStorage.getItem('token');
@@ -158,15 +159,16 @@ function Navbar() {
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                                component={RouterLink}
-                                to={pageSelection(page)}
-                            >
-                                {page}
-                            </Button>
+                            <a href={pageSelection(page)}>
+                                <Button
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    // component={RouterLink}
+                                >
+                                    {page}
+                                </Button>
+                            </a>
                         ))}
                     </Box>
 

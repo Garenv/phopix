@@ -7,6 +7,7 @@ import '../../../sass/gallery/gallery.scss';
 import Navbar from "../Navbar/Navbar";
 import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 import YourPrizes from "../Pages/YourPrizes/YourPrizes";
+import ProtectedRoute from "../Routes/ProtectedRoute";
 
 const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');
@@ -226,7 +227,7 @@ const Grid = () => {
         <>
             <Router>
 
-                {location.pathname === '/gallery' ? <Navbar/> : null }
+                <Navbar/>
 
                 <Switch>
                     <Route path="/gallery">
@@ -282,15 +283,10 @@ const Grid = () => {
                         </section>
                     </Route>
 
-                    <Route path="/prizeStatus">
-                        <PrizeStatus/>
-                    </Route>
+                    <Route path="/prizeStatus" component={PrizeStatus} />
 
-                    <Route path="/yourPrizes">
-                        <YourPrizes/>
-                    </Route>
+                    <Route path="/yourPrizes" component={YourPrizes}/>
 
-                    {/*<Route path= "*" component={PageNotFound} />*/}
                 </Switch>
             </Router>
         </>

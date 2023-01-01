@@ -8,6 +8,8 @@ import Prizes from "./Prizes/Prizes"
 import PageNotFound from "./PageNotFound/PageNotFound";
 import PastWinners from "./PastWinners/PastWinners";
 import Grid from "./Grid/Grid";
+import YourPrizes from "./Pages/YourPrizes/YourPrizes";
+import PrizeStatus from "./Pages/PrizeStatus/PrizeStatus";
 import ProtectedRoute from "./Routes/ProtectedRoute";
 
 const App = () => {
@@ -17,6 +19,8 @@ const App = () => {
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <ProtectedRoute path="/gallery" component={Grid} />
+                    <ProtectedRoute path="/yourPrizes" component={YourPrizes} />
+                    <ProtectedRoute path="/prizeStatus" component={PrizeStatus} />
                     <Route path="/support" component={Support} />
                     <Route path='/faq' component={FaqComp} />
                     <Route path='/prizes' component={Prizes} />

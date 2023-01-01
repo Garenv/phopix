@@ -1,8 +1,12 @@
 import React from 'react';
+import Navbar from "../../Navbar/Navbar";
 
 const YourPrizes = () => {
     return (
-        <h1>Your Prizes Logic</h1>
+        <>
+            <Navbar/>
+            <h1>Your Prizes Logic</h1>
+        </>
     );
 }
 

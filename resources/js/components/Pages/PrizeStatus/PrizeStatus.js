@@ -1,8 +1,12 @@
 import React from 'react';
+import Navbar from "../../Navbar/Navbar";
 
 const PrizeStatus = () => {
     return (
-        <h1>Prize Status Logic</h1>
+        <>
+            <Navbar/>
+            <h1>Prize Status Logic</h1>
+        </>
     );
 }
 
