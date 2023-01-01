@@ -75,12 +75,11 @@ function Navbar() {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        href="/gallery"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -92,7 +91,7 @@ function Navbar() {
                         }}
                     >
                         Phopix
-                        {/*https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_logo_large.png*/}
+
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

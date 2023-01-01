@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
@@ -164,17 +167,16 @@ const LoginRegister = () => {
                 </section>
                 : null }
 
-            <header className="homePageHeader">
-                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg" className="logoHome" alt="logo" />
-                <input className="menu-btn" type="checkbox" id="menu-btn"/>
-                <label className="menu-icon" htmlFor="menu-btn"><span className="navicon"></span></label>
-                <ul className="menu">
-                    <li><Link to="/faq"><Button className="faqButton">FAQ</Button></Link></li>
-                    <li><Link to="/prizes"><Button className="prizesButton">Prizes</Button></Link></li>
-                    <li><Link to="/past-winners"><Button className="prizesButton">Past Winners</Button></Link></li>
-                    <li><Link to="/support"><Button className="prizesButton">Support</Button></Link></li>
-                </ul>
-            </header>
+            <Navbar bg="dark" variant="dark">
+                <Container>
+                    <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg" className="logoHome" alt="logo" />
+                    <Nav className="me-auto">
+                        <Nav.Link href="#home"><Link to="/faq">FAQ</Link></Nav.Link>
+                        <Nav.Link href="#features"><Link to="/prizes">Prizes</Link></Nav.Link>
+                        <Nav.Link href="#pricing"><Link to="/support">Support</Link></Nav.Link>
+                    </Nav>
+                </Container>
+            </Navbar>
 
             <div className="section">
                 <div className="container">
