@@ -314,6 +314,15 @@ const LoginRegister = () => {
                     </div>
                 </div>
             </div>
+
+            <Nav defaultActiveKey="/home" as="ul" className="justify-content-center">
+                <Nav.Item as="li">
+                    <Nav.Link href="/termsAndConditions">Terms & Conditions</Nav.Link>
+                </Nav.Item>
+                <Nav.Item as="li">
+                    <Nav.Link eventKey="link-1"><Link to="/privacyPolicy">Privacy Policy</Link></Nav.Link>
+                </Nav.Item>
+            </Nav>
         </>
     );
 }

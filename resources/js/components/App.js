@@ -11,6 +11,8 @@ import Grid from "./Grid/Grid";
 import YourPrizes from "./Pages/YourPrizes/YourPrizes";
 import PrizeStatus from "./Pages/PrizeStatus/PrizeStatus";
 import ProtectedRoute from "./Routes/ProtectedRoute";
+import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
+import TermsConditions from "./TermsConditions/TermsConditions";
 
 const App = () => {
     return (
@@ -25,6 +27,8 @@ const App = () => {
                     <Route path='/faq' component={FaqComp} />
                     <Route path='/prizes' component={Prizes} />
                     <Route path='/past-winners' component={PastWinners} />
+                    <Route path='/privacyPolicy' component={PrivacyPolicy} />
+                    <Route path='/termsAndConditions' component={TermsConditions} />
                     <Route path= "*" component={PageNotFound} />
                 </Switch>
             </Router>

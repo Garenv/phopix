@@ -26,7 +26,7 @@ const FaqComp = () => {
     return (
         <div className="container">
             <Link to="/">
-                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png" className="phopixLogo" alt=""/>
+                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png" className="pLogoPrizes" alt="Prize Page Logo"/>
             </Link>
             <Faq data={data} />
         </div>
