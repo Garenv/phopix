@@ -1,44 +1,68 @@
-import React from 'react';
-import { useQuery } from 'react-query';
+import React, { useEffect, useState } from 'react';
 import '../../../sass/Modals/winnerModals.scss';
+import { Image } from "react-bootstrap";
+import {Link} from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
 const SelectedWinners = () => {
     let authToken                                                 = localStorage.getItem('token');
+    const [thisWeeksWinnerData, setThisWeeksWinnerData]           = useState([]);
 
-    async function fetchWinners() {
+    useEffect(() => {
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
         };
 
-        const {data} = await axios.get('http://127.0.0.1:8000/api/get-winners', {headers});
-        return data;
-    }
+        axios.get('http://127.0.0.1:8000/api/get-winners', {headers})
+            .then(resp => {
+                console.log(resp);
+                setThisWeeksWinnerData(resp.data);
+            });
 
-    const { data } = useQuery('winners', fetchWinners);
+    }, []);
+
+    const getPrizePlace = (photos) => {
+        switch (photos.place) {
+            case "1st Place":
+                return "firstPlace";
+            case "2nd Place":
+                return "secondPlace";
+            case "3rd Place":
+                return "thirdPlace";
+        }
+    };
 
     const createUserPhotoNodes = () => {
         return (
             <>
-                <div className="userData">
-                    {
-                        data?.map((photos, index) => {
-                            return (
-                                <div key={index}>
-                                    <img src={photos.url} className="img-fluid" alt="Winner Photos" />
-                                    <div className="winnerInfo">
-                                        <h2 className="winnerUserName">{photos.name}</h2>
-                                        <h2 className="winnerLikes">Likes {photos.likes}</h2>
-                                        <h2 className="firstPlace">{photos.firstPlace}</h2>
-                                        <h2 className="secondPlace">{photos.secondPlace}</h2>
-                                        <h2 className="thirdPlace">{photos.thirdPlace}</h2>
-                                        <br/>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+                {/*<Navbar/>*/}
+                <Link to="/">
+                    <Image src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png" className="pLogoPrizes" fluid />
+                </Link>
+                <section className="gallery">
+                    <div className="container">
+                        <div className="img-container">
+                            {
+                                thisWeeksWinnerData?.map((photos, index) => {
+                                    return (
+                                        <>
+                                            <Image src={photos.url} alt="Photo" className="gallery-img"/>
+                                            <div className={`${getPrizePlace(photos)} text-center`}>
+                                                <h2 className>{photos.place}</h2>
+                                                <h2 className="winnerLikes">Likes {photos.likes}</h2>
+                                                <h2 className="winnerUserName">{photos.name}</h2>
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                </section>
+
+
+
             </>
         );
     };
@@ -48,6 +72,8 @@ const SelectedWinners = () => {
             {createUserPhotoNodes()}
         </>
     );
+
 }
 
 export default SelectedWinners;
+

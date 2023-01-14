@@ -29,9 +29,10 @@ class WinnersRepository implements IWinnersRepository
     public function getTopThreeWinnersFromWinnersTable()
     {
         return DB::table('winners')
-            ->select('users.name', 'winners.likes', 'winners.url')
+            ->select('users.name', 'winners.likes', 'winners.url', 'winners.place')
             ->join('users', 'users.UserID', '=', 'winners.UserID')
             ->orderBy('likes', 'desc')
+            ->limit(3)
             ->get();
     }
 

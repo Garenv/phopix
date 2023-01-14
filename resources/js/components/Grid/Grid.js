@@ -8,6 +8,7 @@ import Navbar from "../Navbar/Navbar";
 import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 import ProtectedRoute from "../Routes/ProtectedRoute";
+import SelectedWinners from "../SelectedWinners/SelectedWinners";
 
 const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');
@@ -115,7 +116,6 @@ const Grid = () => {
         delete userLikedPhotos[likedPhotoUserId];
         gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
         gridData.find(photo => photo.UserID === likedPhotoUserId).is_liked = 0;
-
         toast.error(`You disliked ${userName}'s photo!`, {
             closeOnClick: false,
             progress: false,
@@ -286,6 +286,8 @@ const Grid = () => {
                     <Route path="/prizeStatus" component={PrizeStatus} />
 
                     <Route path="/yourPrizes" component={YourPrizes}/>
+
+                    <Route path="/thisWeeksWinners" component={SelectedWinners}/>
 
                 </Switch>
             </Router>

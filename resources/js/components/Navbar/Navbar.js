@@ -18,7 +18,7 @@ import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 
 // import {useHistory} from "react-router-dom";
 
-const pages = ['Prize Status', 'Your Prizes'];
+const pages = ['Prize Status', 'Your Prizes', `This Week's Winners`];
 const settings = ['Profile', 'Account', 'Gallery', 'Logout'];
 
 function Navbar() {
@@ -50,6 +50,8 @@ function Navbar() {
                 return "/prizeStatus";
             case "Your Prizes":
                 return "/yourPrizes";
+            case "This Week's Winners":
+                return "/thisWeeksWinners"
             default:
                 return "Not Found";
         }

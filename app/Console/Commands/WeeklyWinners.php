@@ -52,6 +52,10 @@ class WeeklyWinners extends Command
         // Get prize data
         $prizesData                     = $this->__winnersRepository->getPrizeData();
 
+        // store winners in winners table and legacy_winners table
+        // truncate winners table
+        //
+
         // Get timestamp of the time winner got chosen
         $time                           = Carbon::now();
         $timeStamp                      = $time->toDateTimeString();
@@ -101,7 +105,6 @@ class WeeklyWinners extends Command
             'timeStamp'                 => $timeStamp,
             'name'                      => $secondPlaceName
         ];
-
         $dataThirdPlace = [
             'UserID'                    => $thirdPlaceUserId,
             'place'                     => "3rd Place",

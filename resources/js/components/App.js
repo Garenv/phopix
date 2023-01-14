@@ -13,6 +13,7 @@ import PrizeStatus from "./Pages/PrizeStatus/PrizeStatus";
 import ProtectedRoute from "./Routes/ProtectedRoute";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./TermsConditions/TermsConditions";
+import SelectedWinners from "./SelectedWinners/SelectedWinners";
 
 const App = () => {
     return (
@@ -23,6 +24,7 @@ const App = () => {
                     <ProtectedRoute path="/gallery" component={Grid} />
                     <ProtectedRoute path="/yourPrizes" component={YourPrizes} />
                     <ProtectedRoute path="/prizeStatus" component={PrizeStatus} />
+                    <ProtectedRoute path="/thisWeeksWinners" component={SelectedWinners} />
                     <Route path="/support" component={Support} />
                     <Route path='/faq' component={FaqComp} />
                     <Route path='/prizes' component={Prizes} />
