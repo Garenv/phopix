@@ -60,10 +60,7 @@ const SelectedWinners = () => {
                         </div>
                     </div>
                 </section>
-
-
-
-            </>
+            </> 
         );
     };
 

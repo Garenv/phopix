@@ -225,10 +225,8 @@ const Grid = () => {
 
     return (
         <>
+            <Navbar/>
             <Router>
-
-                <Navbar/>
-
                 <Switch>
                     <Route path="/gallery">
                         <div className="fileUpload text-center">
