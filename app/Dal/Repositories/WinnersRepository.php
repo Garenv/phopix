@@ -4,6 +4,7 @@ namespace App\Dal\Repositories;
 
 use App\Dal\Interfaces\IWinnersRepository;
 use App\Models\Prizes;
+use App\Models\Uploads;
 use Illuminate\Support\Facades\DB;
 
 class WinnersRepository implements IWinnersRepository
@@ -20,7 +21,6 @@ class WinnersRepository implements IWinnersRepository
         return DB::table('uploads')
             ->select('users.name', 'uploads.likes', 'uploads.url', 'uploads.UserID', 'users.email', 'uploads.timestamp')
             ->join('users', 'users.UserID', '=', 'uploads.UserID')
-            ->whereRaw("`uploads`.`timeStamp` >= curdate() - INTERVAL DAYOFWEEK(curdate()) +6 DAY and `uploads`.`timeStamp` < curdate() - INTERVAL DAYOFWEEK(curdate()) -1 DAY")
             ->orderBy('likes', 'desc')
             ->limit(3)
             ->get();

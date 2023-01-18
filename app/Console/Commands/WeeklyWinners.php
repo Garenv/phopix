@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Dal\Interfaces\IWinnersRepository;
 use App\Models\LegacyWinners;
+use App\Models\Uploads;
 use App\Models\Winners;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -52,11 +53,7 @@ class WeeklyWinners extends Command
         // Get prize data
         $prizesData                     = $this->__winnersRepository->getPrizeData();
 
-        // store winners in winners table and legacy_winners table
-        // truncate winners table
-        //
-
-        // Get timestamp of the time winner got chosen
+        // Get timestamp of when the winner was chosen
         $time                           = Carbon::now();
         $timeStamp                      = $time->toDateTimeString();
 
@@ -105,6 +102,7 @@ class WeeklyWinners extends Command
             'timeStamp'                 => $timeStamp,
             'name'                      => $secondPlaceName
         ];
+
         $dataThirdPlace = [
             'UserID'                    => $thirdPlaceUserId,
             'place'                     => "3rd Place",
@@ -128,5 +126,16 @@ class WeeklyWinners extends Command
         LegacyWinners::create($dataFirstPlace);
         LegacyWinners::create($dataSecondPlace);
         LegacyWinners::create($dataThirdPlace);
+
+        // delete the data in the uploads table to make way for the coming week's uploads
+        Uploads::truncate();
+
+        // delete last week's winner data in the winners table to ensure this week's winners data is in tact
+        Winners::whereRaw('timeStamp >= CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) +3 DAY')
+            ->whereRaw('timeStamp < CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) -4 DAY')->delete();
+
+
+//        Winners::whereRaw('WHERE timeStamp >= CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) +3 DAY
+//                     AND timeStamp < CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) -4 DAY')->delete();
     }
 }
