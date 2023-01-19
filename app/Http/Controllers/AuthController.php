@@ -102,24 +102,27 @@ class AuthController extends Controller
                 if(isset($failedRules['email']['Unique'])) {
                     return response()->json(['status' => 'failed', 'message' => 'Looks like you already have an account!'], 400);
                 }
-
             }
 
-            $userId              = 'u-' . Str::uuid()->toString();
-            $data                = $request->all();
-            $data['UserID']      = $userId;
-            $name                = $data['name'];
-            $age                 = $data['age'];
+            $userId                 = 'u-' . Str::uuid()->toString();
+            $data                   = $request->all();
+            $data['UserID']         = $userId;
+            $name                   = $data['name'];
+            $age                    = $data['age'];
 
-            $locationData        = Location::get();
+            $getRealUserIp          = getRealUserIp();
 
-            $data['ip']          = $locationData->ip;
-            $data['countryName'] = $locationData->countryName;
-            $data['countryCode'] = $locationData->countryCode;
-            $data['regionCode']  = $locationData->regionCode;
-            $data['regionName']  = $locationData->regionName;
-            $data['cityName']    = $locationData->cityName;
-            $data['zipCode']     = $locationData->zipCode;
+            $getGeoLocationData     = getGeoLocationData($getRealUserIp);
+
+            $getGeoLocationDataResp = json_decode($getGeoLocationData, true);
+
+            $data['ip']             = $getGeoLocationDataResp['ip_address'];
+            $data['countryName']    = $getGeoLocationDataResp['country'];
+            $data['countryCode']    = $getGeoLocationDataResp['country_code'];
+            $data['regionCode']     = $getGeoLocationDataResp['region_iso_code'];
+            $data['regionName']     = $getGeoLocationDataResp['region'];
+            $data['cityName']       = $getGeoLocationDataResp['city'];
+            $data['zipCode']        = $getGeoLocationDataResp['postal_code'];
 
             $user = $this->create($data);
 
