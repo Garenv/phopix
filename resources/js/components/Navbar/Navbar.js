@@ -12,9 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import {Link, Link as RouterLink, Route, useHistory} from "react-router-dom";
-import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
-import YourPrizes from "../Pages/YourPrizes/YourPrizes";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 // import {useHistory} from "react-router-dom";
 
@@ -87,12 +85,11 @@ function Navbar() {
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        Phopix
+                        Phopixel
 
                     </Typography>
 
@@ -139,27 +136,24 @@ function Navbar() {
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    {/*<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />*/}
 
                     <Typography
                         variant="h5"
                         noWrap
                         component="a"
-                        href=""
+                        href="/gallery"
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
                             flexGrow: 1,
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                    <Link to="/gallery">
                         Phopixel
-                    </Link>
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -180,7 +174,7 @@ function Navbar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="Remy Sharp" />
                             </IconButton>
                         </Tooltip>
                         <Menu

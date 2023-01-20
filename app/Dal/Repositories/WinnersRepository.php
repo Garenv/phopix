@@ -4,7 +4,6 @@ namespace App\Dal\Repositories;
 
 use App\Dal\Interfaces\IWinnersRepository;
 use App\Models\Prizes;
-use App\Models\Uploads;
 use Illuminate\Support\Facades\DB;
 
 class WinnersRepository implements IWinnersRepository

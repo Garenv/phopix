@@ -36,8 +36,8 @@ const SelectedWinners = () => {
     const createUserPhotoNodes = () => {
         return (
             <>
-                {/*<Navbar/>*/}
-                <Link to="/">
+                <Navbar/>
+                <Link to="/gallery">
                     <Image src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png" className="pLogoPrizes" fluid />
                 </Link>
                 <section className="gallery">
@@ -60,7 +60,7 @@ const SelectedWinners = () => {
                         </div>
                     </div>
                 </section>
-            </> 
+            </>
         );
     };
 

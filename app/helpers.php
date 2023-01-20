@@ -20,7 +20,7 @@ function getGeoLocationData($ip) {
     // Close the cURL handle.
     curl_close($ch);
 
-    // Print the data out onto the page.
+    // Return the data.
     return $data;
 }
 
