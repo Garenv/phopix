@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
@@ -118,7 +119,11 @@ const LoginRegister = () => {
 
     const handleForgotPassword = (e) => {
         e.preventDefault();
-        setForgotPasswordBtnTxt('Sending...');
+        setForgotPasswordBtnTxt(
+            <button className='btn btn-primary'>
+                Sending...
+            </button>
+        );
 
         let dataForgotPassword = {
             'email': forgotPasswordEmail
@@ -132,7 +137,7 @@ const LoginRegister = () => {
                 setForgotPasswordBtnTxt(successMessage);
 
                 setTimeout(() => {
-                    setForgotPasswordStatusStyle('btn sendPasswordResetLinkBtn');
+                    setForgotPasswordStatusStyle('btn btn-primary');
                     setForgotPasswordBtnTxt("Send Forgot Password Link");
                 },5000);
 
@@ -143,7 +148,7 @@ const LoginRegister = () => {
             setForgotPasswordBtnTxt(failureMessage);
 
             setTimeout(() => {
-                setForgotPasswordStatusStyle('btn sendPasswordResetLinkBtn');
+                setForgotPasswordStatusStyle('btn btn-primary');
                 setForgotPasswordBtnTxt("Send Forgot Password Link");
             },5000);
         });
@@ -225,7 +230,7 @@ const LoginRegister = () => {
 
                                                     <Modal show={show} onHide={handleClose}>
                                                         <Modal.Header closeButton className="modalHeader">
-                                                            <h1 className="forgotPasswordText">Just enter your email and we'll send you a link to reset your password :)</h1>
+                                                            <h3 className="forgotPasswordText text-center">Input your email to be sent a link to reset your password :)</h3>
                                                         </Modal.Header>
 
                                                         <Modal.Body>
@@ -242,7 +247,7 @@ const LoginRegister = () => {
                                                                     />
                                                                 </div>
                                                                 <div className="text-center sendPasswordResetLinkBtnWrapper">
-                                                                    <button type="submit" className={`${!forgotPasswordBtnFlag ? 'btn' : forgotPasswordStatusStyle} sendPasswordResetLinkBtn`} onClick={forgotPassWordClicked}>
+                                                                    <button type="submit" className={`${!forgotPasswordBtnFlag ? 'btn btn-primary' : forgotPasswordStatusStyle} sendPasswordResetLinkBtn`} onClick={forgotPassWordClicked}>
                                                                         {forgotPasswordBtnTxt}
                                                                     </button>
                                                                 </div>
@@ -289,7 +294,7 @@ const LoginRegister = () => {
                                                                        autoComplete="none"
                                                                        onChange={(e) => setAge(e.target.value)}
                                                                 />
-                                                                <i className="input-icon uil uil-at"></i>
+                                                                <i className="input-icon uil uil-13-plus"></i>
                                                             </div>
                                                             <div className="form-group mt-2">
                                                                 <input type="password"

@@ -1,6 +1,5 @@
 <?php
 
-
 function getGeoLocationData($ip) {
     // Initialize cURL.
     $ch = curl_init();
