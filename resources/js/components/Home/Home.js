@@ -5,11 +5,12 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import CircularProgress from '@mui/material/CircularProgress';
+import {toast, ToastContainer} from "react-toastify";
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
     const [email, setEmail]                                         = useState("");
-    const [age, setAge]                                             = useState("");
+    const [dateOfBirth, setDateOfBirth]                                             = useState("");
     const [password, setPassword]                                   = useState("");
     const [forgotPasswordEmail, setForgotPasswordEmail]             = useState("");
     const [emailError, setEmailError]                               = useState("");
@@ -71,7 +72,7 @@ const LoginRegister = () => {
         let dataRegister = {
             'name': name,
             'email': email,
-            'age': age,
+            'dateOfBirth': dateOfBirth,
             'password': password
         };
 
@@ -79,17 +80,30 @@ const LoginRegister = () => {
 
         axios.post('http://127.0.0.1:8000/api/register', dataRegister)
             .then(resp => {
+                let successMessage = resp.data.message;
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
                 localStorage.setItem('name', resp.data.name);
 
                 history.push('/gallery');
+
+                toast.success(successMessage, {
+                    closeOnClick: false,
+                    closeButton: false,
+                    autoClose: 1400,
+                });
             }).catch(error => {
                 let errorMessage = error.response.data.message;
                 let errorStatus  = error.response.status;
 
                 setEmailError(errorMessage);
                 setErrorStatus(errorStatus);
+
+                toast.error(errorMessage, {
+                    closeOnClick: false,
+                    closeButton: false,
+                    autoClose: 5000
+                });
         });
 
         const headers = {
@@ -156,7 +170,7 @@ const LoginRegister = () => {
 
     return (
         <>
-            { errorStatus === 400 ?
+            {/*{ errorStatus === 400 ?
                 <section>
                     <div className={`notification error ${errorClose ? 'closed' : null}`}>
                         <span className="title">Error</span> {emailError} <span className='close' onClick={closeMessages}>X</span>
@@ -170,7 +184,7 @@ const LoginRegister = () => {
                         <span className="title">Error</span> {passwordError} <span className='close' onClick={closeMessages}>X</span>
                     </div>
                 </section>
-                : null }
+                : null }*/}
 
             <Navbar bg="dark" variant="dark">
                 <Container>
@@ -182,6 +196,11 @@ const LoginRegister = () => {
                     </Nav>
                 </Container>
             </Navbar>
+
+            <ToastContainer
+                hideProgressBar
+                closeButton={false}
+            />
 
             <div className="section">
                 <div className="container">
@@ -267,7 +286,7 @@ const LoginRegister = () => {
                                                                 <input type="text"
                                                                        name="name"
                                                                        className="form-style"
-                                                                       placeholder="Your Full Name"
+                                                                       placeholder="Name"
                                                                        id="logname"
                                                                        autoComplete="none"
                                                                        onChange={(e) => setName(e.target.value)}
@@ -278,7 +297,7 @@ const LoginRegister = () => {
                                                                 <input type="email"
                                                                        name="email"
                                                                        className="form-style"
-                                                                       placeholder="Your Email"
+                                                                       placeholder="Email"
                                                                        id="logemail"
                                                                        autoComplete="none"
                                                                        onChange={(e) => setEmail(e.target.value)}
@@ -286,13 +305,13 @@ const LoginRegister = () => {
                                                                 <i className="input-icon uil uil-at"></i>
                                                             </div>
                                                             <div className="form-group mt-2">
-                                                                <input type="number"
-                                                                       name="age"
+                                                                <input type="date"
+                                                                       name="dateOfBirth"
                                                                        className="form-style"
-                                                                       placeholder="Your Age"
+                                                                       placeholder="Date Of Birth"
                                                                        id="logemail"
                                                                        autoComplete="none"
-                                                                       onChange={(e) => setAge(e.target.value)}
+                                                                       onChange={(e) => setDateOfBirth(e.target.value)}
                                                                 />
                                                                 <i className="input-icon uil uil-13-plus"></i>
                                                             </div>
@@ -300,7 +319,7 @@ const LoginRegister = () => {
                                                                 <input type="password"
                                                                        name="password"
                                                                        className="form-style"
-                                                                       placeholder="Your Password"
+                                                                       placeholder="Password"
                                                                        id="logpass"
                                                                        autoComplete="none"
                                                                        onChange={(e) => setPassword(e.target.value)}

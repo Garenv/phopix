@@ -60,23 +60,23 @@ class AuthController extends Controller
                 return response()->json(['message' => 'Incorrect email or password!'], 401);
             }
 
-            $user           = Auth::user();
-            $name           = $user['name'];
-            $email          = $user['email'];
-            $userId         = $user['UserID'];
-            $age            = $user['age'];
-            $sessionId      = Session::getId();
-            $modelUser      = User::where('email', $email)->firstOrFail();
-            $createToken    = $modelUser->createToken('auth_token')->plainTextToken;
+            $user                   = Auth::user();
+            $name                   = $user['name'];
+            $email                  = $user['email'];
+            $userId                 = $user['UserID'];
+            $age                    = $user['dateOfBirth'];
+            $sessionId              = Session::getId();
+            $modelUser              = User::where('email', $email)->firstOrFail();
+            $createToken            = $modelUser->createToken('auth_token')->plainTextToken;
 
             return response()->json([
-                'status'    => true,
-                'token'     => $createToken,
-                'name'      => $name,
-                'email'     => $email,
-                'UserID'    => $userId,
-                'age'       => $age,
-                'sessionId' => $sessionId
+                'status'            => true,
+                'token'             => $createToken,
+                'name'              => $name,
+                'email'             => $email,
+                'UserID'            => $userId,
+                'dateOfBirth'       => $age,
+                'sessionId'         => $sessionId
             ]);
 
         } catch(\Exception $e) {
@@ -92,9 +92,11 @@ class AuthController extends Controller
             $validator          = Validator::make($request->all(),[
                 'name'          => 'required',
                 'email'         => 'required|email|unique:users',
-                'age'           => 'required',
+                'dateOfBirth'   => 'required',
                 'password'      => 'required|min:6',
             ]);
+
+            $age = Carbon::parse($request->get('dateOfBirth'))->age;
 
             if($validator->fails()) {
                 $failedRules    = $validator->failed();
@@ -104,11 +106,9 @@ class AuthController extends Controller
                 }
             }
 
-            $userId                 = 'u-' . Str::uuid()->toString();
-            $data                   = $request->all();
-            $data['UserID']         = $userId;
-            $name                   = $data['name'];
-            $age                    = $data['age'];
+            if($age < 13) {
+                return response()->json(['status' => 'failed', 'message' => 'You must be 13 years or older to create an account!'], 400);
+            }
 
             $getRealUserIp          = getRealUserIp();
 
@@ -116,6 +116,11 @@ class AuthController extends Controller
 
             $getGeoLocationDataResp = json_decode($getGeoLocationData, true);
 
+            $userId                 = 'u-' . Str::uuid()->toString();
+            $data                   = $request->all();
+            $data['UserID']         = $userId;
+            $name                   = $data['name'];
+            $dateOfBirth            = $data['dateOfBirth'];
             $data['ip']             = $getGeoLocationDataResp['ip_address'];
             $data['countryName']    = $getGeoLocationDataResp['country'];
             $data['countryCode']    = $getGeoLocationDataResp['country_code'];
@@ -131,7 +136,7 @@ class AuthController extends Controller
                 "name"           => $name,
                 "UserID"         => $userId,
                 "message"        => "Registered Successfully!",
-                "age"            => $age,
+                "dateOfBirth"    => $dateOfBirth,
                 'token'          => $user->createToken('tokens')->plainTextToken
             ]);
         } catch(\Exception $e) {
@@ -149,21 +154,20 @@ class AuthController extends Controller
     public function create(array $data)
     {
         return User::create([
-            'name'        => $data['name'],
-            'email'       => $data['email'],
-            'UserID'      => $data['UserID'],
-            'age'         => $data['age'],
-            'password'    => Hash::make($data['password']),
-            'ip'          => $data['ip'],
-            'countryName' => $data['countryName'],
-            'countryCode' => $data['countryCode'],
-            'regionCode'  => $data['regionCode'],
-            'regionName'  => $data['regionName'],
-            'cityName'    => $data['cityName'],
-            'zipCode'     => $data['zipCode']
+            'name'                        => $data['name'],
+            'email'                       => $data['email'],
+            'UserID'                      => $data['UserID'],
+            'dateOfBirth'                 => $data['dateOfBirth'],
+            'password'                    => Hash::make($data['password']),
+            'ip'                          => $data['ip'],
+            'countryName'                 => $data['countryName'],
+            'countryCode'                 => $data['countryCode'],
+            'regionCode'                  => $data['regionCode'],
+            'regionName'                  => $data['regionName'],
+            'cityName'                    => $data['cityName'],
+            'zipCode'                     => $data['zipCode']
         ]);
     }
-
 
     public function logout()
     {
