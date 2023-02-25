@@ -39,7 +39,6 @@ class UsersController extends Controller
                 'likedPhotoId'                       => $likedPhotoId,
                 'userLikes'                          => $userLikes,
                 'createUpdateUserLikesData'          => $createUpdateUserLikesData,
-//                'getDataFromUserLikesTable'          => $getDataFromUserLikesTable
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
