@@ -1,0 +1,156 @@
+tasks:
+  - debug:
+      var: inventory_hostname
+
+  - name: ensure directory exists
+    file:
+      path: /usr/share/nginx/{{ versionName }}/
+      state: directory
+    when: deployment
+
+  - name: Deployment of source code
+    unarchive:
+      src: ./phopixelSrc.zip
+      dest: /usr/share/nginx/{{ versionName }}/
+    when: deployment
+
+  - name: Change ownership of app's root directory
+    file:
+      path: /usr/share/nginx/{{ versionName }}
+      state: directory
+      owner: ec2-user
+      group: ec2-user
+      mode: 0755
+      recurse: true
+    when: deployment
+
+
+  - name: Installing php dependancies using composer
+    shell: cd /usr/share/nginx/{{ versionName }} && composer install
+    become: yes
+    become_user: ec2-user
+    when: deployment
+
+
+  - name: Copying {{ envName }} env file
+    copy:
+      src: /usr/share/nginx/{{ versionName }}/environments/{{ envName }}.env
+      dest: /usr/share/nginx/{{ versionName }}/.env
+      owner: ec2-user
+      group: ec2-user
+      mode: 0755
+      remote_src: yes
+    when: deployment
+
+
+  - name: Migrating using artisan
+    shell: cd /usr/share/nginx/{{ versionName }} && php artisan migrate --force
+    become: yes
+    become_user: ec2-user
+    when: deployment
+
+  - name: Seeding db using artisan
+    shell: cd /usr/share/nginx/{{ versionName }} && php artisan db:seed --force
+    become: yes
+    become_user: ec2-user
+    when: deployment
+
+  - name: Clearing cache using artisan
+    shell: cd /usr/share/nginx/{{ versionName }} && php artisan optimize:clear
+    become: yes
+    become_user: ec2-user
+    when: deployment
+
+  - name: Configuring cache using artisan
+    shell: cd /usr/share/nginx/{{ versionName }} && php artisan config:cache
+    become: yes
+    become_user: ec2-user
+    when: deployment
+
+  - name: Configuring public storage using artisan
+    shell: cd /usr/share/nginx/{{ versionName }} && php artisan storage:link
+    become: yes
+    become_user: ec2-user
+    when: deployment
+
+  - name: Installing node packages mentioned in package.json using npm
+    npm:
+      path: /usr/share/nginx/{{ versionName }}
+    become: yes
+    become_user: ec2-user
+    when: deployment
+
+  - name: Starting app using npm
+    shell: cd /usr/share/nginx/{{ versionName }} && npm run {{ runCommand }}
+    become: yes
+    become_user: ec2-user
+    when: deployment
+
+  - name: Change ownership of app's root directory to nginx
+    file:
+      path: "/usr/share/nginx/{{ versionName }}"
+      state: directory
+      owner: nginx
+      group: nginx
+      mode: 0755
+      recurse: true
+    when: deployment
+
+  - name: Change permissions of storage directory
+    file:
+      path: "/usr/share/nginx/{{ versionName }}/storage"
+      state: directory
+      owner: nginx
+      group: nginx
+      mode: 0777
+      recurse: true
+    when: deployment
+
+  - name: Change permissions of storage directory
+    file:
+      path: "/usr/share/nginx/html/public/images"
+      state: directory
+      owner: nginx
+      group: nginx
+      mode: 0777
+      recurse: true
+    when: deployment
+
+  - name: Delete content & directory
+    file:
+      state: absent
+      path: /usr/share/nginx/html/
+    when: deployment
+
+  - name: Switching app's root directory to live
+    file:
+      src: /usr/share/nginx/{{ versionName }}
+      dest: /usr/share/nginx/html
+      owner: nginx
+      group: nginx
+      state: link
+      force: yes
+    when: deployment
+
+  - name: Restarting nginx
+    service:
+      name: nginx
+      state: restarted
+
+  - name: Restarting php-fpm
+    service:
+      name: php-fpm
+      state: restarted
+
+  - name: Cleaning old version
+    shell: |
+      cd /usr/share/nginx
+      currentVersion=`readlink -f html | awk -F '/' '{ print $5 }'`
+      versionList=`ls | grep phopixel`
+      for i in $versionList
+      do
+         if [ $i != $currentVersion ];then
+           rm $i -rf
+         fi
+      done
+    when: deployment
