@@ -1,157 +1,53 @@
 version: 0.2
-tasks:
-  - debug:
-      var: inventory_hostname
 
-  - name: ensure directory exists
-    file:
-      path: /usr/share/nginx/{{ versionName }}/
-      state: directory
-    when: deployment
+env:
+  variables:
+    APP_URL: "https://phopixel.com"
 
-  - name: Deployment of source code
-    unarchive:
-      src: ./phopixelSrc.zip
-      dest: /usr/share/nginx/{{ versionName }}/
-    when: deployment
-
-  - name: Change ownership of app's root directory
-    file:
-      path: /usr/share/nginx/{{ versionName }}
-      state: directory
-      owner: ec2-user
-      group: ec2-user
-      mode: 0755
-      recurse: true
-    when: deployment
-
-
-  - name: Installing php dependancies using composer
-    shell: cd /usr/share/nginx/{{ versionName }} && composer install
-    become: yes
-    become_user: ec2-user
-    when: deployment
-
-
-  - name: Copying {{ envName }} env file
-    copy:
-      src: /usr/share/nginx/{{ versionName }}/environments/{{ envName }}.env
-      dest: /usr/share/nginx/{{ versionName }}/.env
-      owner: ec2-user
-      group: ec2-user
-      mode: 0755
-      remote_src: yes
-    when: deployment
-
-
-  - name: Migrating using artisan
-    shell: cd /usr/share/nginx/{{ versionName }} && php artisan migrate --force
-    become: yes
-    become_user: ec2-user
-    when: deployment
-
-  - name: Seeding db using artisan
-    shell: cd /usr/share/nginx/{{ versionName }} && php artisan db:seed --force
-    become: yes
-    become_user: ec2-user
-    when: deployment
-
-  - name: Clearing cache using artisan
-    shell: cd /usr/share/nginx/{{ versionName }} && php artisan optimize:clear
-    become: yes
-    become_user: ec2-user
-    when: deployment
-
-  - name: Configuring cache using artisan
-    shell: cd /usr/share/nginx/{{ versionName }} && php artisan config:cache
-    become: yes
-    become_user: ec2-user
-    when: deployment
-
-  - name: Configuring public storage using artisan
-    shell: cd /usr/share/nginx/{{ versionName }} && php artisan storage:link
-    become: yes
-    become_user: ec2-user
-    when: deployment
-
-  - name: Installing node packages mentioned in package.json using npm
-    npm:
-      path: /usr/share/nginx/{{ versionName }}
-    become: yes
-    become_user: ec2-user
-    when: deployment
-
-  - name: Starting app using npm
-    shell: cd /usr/share/nginx/{{ versionName }} && npm run {{ runCommand }}
-    become: yes
-    become_user: ec2-user
-    when: deployment
-
-  - name: Change ownership of app's root directory to nginx
-    file:
-      path: "/usr/share/nginx/{{ versionName }}"
-      state: directory
-      owner: nginx
-      group: nginx
-      mode: 0755
-      recurse: true
-    when: deployment
-
-  - name: Change permissions of storage directory
-    file:
-      path: "/usr/share/nginx/{{ versionName }}/storage"
-      state: directory
-      owner: nginx
-      group: nginx
-      mode: 0777
-      recurse: true
-    when: deployment
-
-  - name: Change permissions of storage directory
-    file:
-      path: "/usr/share/nginx/html/public/images"
-      state: directory
-      owner: nginx
-      group: nginx
-      mode: 0777
-      recurse: true
-    when: deployment
-
-  - name: Delete content & directory
-    file:
-      state: absent
-      path: /usr/share/nginx/html/
-    when: deployment
-
-  - name: Switching app's root directory to live
-    file:
-      src: /usr/share/nginx/{{ versionName }}
-      dest: /usr/share/nginx/html
-      owner: nginx
-      group: nginx
-      state: link
-      force: yes
-    when: deployment
-
-  - name: Restarting nginx
-    service:
-      name: nginx
-      state: restarted
-
-  - name: Restarting php-fpm
-    service:
-      name: php-fpm
-      state: restarted
-
-  - name: Cleaning old version
-    shell: |
-      cd /usr/share/nginx
-      currentVersion=`readlink -f html | awk -F '/' '{ print $5 }'`
-      versionList=`ls | grep phopixel`
-      for i in $versionList
-      do
-         if [ $i != $currentVersion ];then
-           rm $i -rf
-         fi
-      done
-    when: deployment
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+      # php: 8.1
+      # name: version
+      # name: version
+    commands:
+      - apt-get update -y
+      - apt-get install lsb-release ca-certificates apt-transport-https software-properties-common -y
+      - add-apt-repository ppa:ondrej/php
+      - apt-get update
+      - apt-get install -y php8.1
+      - apt-get install -y php8.1-intl php8.1-zip php8.1-simplexml php8.1-dom php8.1-mbstring php8.1-curl php8.1-mysql php8.1-sqlite php8.1-gd php8.1-imagick
+      #pre_build:
+      #commands:
+      # - command
+  build:
+    commands:
+      - cp .env.example .env
+      - npm install
+      - npm run production
+      - curl -sS https://getcomposer.org/installer | php
+      - /usr/bin/php8.1 ./composer.phar install
+      # - /usr/bin/php8.1 vendor/bin/phpunit
+  post_build:
+    commands:
+      - cp -R ${CODEBUILD_SRC_DIR_codedeploy}/. .
+      - rm -rf .git;
+      - rm -f .php_cs;
+      - rm -rf tests;
+      - rm -rf composer.phar;
+      - rm -rf composer.lock;
+      - rm -rf .env.example;
+      - rm -rf node_modules
+      # - command
+artifacts:
+  files:
+    - '*/'
+    # - location
+    # - location
+    #name: $(date +%Y-%m-%d)
+    #discard-paths: yes
+    #base-directory: location
+    #cache:
+    #paths:
+    # - paths
