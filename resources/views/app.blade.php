@@ -11,11 +11,14 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+        <script>
+            let APP_URL = {!! \Psy\Util\Json::encode(url('/')) !!};
+        </script>
 
 
     </head>
     <body class="antialiased">
         <div id="example"></div>
-        <script src="{{secure_asset('js/app.js')}}" ></script>
+        <script src="{{asset('js/app.js')}}" ></script>
     </body>
 </html>

@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import CircularProgress from '@mui/material/CircularProgress';
+import ApiClient from "../../utilities/ApiClient";
 import {toast, ToastContainer} from "react-toastify";
 
 const LoginRegister = () => {
@@ -48,7 +48,7 @@ const LoginRegister = () => {
 
         JSON.stringify(dataLogin);
 
-        axios.post('http://127.0.0.1:8000/api/login', dataLogin)
+        ApiClient.post('/login', dataLogin)
             .then(resp => {
                 console.log(resp);
                 localStorage.setItem('token', resp.data.token);
@@ -63,6 +63,7 @@ const LoginRegister = () => {
             setPasswordError(errorMessage);
             setErrorStatus(errorStatus);
         });
+
 
     };
 
