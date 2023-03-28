@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../sass/Support/support.scss';
 import {toast, ToastContainer} from "react-toastify";
+import ApiClient from "../../utilities/ApiClient";
 
 const Support = () => {
     const [fileName, setFileName]                                                 = useState("");
@@ -47,7 +48,7 @@ const Support = () => {
             "Accept": 'application/json'
         };
 
-        axios.post('http://127.0.0.1:8000/api/support', data, {headers})
+        ApiClient.post('/support', data, {headers})
             .then(resp => {
                 console.log(resp);
                 let statusMessage = resp.data.message;
@@ -70,20 +71,6 @@ const Support = () => {
 
     return(
         <>
-            { statusCode === 200 ? <section>
-                    <div className={`notification success ${errorClose ? 'closed' : null}`}>
-                        <span className="title">Success!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
-                    </div>
-                </section>
-                : null }
-
-            { statusCode === 422 ? <section>
-                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                        <span className="title">Failed!</span>{statusMessage}<span className="close" onClick={closeMessages}>X</span>
-                    </div>
-                </section>
-                : null }
-
             <ToastContainer
                 hideProgressBar
                 closeButton={false}

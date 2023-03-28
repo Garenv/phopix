@@ -2,15 +2,13 @@ import React, {useEffect, useState} from "react";
 import Faq from "react-faq-component";
 import '../../../sass/faq/faq.scss';
 import { Link } from 'react-router-dom';
-import axios from "axios";
+import ApiClient from "../../utilities/ApiClient";
 
 const FaqComp = () => {
     const [faqData, setFaqData] = useState([]);
 
     useEffect(() => {
-        const url = 'http://127.0.0.1:8000/api/get-faq';
-
-        axios.get(url)
+        ApiClient.get('/get-faq')
             .then(resp => {
                 setFaqData(resp.data);
             }).catch(err => {

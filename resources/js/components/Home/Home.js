@@ -79,7 +79,7 @@ const LoginRegister = () => {
 
         JSON.stringify(dataRegister);
 
-        axios.post('http://127.0.0.1:8000/api/register', dataRegister)
+        ApiClient.post('/register')
             .then(resp => {
                 let successMessage = resp.data.message;
                 localStorage.setItem('token', resp.data.token);
@@ -94,25 +94,26 @@ const LoginRegister = () => {
                     autoClose: 1400,
                 });
             }).catch(error => {
-                let errorMessage = error.response.data.message;
-                let errorStatus  = error.response.status;
+            let errorMessage = error.response.data.message;
+            let errorStatus  = error.response.status;
 
-                setEmailError(errorMessage);
-                setErrorStatus(errorStatus);
+            setEmailError(errorMessage);
+            setErrorStatus(errorStatus);
 
-                toast.error(errorMessage, {
-                    closeOnClick: false,
-                    closeButton: false,
-                    autoClose: 5000
-                });
+            toast.error(errorMessage, {
+                closeOnClick: false,
+                closeButton: false,
+                autoClose: 5000
+            });
         });
+
 
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         };
 
-        axios.post('http://127.0.0.1:8000/api/email/verification-notification', headers, {})
+        ApiClient.post('/verification-notification', {headers})
             .then(resp => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
@@ -126,6 +127,7 @@ const LoginRegister = () => {
             setEmailError(errorMessage);
             setErrorStatus(errorStatus);
         });
+
     };
 
     const forgotPassWordClicked = () => {
@@ -144,7 +146,7 @@ const LoginRegister = () => {
             'email': forgotPasswordEmail
         };
 
-        axios.post('http://127.0.0.1:8000/api/forgot-password', dataForgotPassword)
+        ApiClient.post('/forgot-password', dataForgotPassword)
             .then(resp => {
                 let successMessage = resp.data.message;
 
@@ -167,26 +169,11 @@ const LoginRegister = () => {
                 setForgotPasswordBtnTxt("Send Forgot Password Link");
             },5000);
         });
+
     };
 
     return (
         <>
-            {/*{ errorStatus === 400 ?
-                <section>
-                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                        <span className="title">Error</span> {emailError} <span className='close' onClick={closeMessages}>X</span>
-                    </div>
-                </section>
-                : null }
-
-            { errorStatus === 401 ?
-                <section>
-                    <div className={`notification error ${errorClose ? 'closed' : null}`}>
-                        <span className="title">Error</span> {passwordError} <span className='close' onClick={closeMessages}>X</span>
-                    </div>
-                </section>
-                : null }*/}
-
             <Navbar bg="dark" variant="dark">
                 <Container>
                     <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg" className="logoHome" alt="logo" />
