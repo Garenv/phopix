@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import '../../../sass/pastWinners/pastWinners.scss';
 import {Link} from "react-router-dom";
+import ApiClient from "../../utilities/ApiClient";
 
 const PastWinners = () => {
     const [legacyWinnersData, setLegacyWinnersData] = useState([]);
     const [statusCode, setStatusCode]               = useState(null);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/get-all-legacy-winners')
+        ApiClient.get('/get-all-legacy-winners')
             .then(resp => {
                 console.log(resp.data);
                 setLegacyWinnersData(resp.data);

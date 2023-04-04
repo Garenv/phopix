@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import '../../../sass/prizes/prizes.scss';
 import {Link} from "react-router-dom";
+import {Api} from "@mui/icons-material";
+import ApiClient from "../../utilities/ApiClient";
 
 const Prizes = () => {
 
@@ -8,7 +10,7 @@ const Prizes = () => {
     const [statusCode, setStatusCode]                             = useState(null);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/prizes')
+        ApiClient.get('/prizes')
             .then(resp => {
                 setPrizeData(resp.data);
             }).catch(error => {

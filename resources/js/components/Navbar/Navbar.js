@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link as RouterLink, useHistory } from "react-router-dom";
+import ApiClient from "../../utilities/ApiClient";
 
 // import {useHistory} from "react-router-dom";
 
@@ -63,12 +64,13 @@ function Navbar() {
 
         const data = "";
 
-        axios.post('http://127.0.0.1:8000/api/logout', data, {headers})
+        ApiClient('/logout', data, {headers})
             .then(resp => {
                 localStorage.clear('token');
             }).catch(err => {
             console.log(err);
         });
+
     }
 
     return (

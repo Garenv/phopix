@@ -10,7 +10,7 @@ import {toast, ToastContainer} from "react-toastify";
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
     const [email, setEmail]                                         = useState("");
-    const [dateOfBirth, setDateOfBirth]                                             = useState("");
+    const [dateOfBirth, setDateOfBirth]                             = useState("");
     const [password, setPassword]                                   = useState("");
     const [forgotPasswordEmail, setForgotPasswordEmail]             = useState("");
     const [emailError, setEmailError]                               = useState("");
