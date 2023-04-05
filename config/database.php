@@ -48,7 +48,7 @@ return [
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', 'phopixel-prod-db.ccaz2l7nxyn4.us-east-1.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'phopixel-prod'),
+            'database' => env('DB_DATABASE', 'phopix'),
             'username' => env('DB_USERNAME', 'admin'),
             'password' => env('DB_PASSWORD', '4aiVnKzXZ0cCj9fu'),
             'unix_socket' => env('DB_SOCKET', ''),
