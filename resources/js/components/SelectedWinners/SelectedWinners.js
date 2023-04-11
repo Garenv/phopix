@@ -3,6 +3,7 @@ import '../../../sass/Modals/winnerModals.scss';
 import { Image } from "react-bootstrap";
 import {Link} from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
+import ApiClient from "../../utilities/ApiClient";
 
 const SelectedWinners = () => {
     let authToken                                                 = localStorage.getItem('token');
@@ -14,11 +15,12 @@ const SelectedWinners = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        axios.get('http://127.0.0.1:8000/api/get-winners', {headers})
+        ApiClient.get('/get-winners', {headers})
             .then(resp => {
                 console.log(resp);
                 setThisWeeksWinnerData(resp.data);
             });
+
 
     }, []);
 

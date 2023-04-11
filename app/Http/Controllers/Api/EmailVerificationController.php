@@ -12,18 +12,18 @@ class EmailVerificationController extends Controller
 
     public function sendVerificationEmail(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        if ($getGeoLocationDataResp->user()->hasVerifiedEmail()) {
             return [
                 'message' => 'Already Verified'
             ];
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        $getGeoLocationDataResp->user()->sendEmailVerificationNotification();
 
         return [
             'status' => 'verification-link-sent',
-            'UserID' => $request->user()['UserID'],
-            'email' => $request->user()['email']
+            'UserID' => $getGeoLocationDataResp->user()['UserID'],
+            'email' => $getGeoLocationDataResp->user()['email']
         ];
     }
 

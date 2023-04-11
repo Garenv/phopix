@@ -9,6 +9,7 @@ import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 import ProtectedRoute from "../Routes/ProtectedRoute";
 import SelectedWinners from "../SelectedWinners/SelectedWinners";
+import ApiClient from "../../utilities/ApiClient";
 
 const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');
@@ -39,7 +40,7 @@ const Grid = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        axios.get('http://127.0.0.1:8000/api/get-user-uploads-data', {headers})
+        ApiClient.get('/get-user-uploads-data', {headers})
             .then(resp => {
                 console.log(resp.data);
                 setGridData(resp.data);
@@ -65,8 +66,6 @@ const Grid = () => {
     };
 
     const handleLike = (likedPhotoUserId, userName, likedPhotoId) => {
-        const url = 'http://127.0.0.1:8000/api/like';
-
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
@@ -88,7 +87,7 @@ const Grid = () => {
             closeButton: false
         });
 
-        axios.post(url, data, {headers})
+        ApiClient.post('/like', data, {headers})
             .then(resp => {
                 console.log(resp.data);
             }).catch(err => {
@@ -99,8 +98,6 @@ const Grid = () => {
     };
 
     const handleDislike = (likedPhotoUserId, userName, likedPhotoId) => {
-        const url = 'http://127.0.0.1:8000/api/dislike';
-
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
@@ -122,7 +119,7 @@ const Grid = () => {
             closeButton: false
         });
 
-        axios.post(url, data, {headers})
+        ApiClient.post('/dislike', data, {headers})
             .then(resp => {
                 console.log(resp.data);
             }).catch(err => {
@@ -134,14 +131,13 @@ const Grid = () => {
     };
 
     const deleteUserUpload = (likedPhotoUserId) => {
-        const url = `http://127.0.0.1:8000/api/delete-user-upload?UserID=${likedPhotoUserId}`;
-
         const headers = {
             "Accept": 'application/json',
             "Authorization": `Bearer ${authToken}`
         };
 
-        axios.delete(url,{headers})
+        ApiClient.delete(`/delete-user-upload?UserID=${likedPhotoUserId}`, {headers})
+            .then(url,{headers})
             .then(resp => {
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
@@ -181,8 +177,6 @@ const Grid = () => {
     }
 
     const fileUpload = () => {
-        const url = 'http://127.0.0.1:8000/api/file-upload';
-
         let formData = new FormData();
         let imagefile = document.querySelector('#file');
         formData.append("image", imagefile.files[0]);
@@ -192,7 +186,7 @@ const Grid = () => {
             "Authorization": `Bearer ${authToken}`
         }
 
-        axios.post(url, formData, {headers})
+        ApiClient.post('/file-upload', {headers})
             .then(resp => {
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
@@ -219,7 +213,6 @@ const Grid = () => {
                 closeButton: false,
                 autoClose: 1400
             });
-
         });
     };
 
