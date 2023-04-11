@@ -79,7 +79,7 @@ const LoginRegister = () => {
 
         JSON.stringify(dataRegister);
 
-        ApiClient.post('/register')
+        ApiClient.post('/register', dataRegister)
             .then(resp => {
                 let successMessage = resp.data.message;
                 localStorage.setItem('token', resp.data.token);

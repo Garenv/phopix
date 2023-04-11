@@ -40,7 +40,7 @@ const Grid = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        ApiClient.get('/get-user-uploads-data')
+        ApiClient.get('/get-user-uploads-data', {headers})
             .then(resp => {
                 console.log(resp.data);
                 setGridData(resp.data);
