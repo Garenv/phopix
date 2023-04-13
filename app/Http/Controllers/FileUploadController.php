@@ -90,9 +90,9 @@ class FileUploadController extends Controller
             's3' // Disk Name
         );
 
-        $insertUploadDataAndGetUploadId = DB::table('uploads')->insertGetId($data);
+        DB::table('uploads')->insertGetId($data);
         LegacyUploads::create($data);
-        Redis::set("uploadId:$insertUploadDataAndGetUploadId", json_encode($data));
+//        Redis::set("uploadId:$insertUploadDataAndGetUploadId", json_encode($data));
     }
 
 }

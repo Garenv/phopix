@@ -137,7 +137,6 @@ const Grid = () => {
         };
 
         ApiClient.delete(`/delete-user-upload?UserID=${likedPhotoUserId}`, {headers})
-            .then(url,{headers})
             .then(resp => {
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
@@ -186,7 +185,7 @@ const Grid = () => {
             "Authorization": `Bearer ${authToken}`
         }
 
-        ApiClient.post('/file-upload', {headers})
+        ApiClient.post('/file-upload', formData, {headers})
             .then(resp => {
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
