@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import { Modal } from "react-bootstrap";
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import ApiClient from "../../utilities/ApiClient";
 import {toast, ToastContainer} from "react-toastify";
 
@@ -174,16 +172,30 @@ const LoginRegister = () => {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark">
-                <Container>
-                    <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg" className="logoHome" alt="logo" />
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home"><Link to="/faq">FAQ</Link></Nav.Link>
-                        <Nav.Link href="#features"><Link to="/prizes">Prizes</Link></Nav.Link>
-                        <Nav.Link href="#pricing"><Link to="/support">Support</Link></Nav.Link>
-                    </Nav>
-                </Container>
-            </Navbar>
+            <nav className="navbar navbar-expand-md navbar-light bg-dark">
+                <div className="container">
+                    <a className="navbar-brand" href="#">
+                        <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/phopixel_320x314_transparent.jpg" className="logoHome" alt=""/>
+                    </a>
+                    <button className="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarNav">
+                        <span className="navbar-toggler-icon text-white"></span>
+                    </button>
+                    <div className="collapse navbar-collapse text-white" id="navbarNav">
+                        <ul className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                                <a className="nav-link" ><Link to="/faq">FAQ</Link></a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link"><Link to="/support">Support</Link></a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link"><Link to="/prizes">Prizes</Link></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
 
             <ToastContainer
                 hideProgressBar
