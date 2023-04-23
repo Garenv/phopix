@@ -27,6 +27,10 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'aws_access_key' => env('AWS_ACCESS_KEY_ID'),
+    'aws_secret_access_key' => env('AWS_SECRET_ACCESS_KEY'),
+    'aws_region' => env('AWS_REGION'),
+
 
     /*
     |--------------------------------------------------------------------------

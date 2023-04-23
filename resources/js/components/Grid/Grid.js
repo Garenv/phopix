@@ -188,6 +188,11 @@ const Grid = () => {
 
         ApiClient.post('/file-upload', {headers})
             .then(resp => {
+
+                console.log(resp.data);
+
+
+
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;
 
