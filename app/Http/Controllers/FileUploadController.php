@@ -40,10 +40,7 @@ class FileUploadController extends Controller
             $userId                     = Auth::user()['UserID'];
             $time                       = Carbon::now();
             $timeStamp                  = $time->toDateTimeString();
-            $weekday                    = date("l");
             $photoId                    = 'p-' . Str::uuid()->toString();
-            $getAllUploadsData          = $this->__uploadsRepository->getAllUploadsData();
-            $isUploadsTableEmpty        = $getAllUploadsData->isEmpty();
             $checkIfUserHasUploaded     = $this->__uploadsRepository->checkIfUserHasUploaded($userId);
             $isImageUploadedAppropriate = $this->isImageUploadedAppropriate(file_get_contents($file->path()));
 
@@ -55,38 +52,26 @@ class FileUploadController extends Controller
                 'photo_id'              => $photoId
             ];
 
-            // If the uploads table is empty OR if there doesn't exist an upload record for the user at all
-            // then carry out DB insertion/Redis Set/Store upload in S3 procedure
-//            if ($isUploadsTableEmpty || $checkIfUserHasUploaded->isEmpty()) {
-
-
-//            dd($checkIfUserHasUploaded);
-
-            $existingUploadedTimestamp = $checkIfUserHasUploaded[0]->timeStamp;
-
-                if ($isImageUploadedAppropriate->getStatusCode() == 400) {
-                    return $isImageUploadedAppropriate;
-                }
-
-                $this->insertSetStoreAsset($file, $path, $imgName, $data);
-                return $isImageUploadedAppropriate;
-
-
-//            }
-
-            /*
-            $existingUploadedTimestamp = $checkIfUserHasUploaded[0]->timeStamp;
-
-            // If it's NOT Wednesday AND the user has NOT uploaded any photo this week,
-            // then carry out DB insertion/Redis Set/Store upload in S3 procedure
-            // see this for more info: https://stackoverflow.com/a/30556359
-            if ($weekday !== 'Wednesday' && (date("W") !== date("W", strtotime($existingUploadedTimestamp)))) {
-                if (!$isImageUploadedAppropriate) {
-                    $this->insertSetStoreAsset($file, $path, $imgName, $data);
-                }
+            if ($isImageUploadedAppropriate->getStatusCode() == 400) {
                 return $isImageUploadedAppropriate;
             }
-            */
+
+            if (count($checkIfUserHasUploaded) === 0) {
+                $this->insertSetStoreAsset($file, $path, $imgName, $data);
+                return $isImageUploadedAppropriate;
+            }
+
+            $existingUploadedTimestamp = $checkIfUserHasUploaded[0]->timeStamp;
+            $weekday = date('l', strtotime($existingUploadedTimestamp));
+            $currentWeekNumber = date('W');
+            $uploadedWeekNumber = date('W', strtotime($existingUploadedTimestamp));
+
+            if ($weekday !== 'Wednesday' && ($currentWeekNumber !== $uploadedWeekNumber)) {
+                $this->insertSetStoreAsset($file, $path, $imgName, $data);
+                return $isImageUploadedAppropriate;
+            }
+
+            return response()->json(['status' => 'failed', 'message' => "You have already uploaded a photo this week!"], 500);
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -140,7 +125,7 @@ class FileUploadController extends Controller
         }
 
         return Response::json([
-            'message' => 'Image check successful, ok to upload',
+            'message' => 'Image uploaded!',
             'isInappropriate' => false
         ], 200);
 
