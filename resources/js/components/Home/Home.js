@@ -13,14 +13,9 @@ const LoginRegister = () => {
     const [dateOfBirth, setDateOfBirth]                             = useState("");
     const [password, setPassword]                                   = useState("");
     const [forgotPasswordEmail, setForgotPasswordEmail]             = useState("");
-    const [emailError, setEmailError]                               = useState("");
-    const [errorStatus, setErrorStatus]                             = useState(null);
     const [forgotPasswordBtnFlag, setForgotPasswordBtnFlag]         = useState(false);
     const [forgotPasswordBtnTxt, setForgotPasswordBtnTxt]           = useState("Send Forgot Password Link");
     const [forgotPasswordStatusStyle, setForgotPasswordStatusStyle] = useState(null);
-
-    // Handles password error upon logging in
-    const [passwordError, setPasswordError]                         = useState("");
 
     // Close error
     const [errorClose, setErrorClose]                               = useState(false);
@@ -58,13 +53,13 @@ const LoginRegister = () => {
                 history.push('/gallery');
             }).catch(error => {
             let errorMessage = error.response.data.message;
-            let errorStatus  = error.response.status;
 
-            setPasswordError(errorMessage);
-            setErrorStatus(errorStatus);
+            toast.error(errorMessage, {
+                closeOnClick: false,
+                closeButton: false,
+                autoClose: 5000
+            });
         });
-
-
     };
 
     const handleRegister = (e) => {
@@ -95,10 +90,6 @@ const LoginRegister = () => {
                 });
             }).catch(error => {
             let errorMessage = error.response.data.message;
-            let errorStatus  = error.response.status;
-
-            setEmailError(errorMessage);
-            setErrorStatus(errorStatus);
 
             toast.error(errorMessage, {
                 closeOnClick: false,
@@ -106,7 +97,6 @@ const LoginRegister = () => {
                 autoClose: 5000
             });
         });
-
 
         const headers = {
             "Accept": 'application/json',
@@ -121,11 +111,7 @@ const LoginRegister = () => {
 
                 history.push('/gallery');
             }).catch(error => {
-            let errorMessage = error.response.data.message;
-            let errorStatus  = error.response.status;
-
-            setEmailError(errorMessage);
-            setErrorStatus(errorStatus);
+            console.log(error.response.data.message);
         });
 
     };
