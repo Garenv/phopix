@@ -21,7 +21,6 @@ const SelectedWinners = () => {
                 setThisWeeksWinnerData(resp.data);
             });
 
-
     }, []);
 
     const getPrizePlace = (photos) => {
@@ -45,8 +44,10 @@ const SelectedWinners = () => {
                 <section className="gallery">
                     <div className="container">
                         <div className="img-container">
+
                             {
-                                thisWeeksWinnerData?.map((photos, index) => {
+                                thisWeeksWinnerData.length !== 0 ?
+                                thisWeeksWinnerData.map((photos, index) => {
                                     return (
                                         <>
                                             <Image src={photos.url} alt="Photo" className="gallery-img"/>
@@ -57,8 +58,11 @@ const SelectedWinners = () => {
                                             </div>
                                         </>
                                     )
-                                })
+                                })    : <h1>This week's winners haven't been chosen yet!</h1>
                             }
+
+
+
                         </div>
                     </div>
                 </section>

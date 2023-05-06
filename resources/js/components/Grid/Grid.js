@@ -114,6 +114,7 @@ const Grid = () => {
         delete userLikedPhotos[likedPhotoUserId];
         gridData.find(photo => photo.UserID === likedPhotoUserId).likes--;
         gridData.find(photo => photo.UserID === likedPhotoUserId).is_liked = 0;
+
         toast.error(`You disliked ${userName}'s photo!`, {
             closeOnClick: false,
             progress: false,
@@ -190,8 +191,6 @@ const Grid = () => {
             .then(resp => {
 
                 console.log(resp.data);
-
-
 
                 let okStatus       = resp.status;
                 let successMessage = resp.data.message;

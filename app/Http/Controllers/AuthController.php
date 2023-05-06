@@ -120,7 +120,7 @@ class AuthController extends Controller
             $data                   = $request->all();
             $data['UserID']         = $userId;
             $name                   = $data['name'];
-            $dateOfBirth            = $data['dateOfBirth'];
+            $data['dateOfBirth']    = Carbon::parse($data['dateOfBirth'])->format('Y-m-d');
             $data['ip']             = $getGeoLocationDataResp['ip_address'];
             $data['countryName']    = $getGeoLocationDataResp['country'];
             $data['countryCode']    = $getGeoLocationDataResp['country_code'];
@@ -136,7 +136,7 @@ class AuthController extends Controller
                 "name"           => $name,
                 "UserID"         => $userId,
                 "message"        => "Registered Successfully!",
-                "dateOfBirth"    => $dateOfBirth,
+                "dateOfBirth"    => Carbon::parse($data['dateOfBirth'])->format('Y-m-d'),
                 'token'          => $user->createToken('tokens')->plainTextToken
             ]);
         } catch(\Exception $e) {

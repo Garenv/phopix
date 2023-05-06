@@ -4,6 +4,8 @@ import { Modal } from "react-bootstrap";
 import Nav from 'react-bootstrap/Nav';
 import ApiClient from "../../utilities/ApiClient";
 import {toast, ToastContainer} from "react-toastify";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
@@ -29,6 +31,14 @@ const LoginRegister = () => {
 
     // faq, about, random
     const [show, setShow]                                           = useState(false);
+
+    const [selectedDate, setSelectedDate] = useState(null);
+
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
 
     const closeMessages = () => {
         setErrorClose(true);
@@ -305,13 +315,31 @@ const LoginRegister = () => {
                                                                 <i className="input-icon uil uil-at"></i>
                                                             </div>
                                                             <div className="form-group mt-2">
-                                                                <input type="date"
-                                                                       name="dateOfBirth"
-                                                                       className="form-style"
-                                                                       placeholder="Date Of Birth"
-                                                                       id="logemail"
-                                                                       autoComplete="none"
-                                                                       onChange={(e) => setDateOfBirth(e.target.value)}
+                                                                {/*<input type="date"*/}
+                                                                {/*       name="dateOfBirth"*/}
+                                                                {/*       className="form-style"*/}
+                                                                {/*       placeholder="Date Of Birth"*/}
+                                                                {/*       id="logemail"*/}
+                                                                {/*       autoComplete="none"*/}
+                                                                {/*       onChange={(e) => setDateOfBirth(e.target.value)}*/}
+                                                                {/*/>*/}
+
+                                                                {/*<Form.Control*/}
+                                                                {/*    type="date"*/}
+                                                                {/*    name="dateOfBirth"*/}
+                                                                {/*    className="form-style"*/}
+                                                                {/*    placeholder="Date Of Birth"*/}
+                                                                {/*    id="logemail"*/}
+                                                                {/*    autoComplete="none"*/}
+                                                                {/*    onChange={(e) => setDateOfBirth(e.target.value)}*/}
+                                                                {/*/>*/}
+
+                                                                <DatePicker
+                                                                    className="form-style"
+                                                                    selected={dateOfBirth}
+                                                                    onChange={(date) => setDateOfBirth(date)}
+                                                                    dateFormat="MM/dd/yyyy"
+                                                                    placeholderText="Select a date"
                                                                 />
                                                                 <i className="input-icon uil uil-13-plus"></i>
                                                             </div>
