@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import ApiClient from "../../utilities/ApiClient";
 import {toast, ToastContainer} from "react-toastify";
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker';
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
