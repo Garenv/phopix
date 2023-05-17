@@ -14,6 +14,7 @@ import ProtectedRoute from "./Routes/ProtectedRoute";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./TermsConditions/TermsConditions";
 import SelectedWinners from "./SelectedWinners/SelectedWinners";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
 
 const App = () => {
     return (
@@ -31,6 +32,7 @@ const App = () => {
                     <Route path='/past-winners' component={PastWinners} />
                     <Route path='/privacyPolicy' component={PrivacyPolicy} />
                     <Route path='/termsAndConditions' component={TermsConditions} />
+                    <Route path='/password/reset' component={ForgotPassword} />
                     <Route path= "*" component={PageNotFound} />
                 </Switch>
             </Router>

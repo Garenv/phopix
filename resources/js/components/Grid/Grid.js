@@ -7,10 +7,8 @@ import '../../../sass/gallery/gallery.scss';
 import Navbar from "../Navbar/Navbar";
 import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 import YourPrizes from "../Pages/YourPrizes/YourPrizes";
-import ProtectedRoute from "../Routes/ProtectedRoute";
 import SelectedWinners from "../SelectedWinners/SelectedWinners";
 import ApiClient from "../../utilities/ApiClient";
-import {ImageList, ImageListItem} from "@mui/material";
 
 const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');

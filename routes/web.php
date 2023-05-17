@@ -15,7 +15,11 @@ use \App\Http\Controllers\ReactController;
 |
 */
 
-Route::get('/{path?}',               [ReactController::class, 'show'])->name('routes');
+//Route::get('/{path?}',               [ReactController::class, 'show'])->name('routes');
+
+// When refreshing the page while on a React Router route, you went get a 404 error when refreshing
+Route::view('{path}', 'app')->where('path', '([A-z\d\-\/_.]+)?');
+
 Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('reset.password.get');;
 Route::post('reset-password',        [AuthController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 

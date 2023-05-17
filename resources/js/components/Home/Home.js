@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
-import { Modal } from "react-bootstrap";
 import Nav from 'react-bootstrap/Nav';
 import ApiClient from "../../utilities/ApiClient";
 import {toast, ToastContainer} from "react-toastify";
@@ -12,12 +11,8 @@ const LoginRegister = () => {
     const [email, setEmail]                                         = useState("");
     const [dateOfBirth, setDateOfBirth]                             = useState("");
     const [password, setPassword]                                   = useState("");
-    const [forgotPasswordEmail, setForgotPasswordEmail]             = useState("");
     const [emailError, setEmailError]                               = useState("");
     const [errorStatus, setErrorStatus]                             = useState(null);
-    const [forgotPasswordBtnFlag, setForgotPasswordBtnFlag]         = useState(false);
-    const [forgotPasswordBtnTxt, setForgotPasswordBtnTxt]           = useState("Send Forgot Password Link");
-    const [forgotPasswordStatusStyle, setForgotPasswordStatusStyle] = useState(null);
 
     // Handles password error upon logging in
     const [passwordError, setPasswordError]                         = useState("");
@@ -62,6 +57,10 @@ const LoginRegister = () => {
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
                 localStorage.setItem('name', resp.data.name);
+
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 2000);
 
                 history.push('/gallery');
             }).catch(error => {
@@ -134,48 +133,6 @@ const LoginRegister = () => {
 
             setEmailError(errorMessage);
             setErrorStatus(errorStatus);
-        });
-
-    };
-
-    const forgotPassWordClicked = () => {
-        setForgotPasswordBtnFlag(true);
-    };
-
-    const handleForgotPassword = (e) => {
-        e.preventDefault();
-        setForgotPasswordBtnTxt(
-            <button className='btn btn-primary'>
-                Sending...
-            </button>
-        );
-
-        let dataForgotPassword = {
-            'email': forgotPasswordEmail
-        };
-
-        ApiClient.post('/forgot-password', dataForgotPassword)
-            .then(resp => {
-                let successMessage = resp.data.message;
-
-                setForgotPasswordStatusStyle('forgotPasswordTextSuccess');
-                setForgotPasswordBtnTxt(successMessage);
-
-                setTimeout(() => {
-                    setForgotPasswordStatusStyle('btn btn-primary');
-                    setForgotPasswordBtnTxt("Send Forgot Password Link");
-                },5000);
-
-            }).catch(error => {
-            let failureMessage = error.response.data.message;
-
-            setForgotPasswordStatusStyle('forgotPasswordTextFailed');
-            setForgotPasswordBtnTxt(failureMessage);
-
-            setTimeout(() => {
-                setForgotPasswordStatusStyle('btn btn-primary');
-                setForgotPasswordBtnTxt("Send Forgot Password Link");
-            },5000);
         });
 
     };
@@ -253,36 +210,36 @@ const LoginRegister = () => {
                                                     </form>
                                                     <p className="mb-0 mt-4 text-center">
                                                         <p className="mb-0 mt-4 text-center">
-                                                            <Link onClick={handleShow} className="link">Forgot Password</Link>
+                                                            <Link to="/password/reset" className="link">Forgot Password</Link>
                                                         </p>
                                                     </p>
 
-                                                    <Modal show={show} onHide={handleClose}>
-                                                        <Modal.Header closeButton className="modalHeader">
-                                                            <h3 className="forgotPasswordText text-center">Input your email to be sent a link to reset your password :)</h3>
-                                                        </Modal.Header>
+                                                    {/*<Modal show={show} onHide={handleClose}>*/}
+                                                    {/*    <Modal.Header closeButton className="modalHeader">*/}
+                                                    {/*        <h3 className="forgotPasswordText text-center">Input your email to be sent a link to reset your password :)</h3>*/}
+                                                    {/*    </Modal.Header>*/}
 
-                                                        <Modal.Body>
-                                                            <form onSubmit={handleForgotPassword} method="POST">
-                                                                <div className="form-group row">
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control"
-                                                                        placeholder="Enter your email address"
-                                                                        name="email"
-                                                                        onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                                                                        required
-                                                                        autoFocus
-                                                                    />
-                                                                </div>
-                                                                <div className="text-center sendPasswordResetLinkBtnWrapper">
-                                                                    <button type="submit" className={`${!forgotPasswordBtnFlag ? 'btn btn-primary' : forgotPasswordStatusStyle} sendPasswordResetLinkBtn`} onClick={forgotPassWordClicked}>
-                                                                        {forgotPasswordBtnTxt}
-                                                                    </button>
-                                                                </div>
-                                                            </form>
-                                                        </Modal.Body>
-                                                    </Modal>
+                                                    {/*    <Modal.Body>*/}
+                                                    {/*        <form onSubmit={handleForgotPassword} method="POST">*/}
+                                                    {/*            <div className="form-group row">*/}
+                                                    {/*                <input*/}
+                                                    {/*                    type="text"*/}
+                                                    {/*                    className="form-control"*/}
+                                                    {/*                    placeholder="Enter your email address"*/}
+                                                    {/*                    name="email"*/}
+                                                    {/*                    onChange={(e) => setForgotPasswordEmail(e.target.value)}*/}
+                                                    {/*                    required*/}
+                                                    {/*                    autoFocus*/}
+                                                    {/*                />*/}
+                                                    {/*            </div>*/}
+                                                    {/*            <div className="text-center sendPasswordResetLinkBtnWrapper">*/}
+                                                    {/*                <button type="submit" className={`${!forgotPasswordBtnFlag ? 'btn btn-primary' : forgotPasswordStatusStyle} sendPasswordResetLinkBtn`} onClick={forgotPassWordClicked}>*/}
+                                                    {/*                    {forgotPasswordBtnTxt}*/}
+                                                    {/*                </button>*/}
+                                                    {/*            </div>*/}
+                                                    {/*        </form>*/}
+                                                    {/*    </Modal.Body>*/}
+                                                    {/*</Modal>*/}
                                                 </div>
                                             </div>
                                         </div>
