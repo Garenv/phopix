@@ -20,6 +20,6 @@
 
     <body class="antialiased">
         <div id="example"></div>
-        <script src="{{secure_asset('js/app.js')}}" ></script>
+        <script src="{{asset('js/app.js')}}" ></script>
     </body>
 </html>

@@ -26,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->bind(IUsersRepository::class,UsersRepository::class);
             $this->app->bind(IWinnersRepository::class,WinnersRepository::class);
         }
+
+        if (env('APP_ENV') != 'local') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 
     /**
