@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import ApiClient from "../../utilities/ApiClient";
@@ -33,7 +33,6 @@ const LoginRegister = () => {
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
-
 
     const closeMessages = () => {
         setErrorClose(true);

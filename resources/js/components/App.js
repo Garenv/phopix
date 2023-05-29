@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
+import { UserProvider } from '../utilities/UserContext';
 import '../../sass/HomePage/homePage.scss';
 import Home from "./Home/Home";
 import Support from "./Support/Support";
@@ -15,6 +16,8 @@ import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./TermsConditions/TermsConditions";
 import SelectedWinners from "./SelectedWinners/SelectedWinners";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import Settings from "./Settings/Settings";
+import {DarkModeContext} from "../utilities/DarkModeContext";
 
 const App = () => {
     return (
@@ -26,6 +29,7 @@ const App = () => {
                     <ProtectedRoute path="/yourPrizes" component={YourPrizes} />
                     <ProtectedRoute path="/prizeStatus" component={PrizeStatus} />
                     <ProtectedRoute path="/thisWeeksWinners" component={SelectedWinners} />
+                    <ProtectedRoute path="/settings" component={Settings} />
                     <Route path="/support" component={Support} />
                     <Route path='/faq' component={FaqComp} />
                     <Route path='/prizes' component={Prizes} />
@@ -42,4 +46,4 @@ const App = () => {
 
 const container = document.getElementById('example');
 const root = createRoot(container);
-root.render(<Router><App/></Router>);
+root.render(<UserProvider><Router><App/></Router></UserProvider>);

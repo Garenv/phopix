@@ -12,8 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import {Link as RouterLink, Route, useHistory} from "react-router-dom";
 import ApiClient from "../../utilities/ApiClient";
+import Settings from "../../components/Settings/Settings";
 
 // import {useHistory} from "react-router-dom";
 
@@ -138,7 +139,6 @@ function Navbar() {
                             ))}
                         </Menu>
                     </Box>
-                    {/*<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />*/}
 
                     <Typography
                         variant="h5"
@@ -198,6 +198,12 @@ function Navbar() {
                         <a href="/" className="myButton" onClick={logout}>
                             <Button onClick={logout} variant="text">
                                Logout
+                            </Button>
+                        </a>
+
+                        <a href="/settings" className="myButton">
+                            <Button variant="text">
+                                Settings
                             </Button>
                         </a>
                         </Menu>

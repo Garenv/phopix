@@ -10,6 +10,7 @@ use App\Http\Controllers\WinnersController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\PrizesController;
 use App\Http\Controllers\FaqController;
+use Illuminate\Support\Facades\Cache;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,5 +49,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('dislike',                              [UsersController::class,      'handleDislike']);
     Route::delete('delete-user-upload',                 [UsersController::class,      'deleteUserUpload']);
     Route::get('get-data-from-userlikes-table',         [UsersController::class,      'getDataFromUserLikesTable']);
+    Route::get('get-user-data',                         [UsersController::class,      'getUserData']);
 });
 

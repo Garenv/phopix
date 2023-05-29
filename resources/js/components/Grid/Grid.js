@@ -9,6 +9,7 @@ import PrizeStatus from "../Pages/PrizeStatus/PrizeStatus";
 import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 import SelectedWinners from "../SelectedWinners/SelectedWinners";
 import ApiClient from "../../utilities/ApiClient";
+import {useUserContext} from "../../utilities/UserContext";
 
 const Grid = () => {
     let authToken                                                 = localStorage.getItem('token');
@@ -32,6 +33,8 @@ const Grid = () => {
     const closeMessages = () => {
         setErrorClose(true);
     }
+
+    const { userId, name } = useUserContext();
 
     useEffect(() => {
         const headers = {
@@ -202,10 +205,6 @@ const Grid = () => {
                     closeButton: false,
                     autoClose: 1400,
                 });
-
-                // setTimeout(() => {
-                //     window.location.reload(false);
-                // },1400);
 
             }).catch(error => {
             let errorMessage       = error.response.data.message;

@@ -31,8 +31,6 @@ class UsersController extends Controller
             $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
             $userLikes                               = $getUserLikes[0]->likes;
 
-//            $getDataFromUserLikesTable = $this->__usersRepository->getDataFromUserLikesTable($loggedInUserId);
-
             return [
                 'UserID'                             => $likedUserId,
                 'loggedInUserId'                     => $loggedInUserId,
@@ -40,6 +38,7 @@ class UsersController extends Controller
                 'userLikes'                          => $userLikes,
                 'createUpdateUserLikesData'          => $createUpdateUserLikesData,
             ];
+
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
@@ -59,16 +58,14 @@ class UsersController extends Controller
             $getUserLikes                            = $this->__usersRepository->getUserLikes($likedUserId);
             $userLikes                               = $getUserLikes[0]->likes;
 
-//            $getDataFromUserLikesTable = $this->__usersRepository->getDataFromUserLikesTable($loggedInUserId);
-
             return [
                 'UserID'                             => $likedUserId,
                 'loggedInUserId'                     => $loggedInUserId,
                 'dislikedPhotoId'                    => $dislikedPhotoId,
                 'userLikes'                          => $userLikes,
                 'updateDisklikesData'                => $updateDisklikesData,
-//                'getDataFromUserLikesTable'          => $getDataFromUserLikesTable
             ];
+
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
@@ -111,6 +108,10 @@ class UsersController extends Controller
         $loggedInUserId = Auth::user()['UserID'];
 
         return $this->__usersRepository->getDataFromUserLikesTable($loggedInUserId);
+    }
+
+    public function getUserData() {
+        return Auth::user();
     }
 
 }
