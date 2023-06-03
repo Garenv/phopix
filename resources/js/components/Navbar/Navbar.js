@@ -201,11 +201,11 @@ function Navbar() {
                             </Button>
                         </a>
 
-                        <a href="/settings" className="myButton">
-                            <Button variant="text">
-                                Settings
-                            </Button>
-                        </a>
+                        {/*<a href="/settings" className="myButton">*/}
+                        {/*    <Button variant="text">*/}
+                        {/*        Settings*/}
+                        {/*    </Button>*/}
+                        {/*</a>*/}
                         </Menu>
                     </Box>
                 </Toolbar>

@@ -5,6 +5,7 @@ import ApiClient from "../../utilities/ApiClient";
 import {toast, ToastContainer} from "react-toastify";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import ReactSwitch from "react-switch";
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
@@ -29,6 +30,15 @@ const LoginRegister = () => {
 
     const [selectedDate, setSelectedDate] = useState(null);
 
+    const [theme, setTheme] = useState('light');
+
+    const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
+
+    useEffect(() => {
+        document.body.style.backgroundColor = theme === 'dark' ? '#000000' : '#FFFFFF';
+    }, [theme]);
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -181,7 +191,7 @@ const LoginRegister = () => {
                                         <div className="card-front">
                                             <div className="center-wrap">
                                                 <div className="section text-center">
-                                                    <h4 className="mb-4 pb-3">Log In</h4>
+                                                    <h4 className="mb-4 pb-3 text-white">Log In</h4>
                                                     <form onSubmit={handleLogin} method="POST">
                                                         <div className="form-group">
                                                             <input type="email"
@@ -320,8 +330,16 @@ const LoginRegister = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/*<div className="text-center">*/}
+                    {/*    <ReactSwitch checked={theme === 'dark'} onChange={toggleTheme} />*/}
+                    {/*    <p>Current Theme: {theme === 'dark' ? 'dark' : 'light'}</p>*/}
+                    {/*</div>*/}
+
                 </div>
             </div>
+
+
 
             <Nav defaultActiveKey="/home" as="ul" className="justify-content-center">
                 <Nav.Item as="li">

@@ -259,8 +259,8 @@ const Grid = () => {
                                                     <div className="userDetails">
                                                         <span className="likesAmt">❤️ {photos.likes}</span><br/>
                                                         {!photos.is_liked ?
-                                                            <Button variant="success" onClick={() => handleLike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>Like</Button> :
-                                                            <Button variant="danger" onClick={() => handleDislike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>Dislike</Button>
+                                                            <Button variant="success" onClick={() => handleLike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>👍</Button> :
+                                                            <Button variant="danger" onClick={() => handleDislike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>👎</Button>
                                                         }
                                                             <br/>
                                                             <span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
