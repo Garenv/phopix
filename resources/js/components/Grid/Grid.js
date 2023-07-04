@@ -244,35 +244,39 @@ const Grid = () => {
                             </Modal.Footer>
                         </Modal>
 
-                        <section className="gallery">
-                            <div className="container">
-                                <div className="img-container">
-                                    {
-                                        gridData.map((photos, index) => {
-                                            return (
-                                                <>
-                                                    <img src={photos.url} alt="Photo" className="gallery-img"/>
-                                                    <ToastContainer
-                                                        hideProgressBar
-                                                        closeButton={false}
-                                                    />
-                                                    <div className="userDetails">
-                                                        <span className="likesAmt">❤️ {photos.likes}</span><br/>
-                                                        {!photos.is_liked ?
-                                                            <Button variant="success" onClick={() => handleLike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>👍</Button> :
-                                                            <Button variant="danger" onClick={() => handleDislike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>👎</Button>
-                                                        }
-                                                            <br/>
-                                                            <span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
-                                                        {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
-                                                    </div>
-                                                </>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        </section>
+                        {
+                            gridData.length !== 0 ?
+                                <section className="gallery">
+                                    <div className="container">
+                                        <div className="img-container">
+                                            {
+                                                gridData.map((photos, index) => {
+                                                    return (
+                                                        <>
+                                                            <img src={photos.url} alt="Photo" className="gallery-img"/>
+                                                            <ToastContainer
+                                                                hideProgressBar
+                                                                closeButton={false}
+                                                            />
+                                                            <div className="userDetails">
+                                                                <span className="likesAmt">❤️ {photos.likes}</span><br/>
+                                                                {!photos.is_liked ?
+                                                                    <Button variant="success" onClick={() => handleLike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>👍</Button> :
+                                                                    <Button variant="danger" onClick={() => handleDislike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>👎</Button>
+                                                                }
+                                                                <br/>
+                                                                <span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                                                {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
+                                                            </div>
+                                                        </>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </section> : <h1>No Uploads, yet.  Be the first to upload!</h1>
+                        }
+
                     </Route>
 
                     <Route path="/prizeStatus" component={PrizeStatus} />

@@ -127,15 +127,16 @@ class WeeklyWinners extends Command
         LegacyWinners::create($dataSecondPlace);
         LegacyWinners::create($dataThirdPlace);
 
-        // delete the data in the uploads table to make way for the coming week's uploads
-        Uploads::truncate();
+        // Truncate the data in the uploads table to make way for the coming week's uploads
+        if(Uploads::count() > 0) {
+            Uploads::truncate();
+        }
 
-        // delete last week's winner data in the winners table to ensure this week's winners data is in tact
-        Winners::whereRaw('timeStamp >= CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) +3 DAY')
-            ->whereRaw('timeStamp < CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) -4 DAY')->delete();
+//        if(Winners::count() > 0) {
+//            // Delete last week's winner data in the winners table to ensure this week's winners data is in tact
+//            Winners::whereRaw('timeStamp >= CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) +3 DAY')
+//                ->whereRaw('timeStamp < CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) -4 DAY')->truncate();
+//        }
 
-
-//        Winners::whereRaw('WHERE timeStamp >= CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) +3 DAY
-//                     AND timeStamp < CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) -4 DAY')->delete();
     }
 }

@@ -222,33 +222,6 @@ const LoginRegister = () => {
                                                             <Link to="/password/reset" className="link">Forgot Password</Link>
                                                         </p>
                                                     </p>
-
-                                                    {/*<Modal show={show} onHide={handleClose}>*/}
-                                                    {/*    <Modal.Header closeButton className="modalHeader">*/}
-                                                    {/*        <h3 className="forgotPasswordText text-center">Input your email to be sent a link to reset your password :)</h3>*/}
-                                                    {/*    </Modal.Header>*/}
-
-                                                    {/*    <Modal.Body>*/}
-                                                    {/*        <form onSubmit={handleForgotPassword} method="POST">*/}
-                                                    {/*            <div className="form-group row">*/}
-                                                    {/*                <input*/}
-                                                    {/*                    type="text"*/}
-                                                    {/*                    className="form-control"*/}
-                                                    {/*                    placeholder="Enter your email address"*/}
-                                                    {/*                    name="email"*/}
-                                                    {/*                    onChange={(e) => setForgotPasswordEmail(e.target.value)}*/}
-                                                    {/*                    required*/}
-                                                    {/*                    autoFocus*/}
-                                                    {/*                />*/}
-                                                    {/*            </div>*/}
-                                                    {/*            <div className="text-center sendPasswordResetLinkBtnWrapper">*/}
-                                                    {/*                <button type="submit" className={`${!forgotPasswordBtnFlag ? 'btn btn-primary' : forgotPasswordStatusStyle} sendPasswordResetLinkBtn`} onClick={forgotPassWordClicked}>*/}
-                                                    {/*                    {forgotPasswordBtnTxt}*/}
-                                                    {/*                </button>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </form>*/}
-                                                    {/*    </Modal.Body>*/}
-                                                    {/*</Modal>*/}
                                                 </div>
                                             </div>
                                         </div>
@@ -281,25 +254,6 @@ const LoginRegister = () => {
                                                                 <i className="input-icon uil uil-at"></i>
                                                             </div>
                                                             <div className="form-group mt-2">
-                                                                {/*<input type="date"*/}
-                                                                {/*       name="dateOfBirth"*/}
-                                                                {/*       className="form-style"*/}
-                                                                {/*       placeholder="Date Of Birth"*/}
-                                                                {/*       id="logemail"*/}
-                                                                {/*       autoComplete="none"*/}
-                                                                {/*       onChange={(e) => setDateOfBirth(e.target.value)}*/}
-                                                                {/*/>*/}
-
-                                                                {/*<Form.Control*/}
-                                                                {/*    type="date"*/}
-                                                                {/*    name="dateOfBirth"*/}
-                                                                {/*    className="form-style"*/}
-                                                                {/*    placeholder="Date Of Birth"*/}
-                                                                {/*    id="logemail"*/}
-                                                                {/*    autoComplete="none"*/}
-                                                                {/*    onChange={(e) => setDateOfBirth(e.target.value)}*/}
-                                                                {/*/>*/}
-
                                                                 <DatePicker
                                                                     className="form-style"
                                                                     selected={dateOfBirth}

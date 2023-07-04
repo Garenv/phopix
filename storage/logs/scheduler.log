@@ -1,0 +1,29 @@
+Illuminate\Support\Collection {#1117
+  #items: array:3 [
+    0 => {#1114
+      +"name": "Garen"
+      +"likes": 10000
+      +"url": "https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/user/50_visa_gc (1).jpeg"
+      +"UserID": "u-198be0de-ebdc-41f2-9523-1ea5eb250766"
+      +"email": "bamchickawow@gmail.com"
+      +"timestamp": "2023-07-07 12:41:21"
+    }
+    1 => {#1115
+      +"name": "crap"
+      +"likes": 8000
+      +"url": "https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/user/roof3.jpg"
+      +"UserID": "u-c29e03fa-8359-4766-9a4e-41abde6a4b55"
+      +"email": "crap@gmail.com"
+      +"timestamp": "2023-07-06 12:41:46"
+    }
+    2 => {#1119
+      +"name": "Nedate"
+      +"likes": 3000
+      +"url": "https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/user/download (1).png"
+      +"UserID": "u-69f6113d-da23-4f8e-a9aa-228b6dd9cecf"
+      +"email": "hdid@tahoo.com"
+      +"timestamp": "2023-07-08 12:40:56"
+    }
+  ]
+  #escapeWhenCastingToString: false
+}

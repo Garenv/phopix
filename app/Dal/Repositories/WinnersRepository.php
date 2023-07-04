@@ -5,6 +5,8 @@ namespace App\Dal\Repositories;
 use App\Dal\Interfaces\IWinnersRepository;
 use App\Models\Prizes;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class WinnersRepository implements IWinnersRepository
 {
@@ -16,14 +18,19 @@ class WinnersRepository implements IWinnersRepository
 
     public function getTopThreeWinnersFromUploadsTable()
     {
-        // See https://stackoverflow.com/a/54619338 for reference
+        $wednesdayThisWeek = Carbon::now()->startOfWeek()->addDays(2); // This gets the date for Wednesday this week.
+        $wednesdayNextWeek = $wednesdayThisWeek->copy()->addWeek()->subSecond(); // This gets the date for Wednesday next week.
+
         return DB::table('uploads')
             ->select('users.name', 'uploads.likes', 'uploads.url', 'uploads.UserID', 'users.email', 'uploads.timestamp')
             ->join('users', 'users.UserID', '=', 'uploads.UserID')
-            ->orderBy('likes', 'desc')
+            ->whereBetween('uploads.timestamp', [$wednesdayThisWeek, $wednesdayNextWeek])
+            ->orderBy('uploads.likes', 'desc')
             ->limit(3)
             ->get();
     }
+
+
 
     public function getTopThreeWinnersFromWinnersTable()
     {
