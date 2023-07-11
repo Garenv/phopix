@@ -36,6 +36,9 @@ const Grid = () => {
 
     const { userId, name } = useUserContext();
 
+    console.log('userId', userId);
+    console.log('name', name);
+
     useEffect(() => {
         const headers = {
             "Accept": 'application/json',
@@ -265,7 +268,7 @@ const Grid = () => {
                                                                     <Button variant="danger" onClick={() => handleDislike(photos.UserID, photos.name, photos.photo_id, photos.is_liked)}>👎</Button>
                                                                 }
                                                                 <br/>
-                                                                <span className="name">{photos.name} {localStorage.getItem('UserID') === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
+                                                                <span className="name">{photos.name} {userId === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
                                                                 {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
                                                             </div>
                                                         </>

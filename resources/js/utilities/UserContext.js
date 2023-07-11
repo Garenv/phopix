@@ -12,12 +12,12 @@ export const UserProvider = ({ children }) => {
     const [userId, setUserId] = useState('');
     const [name, setName]     = useState('');
 
-    const headers = {
-        "Accept": 'application/json',
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-    };
+    const fetchUserData = () => {
+        const headers = {
+            "Accept": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        };
 
-    useEffect(() => {
         ApiClient.get('get-user-data', {headers})
             .then(res => {
                 console.log("UserContext.js", res.data);
@@ -26,12 +26,14 @@ export const UserProvider = ({ children }) => {
             }).catch(err => {
             console.log(err);
         });
-    },[])
+    }
 
-    // Value object to be provided by the context
+    useEffect(fetchUserData,[])
+
     const contextValue = {
         userId,
-        name
+        name,
+        refreshUserData: fetchUserData // provide this function in context so that it can be called elsewhere
     };
 
     return (

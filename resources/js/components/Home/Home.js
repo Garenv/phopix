@@ -6,6 +6,8 @@ import {toast, ToastContainer} from "react-toastify";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactSwitch from "react-switch";
+import {useUserContext} from "../../utilities/UserContext";
+
 
 const LoginRegister = () => {
     const [name, setName]                                           = useState("");
@@ -14,6 +16,7 @@ const LoginRegister = () => {
     const [password, setPassword]                                   = useState("");
     const [emailError, setEmailError]                               = useState("");
     const [errorStatus, setErrorStatus]                             = useState(null);
+    const { refreshUserData } = useUserContext();
 
     // Handles password error upon logging in
     const [passwordError, setPasswordError]                         = useState("");
@@ -49,6 +52,7 @@ const LoginRegister = () => {
     }
 
     const handleLogin = (e) => {
+
         e.preventDefault();
 
         console.log("Clicked Login");
@@ -71,6 +75,7 @@ const LoginRegister = () => {
                     setIsLoading(false);
                 }, 2000);
 
+                refreshUserData();
                 history.push('/gallery');
             }).catch(error => {
             let errorMessage = error.response.data.message;

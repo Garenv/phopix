@@ -17,7 +17,7 @@ import TermsConditions from "./TermsConditions/TermsConditions";
 import SelectedWinners from "./SelectedWinners/SelectedWinners";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import Settings from "./Settings/Settings";
-import {createContext, useEffect, useState} from "react";
+import { createContext } from "react";
 
 export const ThemeContext = createContext(null);
 
