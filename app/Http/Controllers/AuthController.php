@@ -67,11 +67,11 @@ class AuthController extends Controller
             $age                    = $user['dateOfBirth'];
             $sessionId              = Session::getId();
             $modelUser              = User::where('email', $email)->firstOrFail();
-            $createToken            = $modelUser->createToken('auth_token')->plainTextToken;
+            $authToken              = $modelUser->createToken('auth_token')->plainTextToken;
 
             return response()->json([
                 'status'            => true,
-                'token'             => $createToken,
+                'token'             => $authToken,
                 'name'              => $name,
                 'email'             => $email,
                 'UserID'            => $userId,

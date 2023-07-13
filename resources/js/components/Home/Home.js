@@ -10,30 +10,30 @@ import {useUserContext} from "../../utilities/UserContext";
 
 
 const LoginRegister = () => {
-    const [name, setName]                                           = useState("");
-    const [email, setEmail]                                         = useState("");
-    const [dateOfBirth, setDateOfBirth]                             = useState("");
-    const [password, setPassword]                                   = useState("");
-    const [emailError, setEmailError]                               = useState("");
+    const [name, setName]                                    = useState("");
+    const [email, setEmail]                                  = useState("");
+    const [dateOfBirth, setDateOfBirth]                      = useState("");
+    const [password, setPassword]                            = useState("");
+    const [emailError, setEmailError]                        = useState("");
     const [errorStatus, setErrorStatus]                             = useState(null);
-    const { refreshUserData } = useUserContext();
+    const { refreshUserData }                                       = useUserContext();
 
     // Handles password error upon logging in
-    const [passwordError, setPasswordError]                         = useState("");
+    const [passwordError, setPasswordError]                  = useState("");
 
     // Close error
-    const [errorClose, setErrorClose]                               = useState(false);
+    const [errorClose, setErrorClose]                      = useState(false);
 
     const handleClose                                               = () => setShow(false);
     const handleShow                                                = () => setShow(true);
     let history                                                     = useHistory();
 
     // faq, about, random
-    const [show, setShow]                                           = useState(false);
+    const [show, setShow]                                  = useState(false);
 
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate]                           = useState(null);
 
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme]                                  = useState('light');
 
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -105,7 +105,6 @@ const LoginRegister = () => {
                 let successMessage = resp.data.message;
                 localStorage.setItem('token', resp.data.token);
                 localStorage.setItem('UserID', resp.data.UserID);
-                localStorage.setItem('name', resp.data.name);
 
                 history.push('/gallery');
 

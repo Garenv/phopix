@@ -12,32 +12,29 @@ import ApiClient from "../../utilities/ApiClient";
 import {useUserContext} from "../../utilities/UserContext";
 
 const Grid = () => {
-    let authToken                                                 = localStorage.getItem('token');
+    let authToken                                              = localStorage.getItem('token');
 
-    const [gridData, setGridData]                                 = useState([]);
+    const [gridData, setGridData]                                     = useState([]);
 
     // Preview modal content
     const [show, setShow]                                         = useState(false);
-    const [filePreview, setFilePreview]                           = useState(null);
+    const [filePreview, setFilePreview]                                    = useState(null);
     const [filePreviewModalStatus, setFilePreviewModalStatus]     = useState(true);
 
     // Status codes
     const [errorClose, setErrorClose]                             = useState(false);
-    const [uploadSuccess, setUploadSuccess]                       = useState(null);
+    const [uploadSuccess, setUploadSuccess]                                = useState(null);
 
-    const handleClose                                             = () => setShow(false);
+    const handleClose                                                      = () => setShow(false);
 
     // User clicks likes
-    const [userLikedPhotos, setUserLikedPhotos]                   = useState({});
+    const [userLikedPhotos, setUserLikedPhotos]                        = useState({});
 
     const closeMessages = () => {
         setErrorClose(true);
     }
 
-    const { userId, name } = useUserContext();
-
-    console.log('userId', userId);
-    console.log('name', name);
+    const { userId } = useUserContext();
 
     useEffect(() => {
         const headers = {
@@ -269,7 +266,7 @@ const Grid = () => {
                                                                 }
                                                                 <br/>
                                                                 <span className="name">{photos.name} {userId === photos.UserID ? <h6 className="you">(You)</h6> : null}</span>
-                                                                {localStorage.getItem('UserID') === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
+                                                                {userId === photos.UserID ? <Button variant="danger" onClick={() => deleteUserUpload(photos.UserID)}>Delete</Button> : null}
                                                             </div>
                                                         </>
                                                     )

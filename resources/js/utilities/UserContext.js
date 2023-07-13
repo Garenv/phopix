@@ -13,14 +13,19 @@ export const UserProvider = ({ children }) => {
     const [name, setName]     = useState('');
 
     const fetchUserData = () => {
+        const token = localStorage.getItem('token');
+
+        if(!token) { // No token, no need to fetch user data
+            return;
+        }
+
         const headers = {
             "Accept": 'application/json',
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
+            "Authorization": `Bearer ${token}`
         };
 
         ApiClient.get('get-user-data', {headers})
             .then(res => {
-                console.log("UserContext.js", res.data);
                 setUserId(res.data.UserID);
                 setName(res.data.name);
             }).catch(err => {
@@ -40,3 +45,4 @@ export const UserProvider = ({ children }) => {
         <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
     );
 };
+
