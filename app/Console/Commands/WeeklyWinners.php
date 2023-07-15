@@ -8,6 +8,7 @@ use App\Models\Uploads;
 use App\Models\Winners;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class WeeklyWinners extends Command
@@ -47,96 +48,105 @@ class WeeklyWinners extends Command
      */
     public function handle()
     {
-        // Get top three winners by joining uploads and users tables
-        $topThreeWinners                = $this->__winnersRepository->getTopThreeWinnersFromUploadsTable();
+        try {
 
-        // Get prize data
-        $prizesData                     = $this->__winnersRepository->getPrizeData();
+            // Get top three winners by joining uploads and users tables
+            $topThreeWinners                = $this->__winnersRepository->getTopThreeWinnersFromUploadsTable();
 
-        // Get timestamp of when the winner was chosen
-        $time                           = Carbon::now();
-        $timeStamp                      = $time->toDateTimeString();
+            // Get prize data
+            $prizesData                     = $this->__winnersRepository->getPrizeData();
 
-        // First place data
-        $firstPlaceUserId               = $topThreeWinners[0]->UserID;
-        $firstPlaceLikes                = $topThreeWinners[0]->likes;
-        $firstPlaceWinnerId             = 'w-' . Str::uuid()->toString();
-        $firstPlaceUrl                  = $topThreeWinners[0]->url;
-        $firstPlacePrizeId              = $prizesData[0]->prizeId;
-        $firstPlaceName                 = $topThreeWinners[0]->name;
 
-        // Second place data
-        $secondPlaceUserId              = $topThreeWinners[1]->UserID;
-        $secondPlaceLikes               = $topThreeWinners[1]->likes;
-        $secondPlaceWinnerId            = 'w-' . Str::uuid()->toString();
-        $secondPlaceUrl                 = $topThreeWinners[1]->url;
-        $secondPlacePrizeId             = $prizesData[1]->prizeId;
-        $secondPlaceName                = $topThreeWinners[1]->name;
 
-        // Third place data
-        $thirdPlaceUserId               = $topThreeWinners[2]->UserID;
-        $thirdPlaceLikes                = $topThreeWinners[2]->likes;
-        $thirdPlaceWinnerId             = 'w-' . Str::uuid()->toString();
-        $thirdPlaceUrl                  = $topThreeWinners[2]->url;
-        $thirdPlacePrizeId              = $prizesData[2]->prizeId;
-        $thirdPlaceName                 = $topThreeWinners[2]->name;
+            // Get timestamp of when the winner was chosen
+            $time                           = Carbon::now();
+            $timeStamp                      = $time->toDateTimeString();
 
-        $dataFirstPlace = [
-            'UserID'                    => $firstPlaceUserId,
-            'place'                     => "1st Place",
-            'likes'                     => $firstPlaceLikes,
-            'winnerId'                  => $firstPlaceWinnerId,
-            'url'                       => $firstPlaceUrl,
-            'prizeId'                   => $firstPlacePrizeId,
-            'timeStamp'                 => $timeStamp,
-            'name'                      => $firstPlaceName
-        ];
+            // First place data
+            $firstPlaceUserId               = $topThreeWinners[0]->UserID;
+            $firstPlaceLikes                = $topThreeWinners[0]->likes;
+            $firstPlaceWinnerId             = 'w-' . Str::uuid()->toString();
+            $firstPlaceUrl                  = $topThreeWinners[0]->url;
+            $firstPlacePrizeId              = $prizesData[0]->prizeId;
+            $firstPlaceName                 = $topThreeWinners[0]->name;
 
-        $dataSecondPlace = [
-            'UserID'                    => $secondPlaceUserId,
-            'place'                     => "2nd Place",
-            'likes'                     => $secondPlaceLikes,
-            'winnerId'                  => $secondPlaceWinnerId,
-            'url'                       => $secondPlaceUrl,
-            'prizeId'                   => $secondPlacePrizeId,
-            'timeStamp'                 => $timeStamp,
-            'name'                      => $secondPlaceName
-        ];
+            // Second place data
+            $secondPlaceUserId              = $topThreeWinners[1]->UserID;
+            $secondPlaceLikes               = $topThreeWinners[1]->likes;
+            $secondPlaceWinnerId            = 'w-' . Str::uuid()->toString();
+            $secondPlaceUrl                 = $topThreeWinners[1]->url;
+            $secondPlacePrizeId             = $prizesData[1]->prizeId;
+            $secondPlaceName                = $topThreeWinners[1]->name;
 
-        $dataThirdPlace = [
-            'UserID'                    => $thirdPlaceUserId,
-            'place'                     => "3rd Place",
-            'likes'                     => $thirdPlaceLikes,
-            'winnerId'                  => $thirdPlaceWinnerId,
-            'url'                       => $thirdPlaceUrl,
-            'prizeId'                   => $thirdPlacePrizeId,
-            'timeStamp'                 => $timeStamp,
-            'name'                      => $thirdPlaceName
-        ];
+            // Third place data
+            $thirdPlaceUserId               = $topThreeWinners[2]->UserID;
+            $thirdPlaceLikes                = $topThreeWinners[2]->likes;
+            $thirdPlaceWinnerId             = 'w-' . Str::uuid()->toString();
+            $thirdPlaceUrl                  = $topThreeWinners[2]->url;
+            $thirdPlacePrizeId              = $prizesData[2]->prizeId;
+            $thirdPlaceName                 = $topThreeWinners[2]->name;
 
-        // store them in Redis
-        // Redis::set("user_data:$firstPlaceUserId", json_encode($dataFirstPlace));
+            $dataFirstPlace = [
+                'UserID'                    => $firstPlaceUserId,
+                'place'                     => "1st Place",
+                'likes'                     => $firstPlaceLikes,
+                'winnerId'                  => $firstPlaceWinnerId,
+                'url'                       => $firstPlaceUrl,
+                'prizeId'                   => $firstPlacePrizeId,
+                'timeStamp'                 => $timeStamp,
+                'name'                      => $firstPlaceName
+            ];
 
-        // store them in winners table
-        Winners::create($dataFirstPlace);
-        Winners::create($dataSecondPlace);
-        Winners::create($dataThirdPlace);
+            $dataSecondPlace = [
+                'UserID'                    => $secondPlaceUserId,
+                'place'                     => "2nd Place",
+                'likes'                     => $secondPlaceLikes,
+                'winnerId'                  => $secondPlaceWinnerId,
+                'url'                       => $secondPlaceUrl,
+                'prizeId'                   => $secondPlacePrizeId,
+                'timeStamp'                 => $timeStamp,
+                'name'                      => $secondPlaceName
+            ];
 
-        // store in legacy winners table
-        LegacyWinners::create($dataFirstPlace);
-        LegacyWinners::create($dataSecondPlace);
-        LegacyWinners::create($dataThirdPlace);
+            $dataThirdPlace = [
+                'UserID'                    => $thirdPlaceUserId,
+                'place'                     => "3rd Place",
+                'likes'                     => $thirdPlaceLikes,
+                'winnerId'                  => $thirdPlaceWinnerId,
+                'url'                       => $thirdPlaceUrl,
+                'prizeId'                   => $thirdPlacePrizeId,
+                'timeStamp'                 => $timeStamp,
+                'name'                      => $thirdPlaceName
+            ];
 
-        // Truncate the data in the uploads table to make way for the coming week's uploads
-        if(Uploads::count() > 0) {
-            Uploads::truncate();
+            // store them in Redis
+            // Redis::set("user_data:$firstPlaceUserId", json_encode($dataFirstPlace));
+
+            // store them in winners table
+            Winners::create($dataFirstPlace);
+            Winners::create($dataSecondPlace);
+            Winners::create($dataThirdPlace);
+
+            // store in legacy winners table
+            LegacyWinners::create($dataFirstPlace);
+            LegacyWinners::create($dataSecondPlace);
+            LegacyWinners::create($dataThirdPlace);
+
+            // Truncate the data in the uploads table to make way for the coming week's uploads
+            if(Uploads::count() > 0) {
+                Uploads::truncate();
+            }
+
+    //        if(Winners::count() > 0) {
+    //            // Delete last week's winner data in the winners table to ensure this week's winners data is in tact
+    //            Winners::whereRaw('timeStamp >= CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) +3 DAY')
+    //                ->whereRaw('timeStamp < CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) -4 DAY')->truncate();
+    //        }
+        } catch(\Exception $e) {
+            Log::error($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
 
-//        if(Winners::count() > 0) {
-//            // Delete last week's winner data in the winners table to ensure this week's winners data is in tact
-//            Winners::whereRaw('timeStamp >= CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) +3 DAY')
-//                ->whereRaw('timeStamp < CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) -4 DAY')->truncate();
-//        }
 
     }
 }

@@ -18,13 +18,13 @@ class WinnersRepository implements IWinnersRepository
 
     public function getTopThreeWinnersFromUploadsTable()
     {
-        $wednesdayThisWeek = Carbon::now()->startOfWeek()->addDays(2); // This gets the date for Wednesday this week.
-        $wednesdayNextWeek = $wednesdayThisWeek->copy()->addWeek()->subSecond(); // This gets the date for Wednesday next week.
+//        $wednesdayThisWeek = Carbon::now()->startOfWeek()->addDays(3); // This gets the date for Wednesday this week.
+//        $wednesdayNextWeek = $wednesdayThisWeek->copy()->addWeek()->subSecond(); // This gets the date for Wednesday next week.
 
         return DB::table('uploads')
             ->select('users.name', 'uploads.likes', 'uploads.url', 'uploads.UserID', 'users.email', 'uploads.timestamp')
             ->join('users', 'users.UserID', '=', 'uploads.UserID')
-            ->whereBetween('uploads.timestamp', [$wednesdayThisWeek, $wednesdayNextWeek])
+//            ->whereBetween('uploads.timestamp', [$wednesdayThisWeek, $wednesdayNextWeek])
             ->orderBy('uploads.likes', 'desc')
             ->limit(3)
             ->get();
