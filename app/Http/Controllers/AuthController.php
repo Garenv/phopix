@@ -54,7 +54,13 @@ class AuthController extends Controller
                 'password'  => 'required',
             ]);
 
-            $credentials    = $request->only('email', 'password');;
+            $credentials    = $request->only('email', 'password');
+
+            $checkForUserEmail = User::where('email', '=', $request->get('email'))->first();
+
+            if(empty($checkForUserEmail)) {
+                return response()->json(['status' => 'failed', 'message' => "We can't find your email in our system!"], 400);
+            }
 
             if (!Auth::attempt($credentials)) {
                 return response()->json(['message' => 'Incorrect email or password!'], 401);

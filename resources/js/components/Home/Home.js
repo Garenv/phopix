@@ -83,9 +83,13 @@ const LoginRegister = () => {
 
             setPasswordError(errorMessage);
             setErrorStatus(errorStatus);
+
+            toast.error(errorMessage, {
+                closeOnClick: false,
+                closeButton: false,
+                autoClose: 5000
+            });
         });
-
-
     };
 
     const handleRegister = (e) => {
@@ -126,7 +130,6 @@ const LoginRegister = () => {
                 autoClose: 5000
             });
         });
-
 
         const headers = {
             "Accept": 'application/json',
