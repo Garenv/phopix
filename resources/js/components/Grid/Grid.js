@@ -10,6 +10,8 @@ import YourPrizes from "../Pages/YourPrizes/YourPrizes";
 import SelectedWinners from "../SelectedWinners/SelectedWinners";
 import ApiClient from "../../utilities/ApiClient";
 import {useUserContext} from "../../utilities/UserContext";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css'; // you can choose your own effect
 
 const Grid = () => {
     let authToken                                              = localStorage.getItem('token');
@@ -253,7 +255,15 @@ const Grid = () => {
                                                 gridData.map((photos, index) => {
                                                     return (
                                                         <>
-                                                            <img src={photos.url} alt="Photo" className="gallery-img"/>
+                                                            <>
+                                                                <LazyLoadImage
+                                                                    src={photos.url}
+                                                                    alt="Photo"
+                                                                    effect="blur" // you can choose your own effect
+                                                                    className="gallery-img"
+                                                                />
+
+                                                            </>
                                                             <ToastContainer
                                                                 hideProgressBar
                                                                 closeButton={false}
