@@ -255,19 +255,18 @@ const Grid = () => {
                                                 gridData.map((photos, index) => {
                                                     return (
                                                         <>
-                                                            <>
-                                                                <LazyLoadImage
-                                                                    src={photos.url}
-                                                                    alt="Photo"
-                                                                    effect="blur" // you can choose your own effect
-                                                                    className="gallery-img"
-                                                                />
-
-                                                            </>
                                                             <ToastContainer
                                                                 hideProgressBar
                                                                 closeButton={false}
                                                             />
+
+                                                            <LazyLoadImage
+                                                                src={photos.url}
+                                                                alt="Photo"
+                                                                effect="blur"
+                                                                className="gallery-img"
+                                                            />
+
                                                             <div className="userDetails">
                                                                 <span className="likesAmt">❤️ {photos.likes}</span><br/>
                                                                 {!photos.is_liked ?
