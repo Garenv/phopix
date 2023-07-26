@@ -15,8 +15,8 @@
                 font-family: 'Poppins', sans-serif;
                 font-size: 15px;
                 line-height: 1.7;
-                background: rgb(63,94,251);
-                background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(196,70,252,1) 100%);
+                background: #89CFF0 !important;
+                /*background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(196,70,252,1) 100%);*/
                 overflow-x: hidden;
             }
 

@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Stevebauman\Location\Facades\Location;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -275,4 +274,41 @@ class AuthController extends Controller
         }
 
     }
+
+    public function changePassword(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'currentPassword' => 'required',
+            'newPassword' => [
+                'required',
+                'min:8', // password must be at least 8 characters
+                'regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()\-_=+{};:,<.>]).*$/', // password must be alphanumeric and contain a special character
+            ],
+        ]);
+
+        if($validator->fails()) {
+            $failedRules            = $validator->failed();
+
+            if(isset($failedRules['newPassword']['Min'])) {
+                return response()->json(['status' => 'failed', 'message' => 'Password must contain 8 characters!'], 400);
+            }
+
+            if(isset($failedRules['newPassword']['Regex'])) {
+                return response()->json(['status' => 'failed', 'message' => 'Password must be alphanumeric and contain a special character!'], 400);
+            }
+        }
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->currentPassword, $user->password)) {
+            return response()->json(['message' => 'Current password is incorrect'], 401);
+        }
+
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return response()->json(['message' => 'Password changed successfully'], 200);
+    }
+
 }
