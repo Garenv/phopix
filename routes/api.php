@@ -51,5 +51,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('get-data-from-userlikes-table',         [UsersController::class,      'getDataFromUserLikesTable']);
     Route::get('get-user-data',                         [UsersController::class,      'getUserData']);
     Route::post('change-password',                      [AuthController::class,       'changePassword']);
+    Route::post('update-email',                         [UsersController::class,      'updateEmail']);
 });
 

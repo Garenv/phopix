@@ -227,88 +227,52 @@ class AuthController extends Controller
     {
 
         try {
-            $token                      = $request->get('token');
+            $token = $request->get('token');
 
             $validator = Validator::make($request->all(), [
-                'token'                 => 'required|string',
-                'password'              => 'required|min:6',
+                'token' => 'required|string',
+                'password' => 'required|min:6',
                 'password_confirmation' => 'required|min:6|same:password'
             ]);
 
-            $passwordReset              = DB::table('password_resets')->where(['token' => $token])->first();
+            $passwordReset = DB::table('password_resets')->where(['token' => $token])->first();
 
             if (!$passwordReset) {
-                return response()->json( [
-                    'error'             => true,
-                    'message'           => 'This Password Reset token is invalid.'
+                return response()->json([
+                    'error' => true,
+                    'message' => 'This Password Reset token is invalid.'
                 ], 404);
             }
 
-            if($validator->fails()) {
-                $failedRules            = $validator->failed();
+            if ($validator->fails()) {
+                $failedRules = $validator->failed();
 
-                if(isset($failedRules['password_confirmation']['Same'])) {
+                if (isset($failedRules['password_confirmation']['Same'])) {
                     return Redirect::back()->with('passwordNotMatching', "The entered passwords don't match!");
                 }
             }
 
-            $userEmail                  = DB::table('password_resets')->where( 'token', $passwordReset->token )->pluck('email');
-            $user                       = User::where('email', $userEmail)->first();
+            $userEmail = DB::table('password_resets')->where('token', $passwordReset->token)->pluck('email');
+            $user = User::where('email', $userEmail)->first();
 
             if (!$user) {
-                return response()->json( [
-                    'error'             => true,
-                    'message'           => 'We cannot find this account in our system!'
+                return response()->json([
+                    'error' => true,
+                    'message' => 'We cannot find this account in our system!'
                 ], 404);
             }
 
-            $user->password             = bcrypt($request->password);
+            $user->password = bcrypt($request->password);
             $user->save();
             DB::table('password_resets')->where(['token' => $token])->delete();
 
             return Redirect::back()->with('success', "Successfully updated your account password!");
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
 
-    }
-
-    public function changePassword(Request $request)
-    {
-
-        $validator = Validator::make($request->all(), [
-            'currentPassword' => 'required',
-            'newPassword' => [
-                'required',
-                'min:8', // password must be at least 8 characters
-                'regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()\-_=+{};:,<.>]).*$/', // password must be alphanumeric and contain a special character
-            ],
-        ]);
-
-        if($validator->fails()) {
-            $failedRules            = $validator->failed();
-
-            if(isset($failedRules['newPassword']['Min'])) {
-                return response()->json(['status' => 'failed', 'message' => 'Password must contain 8 characters!'], 400);
-            }
-
-            if(isset($failedRules['newPassword']['Regex'])) {
-                return response()->json(['status' => 'failed', 'message' => 'Password must be alphanumeric and contain a special character!'], 400);
-            }
-        }
-
-        $user = Auth::user();
-
-        if (!Hash::check($request->currentPassword, $user->password)) {
-            return response()->json(['message' => 'Current password is incorrect'], 401);
-        }
-
-        $user->password = Hash::make($request->newPassword);
-        $user->save();
-
-        return response()->json(['message' => 'Password changed successfully'], 200);
     }
 
 }

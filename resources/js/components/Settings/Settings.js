@@ -14,6 +14,9 @@ const Settings = () => {
         history.push('/changePassword');
     };
 
+    const handleChangeEmailClick = () => {
+        history.push('/changeEmail');
+    };
 
     return (
         <Box
@@ -40,7 +43,7 @@ const Settings = () => {
 
             <Button
                 variant="contained"
-                onClick={handleClick}
+                onClick={handleChangeEmailClick}
                 sx={{
                     backgroundColor: '#000',
                     color: '#fff',
