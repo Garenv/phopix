@@ -18,8 +18,9 @@ import SelectedWinners from "./SelectedWinners/SelectedWinners";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import Settings from "./Settings/Settings";
 import { createContext } from "react";
-import ChangePassword from "./ChangePassword/ChangePassword";
+import UpdatePassword from "./UpdatePassword/UpdatePassword";
 import UpdateEmail from "./UpdateEmail/UpdateEmail";
+import UpdateName from "./UpdateName/UpdateName";
 
 export const ThemeContext = createContext(null);
 
@@ -33,8 +34,9 @@ const App = () => {
                 <ProtectedRoute path="/prizeStatus" component={PrizeStatus} />
                 <ProtectedRoute path="/thisWeeksWinners" component={SelectedWinners} />
                 <ProtectedRoute path="/settings" component={Settings} />
-                <ProtectedRoute path="/changePassword" component={ChangePassword} />
-                <ProtectedRoute path="/changeEmail" component={UpdateEmail} />
+                <ProtectedRoute path="/updatePassword" component={UpdatePassword} />
+                <ProtectedRoute path="/updateEmail" component={UpdateEmail} />
+                <ProtectedRoute path="/updateName" component={UpdateName} />
                 <Route path="/support" component={Support} />
                 <Route path='/faq' component={FaqComp} />
                 <Route path='/prizes' component={Prizes} />

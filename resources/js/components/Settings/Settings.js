@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
@@ -10,12 +10,16 @@ const Settings = () => {
         console.log("Button clicked");
     }
 
-    const handleChangePasswordClick = () => {
-        history.push('/changePassword');
+    const handleUpdatePasswordClick = () => {
+        history.push('/updatePassword');
     };
 
-    const handleChangeEmailClick = () => {
-        history.push('/changeEmail');
+    const handleUpdateEmailClick = () => {
+        history.push('/updateEmail');
+    };
+
+    const handleUpdateNameClick = () => {
+        history.push('/updateName');
     };
 
     return (
@@ -26,9 +30,12 @@ const Settings = () => {
             alignItems="center"
             minHeight="100vh"
         >
+            <Link to="/gallery">
+                <img src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png" className="pLogoPrizes" alt="Prize Page Logo"/>
+            </Link>
             <Button
                 variant="contained"
-                onClick={handleChangePasswordClick}
+                onClick={handleUpdatePasswordClick}
                 sx={{
                     backgroundColor: '#000',
                     color: '#fff',
@@ -38,12 +45,12 @@ const Settings = () => {
                     marginBottom: '1em',
                 }}
             >
-                Change Password
+                Update Password
             </Button>
 
             <Button
                 variant="contained"
-                onClick={handleChangeEmailClick}
+                onClick={handleUpdateEmailClick}
                 sx={{
                     backgroundColor: '#000',
                     color: '#fff',
@@ -53,12 +60,12 @@ const Settings = () => {
                     marginBottom: '1em',
                 }}
             >
-                Change Email
+                Update Email
             </Button>
 
             <Button
                 variant="contained"
-                onClick={handleClick}
+                onClick={handleUpdateNameClick}
                 sx={{
                     backgroundColor: '#000',
                     color: '#fff',
@@ -67,7 +74,7 @@ const Settings = () => {
                     }
                 }}
             >
-                Change Name
+                Update Name
             </Button>
         </Box>
     );

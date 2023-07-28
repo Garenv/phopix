@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ChangePassword = () => {
+const UpdatePassword = () => {
     const { register, handleSubmit } = useForm();
     let authToken= localStorage.getItem('token');
     let history  = useHistory();
@@ -41,7 +41,7 @@ const ChangePassword = () => {
             "Authorization": `Bearer ${authToken}`
         };
 
-        ApiClient.post('change-password', formData, {headers})
+        ApiClient.post('update-password', formData, {headers})
             .then(resp => {
                 console.log(resp);
 
@@ -127,4 +127,4 @@ const ChangePassword = () => {
     );
 };
 
-export default ChangePassword;
+export default UpdatePassword;

@@ -50,7 +50,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('delete-user-upload',                 [UsersController::class,      'deleteUserUpload']);
     Route::get('get-data-from-userlikes-table',         [UsersController::class,      'getDataFromUserLikesTable']);
     Route::get('get-user-data',                         [UsersController::class,      'getUserData']);
-    Route::post('change-password',                      [AuthController::class,       'changePassword']);
+    Route::post('update-password',                      [UsersController::class,      'changePassword']);
     Route::post('update-email',                         [UsersController::class,      'updateEmail']);
+    Route::post('update-name',                          [UsersController::class,      'updateName']);
 });
 
