@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Facade\FlareClient\Http\Response;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,26 +21,6 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-
-    /**
-     * return error response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function sendError($error, $errorMessages = [], $code = 401)
-    {
-        $response = [
-            'success'         => false,
-            'message'         => $error,
-        ];
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
-        }
-
-        return response()->json($response, $code);
-    }
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -134,13 +116,28 @@ class AuthController extends Controller
             $data['cityName']       = $getGeoLocationDataResp['city'];
             $data['zipCode']        = $getGeoLocationDataResp['postal_code'];
 
-            $user = $this->create($data);
+            $user = User::create([
+                'name'                        => $data['name'],
+                'email'                       => $data['email'],
+                'UserID'                      => $data['UserID'],
+                'dateOfBirth'                 => $data['dateOfBirth'],
+                'password'                    => Hash::make($data['password']),
+                'ip'                          => $data['ip'],
+                'countryName'                 => $data['countryName'],
+                'countryCode'                 => $data['countryCode'],
+                'regionCode'                  => $data['regionCode'],
+                'regionName'                  => $data['regionName'],
+                'cityName'                    => $data['cityName'],
+                'zipCode'                     => $data['zipCode']
+            ]);
+
+            event(new Registered($user));
 
             return response()->json([
                 "status"         => true,
                 "name"           => $name,
                 "UserID"         => $userId,
-                "message"        => "Registered Successfully!",
+                "message"        => "A verification email has been sent. Please check your email.",
                 "dateOfBirth"    => Carbon::parse($data['dateOfBirth'])->format('Y-m-d'),
                 'token'          => $user->createToken('tokens')->plainTextToken
             ]);

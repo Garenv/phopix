@@ -3876,3 +3876,19 @@ Stack trace:
 #44 /Users/garenvartanian/workstation/phopixel/server.php(21): require_once('/Users/garenvar...')
 #45 {main}
 "} 
+[2023-07-30 01:32:45] local.ERROR: Unclosed '{' on line 11 {"exception":"[object] (ParseError(code: 0): Unclosed '{' on line 11 at /Users/garenvartanian/workstation/phopixel/app/Providers/AuthServiceProvider.php:39)
+[stacktrace]
+#0 /Users/garenvartanian/workstation/phopixel/vendor/composer/ClassLoader.php(322): Composer\\Autoload\\includeFile('/Users/garenvar...')
+#1 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(745): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(679): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#9 /Users/garenvartanian/workstation/phopixel/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#10 /Users/garenvartanian/workstation/phopixel/public/index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#11 /Users/garenvartanian/workstation/phopixel/server.php(21): require_once('/Users/garenvar...')
+#12 {main}
+"} 

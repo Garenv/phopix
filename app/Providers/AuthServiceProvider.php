@@ -27,9 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
-            $spaUrl = env('APP_URL')."?email_verify_url=".$url."/gallery";
+            $spaUrl = env('APP_URL')."/gallery";
 
             return (new MailMessage)
                 ->subject('Verify Email Address')
@@ -37,4 +36,5 @@ class AuthServiceProvider extends ServiceProvider
                 ->action('Verify Email Address', $spaUrl);
         });
     }
+
 }
