@@ -226,7 +226,7 @@ const Grid = () => {
                 <Switch>
                     <Route path="/gallery">
                         <div className="fileUpload text-center">
-                            <input type="file" id="file" onChange={getcreatedPhotoUrl}/>
+                            <input type="file" id="file" accept=".jpg, .jpeg, .png, .heic" onChange={getcreatedPhotoUrl}/>
                             <label htmlFor="file" className="btn-1">
                                 <span>Upload</span>
                             </label>
