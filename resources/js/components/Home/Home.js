@@ -236,7 +236,7 @@ const LoginRegister = () => {
                                         <div className="card-back">
                                             <div className="center-wrap">
                                                 <div className="section text-center">
-                                                    <h4 className="mb-4 pb-3">Sign Up</h4>
+                                                    <h4 className="mb-4 pb-3 text-white">Sign Up</h4>
                                                         <form onSubmit={handleRegister}>
                                                             <div className="form-group">
                                                                 <input type="text"

@@ -11,10 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import {Link as RouterLink, Route, useHistory} from "react-router-dom";
+import {Link as RouterLink, useHistory} from "react-router-dom";
 import ApiClient from "../../utilities/ApiClient";
-import Settings from "../../components/Settings/Settings";
 
 // import {useHistory} from "react-router-dom";
 
@@ -42,6 +40,10 @@ function Navbar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleSettingsClick = () => {
+        history.push('/settings');
     };
 
     const pageSelection = (page) => {
@@ -195,17 +197,16 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                        <a href="/" className="myButton" onClick={logout}>
-                            <Button onClick={logout} variant="text">
-                               Logout
-                            </Button>
-                        </a>
+
+                        <Button variant="text" onClick={handleSettingsClick}>
+                            Settings
+                        </Button>
 
                         <br/>
 
-                        <a href="/settings" className="myButton">
-                            <Button variant="text">
-                                Settings
+                        <a href="/" className="myButton" onClick={logout}>
+                            <Button onClick={logout} variant="text">
+                                Logout
                             </Button>
                         </a>
                         </Menu>

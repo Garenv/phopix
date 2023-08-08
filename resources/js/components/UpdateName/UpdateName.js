@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useForm} from "react-hook-form";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import ApiClient from "../../utilities/ApiClient";
 
 
@@ -21,9 +21,9 @@ const useStyles = makeStyles(theme => ({
 }));
 const UpdateName = () => {
 
-    const { register, handleSubmit } = useForm();
-    let authToken= localStorage.getItem('token');
-    let history  = useHistory();
+    const {register, handleSubmit} = useForm();
+    let authToken = localStorage.getItem('token');
+    let history = useHistory();
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
 
@@ -31,7 +31,7 @@ const UpdateName = () => {
         console.log("updateName: ", data.updateName);
 
         const formData = {
-            updateName : data.updateName
+            updateName: data.updateName
         };
 
         const headers = {
@@ -67,49 +67,52 @@ const UpdateName = () => {
         });
     }
 
-    return(
+    return (
         <>
-            {loading && <CircularProgress className={classes.spinner} />}
-            <Container component="main" maxWidth="xs">
-                <ToastContainer
-                    hideProgressBar
-                    closeButton={false}
-                />
+            {loading && <CircularProgress className={classes.spinner}/>}
+            <ToastContainer
+                hideProgressBar
+                closeButton={false}
+            />
 
-                <Box
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    minHeight="100vh"
-                >
-                    <form onSubmit={handleSubmit(onSubmit)}>
+            <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="100vh"
+            >
+                <Link to="/gallery">
+                    <img
+                        src="https://cruskip.s3.us-east-2.amazonaws.com/assets/images/phopix/logos/p_1081x1080_transparent.png"
+                        className="pLogoPrizes" alt="Prize Page Logo"/>
+                </Link>
 
-                        <TextField
-                            {...register('updateName')}
-                            variant="standard"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="updateName"
-                            label="Update Name"
-                            type="text"
-                            id="updateName"
-                        />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField
+                        {...register('updateName')}
+                        variant="standard"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="updateName"
+                        label="Update Name"
+                        type="text"
+                        id="updateName"
+                    />
 
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Submit
-                        </Button>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{mt: 3, mb: 2}}
+                    >
+                        Submit
+                    </Button>
 
-                    </form>
-                </Box>
-            </Container>
+                </form>
+            </Box>
         </>
     );
 }
