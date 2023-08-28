@@ -53,4 +53,9 @@ class WinnersController extends Controller
     {
         return $this->__winnersRepository->getAllWinnersFromLegacyWinnersTable();
     }
+
+    public function showWinnersEmail() {
+        return view('email.winners.winners_email');
+    }
+
 }

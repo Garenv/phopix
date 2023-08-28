@@ -3,12 +3,14 @@
 namespace App\Console\Commands;
 
 use App\Dal\Interfaces\IWinnersRepository;
+use App\Mail\WinnersEmail;
 use App\Models\LegacyWinners;
 use App\Models\Uploads;
 use App\Models\Winners;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class WeeklyWinners extends Command
@@ -56,8 +58,6 @@ class WeeklyWinners extends Command
             // Get prize data
             $prizesData                     = $this->__winnersRepository->getPrizeData();
 
-
-
             // Get timestamp of when the winner was chosen
             $time                           = Carbon::now();
             $timeStamp                      = $time->toDateTimeString();
@@ -69,6 +69,7 @@ class WeeklyWinners extends Command
             $firstPlaceUrl                  = $topThreeWinners[0]->url;
             $firstPlacePrizeId              = $prizesData[0]->prizeId;
             $firstPlaceName                 = $topThreeWinners[0]->name;
+            $firstPlaceEmail                = $topThreeWinners[0]->email;
 
             // Second place data
             $secondPlaceUserId              = $topThreeWinners[1]->UserID;
@@ -77,6 +78,7 @@ class WeeklyWinners extends Command
             $secondPlaceUrl                 = $topThreeWinners[1]->url;
             $secondPlacePrizeId             = $prizesData[1]->prizeId;
             $secondPlaceName                = $topThreeWinners[1]->name;
+            $secondPlaceEmail               = $topThreeWinners[1]->email;
 
             // Third place data
             $thirdPlaceUserId               = $topThreeWinners[2]->UserID;
@@ -85,6 +87,7 @@ class WeeklyWinners extends Command
             $thirdPlaceUrl                  = $topThreeWinners[2]->url;
             $thirdPlacePrizeId              = $prizesData[2]->prizeId;
             $thirdPlaceName                 = $topThreeWinners[2]->name;
+            $thirdPlaceEmail                = $topThreeWinners[2]->email;
 
             $dataFirstPlace = [
                 'UserID'                    => $firstPlaceUserId,
@@ -94,7 +97,8 @@ class WeeklyWinners extends Command
                 'url'                       => $firstPlaceUrl,
                 'prizeId'                   => $firstPlacePrizeId,
                 'timeStamp'                 => $timeStamp,
-                'name'                      => $firstPlaceName
+                'name'                      => $firstPlaceName,
+                'email'                     => $firstPlaceEmail
             ];
 
             $dataSecondPlace = [
@@ -105,7 +109,8 @@ class WeeklyWinners extends Command
                 'url'                       => $secondPlaceUrl,
                 'prizeId'                   => $secondPlacePrizeId,
                 'timeStamp'                 => $timeStamp,
-                'name'                      => $secondPlaceName
+                'name'                      => $secondPlaceName,
+                'email'                     => $secondPlaceEmail
             ];
 
             $dataThirdPlace = [
@@ -116,11 +121,43 @@ class WeeklyWinners extends Command
                 'url'                       => $thirdPlaceUrl,
                 'prizeId'                   => $thirdPlacePrizeId,
                 'timeStamp'                 => $timeStamp,
-                'name'                      => $thirdPlaceName
+                'name'                      => $thirdPlaceName,
+                'email'                     => $thirdPlaceEmail
             ];
+
+//            dd($dataFirstPlace, $dataSecondPlace, $dataThirdPlace);
 
             // store them in Redis
             // Redis::set("user_data:$firstPlaceUserId", json_encode($dataFirstPlace));
+
+            // garenvartanian1992@gmail.com - 1st place
+            // garen.vartanian@phopixel.com - 2nd place
+            // garenvartanian24@gmail.com - 3rd place
+
+//            dd($dataFirstPlace);
+
+            switch($dataFirstPlace['place']) {
+                case '1st Place':
+                    Mail::to($dataFirstPlace['email'])->send(new WinnersEmail($dataFirstPlace, $dataSecondPlace, $dataThirdPlace));
+                case '2nd Place':
+            }
+
+            Mail::to($dataFirstPlace['email'])->send(new WinnersEmail($dataFirstPlace, $dataSecondPlace, $dataThirdPlace));
+            Mail::to($dataSecondPlace['email'])->send(new WinnersEmail($dataFirstPlace, $dataSecondPlace, $dataThirdPlace));
+            Mail::to($dataThirdPlace['email'])->send(new WinnersEmail($dataFirstPlace, $dataSecondPlace, $dataThirdPlace));
+
+
+//            view('email.winners.winners_email', compact('data'));
+//
+//            exit;
+
+//            Mail::send('email.winners.winners_email', $data, function ($message) use ($view) {
+//                // Configure the email and attach the view
+//                $message->to('garenvartanian1992@gmail.com')->subject('Winners Email');
+//                $message->attachData($view->render(), 'winners_email.html', ['mime' => 'text/html']);
+
+            exit;
+//            });
 
             // store them in winners table
             Winners::create($dataFirstPlace);
@@ -146,7 +183,6 @@ class WeeklyWinners extends Command
             Log::error($e->getMessage());
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
         }
-
 
     }
 }
