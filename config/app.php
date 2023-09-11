@@ -30,6 +30,8 @@ return [
     'aws_access_key' => env('AWS_ACCESS_KEY_ID'),
     'aws_secret_access_key' => env('AWS_SECRET_ACCESS_KEY'),
     'aws_region' => env('AWS_REGION'),
+    'mailgun_api_key' => env('MAILGUN_API_KEY'),
+    'mailgun_domain' => env('MAILGUN_DOMAIN'),
 
 
     /*

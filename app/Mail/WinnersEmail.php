@@ -12,16 +12,26 @@ class WinnersEmail extends Mailable
     use Queueable, SerializesModels;
 
     /**
+     * @var mixed
+     */
+    private $winnerData;
+
+    /**
+     * @var mixed
+     */
+    private $place;
+
+    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($firstPlaceWinner, $secondPlaceWinner, $thirdPlaceWinner)
+    public function __construct($winnerData, $place)
     {
-        $this->firstPlaceWinner = $firstPlaceWinner;
-        $this->secondPlaceWinner = $secondPlaceWinner;
-        $this->thirdPlaceWinner = $thirdPlaceWinner;
+        $this->winnerData = $winnerData;
+        $this->place = $place;
     }
+
 
     /**
      * Build the message.
@@ -30,13 +40,11 @@ class WinnersEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('New Winners Email '. $this->firstPlaceWinner)->view('email.winners.winners_email')
-            ->with(
-                [
-                    'firstPlaceWinner' => $this->firstPlaceWinner,
-                    'secondPlaceWinner' => $this->secondPlaceWinner,
-                    'thirdPlaceWinner' => $this->thirdPlaceWinner,
-                ]
-            );
+        return $this->subject('Winner Email')->view('email.winners.winners_email')
+            ->with([
+                'winnerData' => $this->winnerData,
+                'place' => $this->place,
+            ]);
+
     }
 }

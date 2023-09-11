@@ -3,18 +3,20 @@
 namespace App\Console\Commands;
 
 use App\Dal\Interfaces\IWinnersRepository;
-use App\Mail\WinnersEmail;
 use App\Models\LegacyWinners;
 use App\Models\Uploads;
 use App\Models\Winners;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Traits\MailgunTrait;
 
 class WeeklyWinners extends Command
 {
+
+    use MailgunTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -44,6 +46,11 @@ class WeeklyWinners extends Command
         $this->__winnersRepository      = $winnersRepository;
     }
 
+    protected function winnerHTMLEmail($view, $data)
+    {
+        return view($view, $data)->render();
+    }
+
     /**
      * Execute the console command.
      *
@@ -51,7 +58,6 @@ class WeeklyWinners extends Command
     public function handle()
     {
         try {
-
             // Get top three winners by joining uploads and users tables
             $topThreeWinners                = $this->__winnersRepository->getTopThreeWinnersFromUploadsTable();
 
@@ -89,96 +95,97 @@ class WeeklyWinners extends Command
             $thirdPlaceName                 = $topThreeWinners[2]->name;
             $thirdPlaceEmail                = $topThreeWinners[2]->email;
 
-            $dataFirstPlace = [
+            $emailDataFirstPlace = [
+                'from' => 'Phopixel Team <noreply@phopixel.com>',
+                'to' => $firstPlaceEmail,
+                'place' => "1st Place",
+                'name' => $firstPlaceName,
+                'subject' => "You're the 1st Place Winner!",
+                'html' => $this->winnerHTMLEmail('email.winners.winners_email', [
+                    'winnerData' => $firstPlaceName,
+                    'place' => '1st Place'
+                ])
+            ];
+
+            $emailDataSecondPlace = [
+                'to' => $secondPlaceEmail,
+                'from' => 'Phopixel Team <noreply@phopixel.com>',
+                'place' => "2nd Place",
+                'name' => $secondPlaceName,
+                'subject' => "You're the 2nd Place Winner!",
+                'html' => $this->winnerHTMLEmail('email.winners.winners_email', [
+                    'winnerData' => $secondPlaceName,
+                    'place' => '2nd Place'
+                ])
+            ];
+
+            $emailDataThirdPlace = [
+                'to' => $thirdPlaceEmail,
+                'from' => 'Phopixel Team <noreply@phopixel.com>',
+                'place' => "3rd Place",
+                'name' => $thirdPlaceName,
+                'subject' => "You're the 3rd Place Winner!",
+                'html' => $this->winnerHTMLEmail('email.winners.winners_email', [
+                    'winnerData' => $thirdPlaceName,
+                    'place' => '3rd Place'
+                ])
+            ];
+
+            $this->mailgunSendMessage($emailDataFirstPlace);
+            $this->mailgunSendMessage($emailDataSecondPlace);
+            $this->mailgunSendMessage($emailDataThirdPlace);
+
+            $winnersDataFirstPlace = [
                 'UserID'                    => $firstPlaceUserId,
+                'email'                     => $firstPlaceEmail,
                 'place'                     => "1st Place",
                 'likes'                     => $firstPlaceLikes,
                 'winnerId'                  => $firstPlaceWinnerId,
                 'url'                       => $firstPlaceUrl,
                 'prizeId'                   => $firstPlacePrizeId,
                 'timeStamp'                 => $timeStamp,
-                'name'                      => $firstPlaceName,
-                'email'                     => $firstPlaceEmail
+                'name'                      => $firstPlaceName
             ];
 
-            $dataSecondPlace = [
+            $winnersDataSecondPlace = [
                 'UserID'                    => $secondPlaceUserId,
+                'email'                     => $secondPlaceEmail,
                 'place'                     => "2nd Place",
                 'likes'                     => $secondPlaceLikes,
                 'winnerId'                  => $secondPlaceWinnerId,
                 'url'                       => $secondPlaceUrl,
                 'prizeId'                   => $secondPlacePrizeId,
                 'timeStamp'                 => $timeStamp,
-                'name'                      => $secondPlaceName,
-                'email'                     => $secondPlaceEmail
+                'name'                      => $secondPlaceName
             ];
 
-            $dataThirdPlace = [
+            $winnersDataThirdPlace = [
                 'UserID'                    => $thirdPlaceUserId,
+                'email'                     => $thirdPlaceEmail,
                 'place'                     => "3rd Place",
                 'likes'                     => $thirdPlaceLikes,
                 'winnerId'                  => $thirdPlaceWinnerId,
                 'url'                       => $thirdPlaceUrl,
                 'prizeId'                   => $thirdPlacePrizeId,
                 'timeStamp'                 => $timeStamp,
-                'name'                      => $thirdPlaceName,
-                'email'                     => $thirdPlaceEmail
+                'name'                      => $thirdPlaceName
             ];
 
-//            dd($dataFirstPlace, $dataSecondPlace, $dataThirdPlace);
-
-            // store them in Redis
-            // Redis::set("user_data:$firstPlaceUserId", json_encode($dataFirstPlace));
-
-            // garenvartanian1992@gmail.com - 1st place
-            // garen.vartanian@phopixel.com - 2nd place
-            // garenvartanian24@gmail.com - 3rd place
-
-//            dd($dataFirstPlace);
-
-            switch($dataFirstPlace['place']) {
-                case '1st Place':
-                    Mail::to($dataFirstPlace['email'])->send(new WinnersEmail($dataFirstPlace, $dataSecondPlace, $dataThirdPlace));
-                case '2nd Place':
-            }
-
-            Mail::to($dataFirstPlace['email'])->send(new WinnersEmail($dataFirstPlace, $dataSecondPlace, $dataThirdPlace));
-            Mail::to($dataSecondPlace['email'])->send(new WinnersEmail($dataFirstPlace, $dataSecondPlace, $dataThirdPlace));
-            Mail::to($dataThirdPlace['email'])->send(new WinnersEmail($dataFirstPlace, $dataSecondPlace, $dataThirdPlace));
-
-
-//            view('email.winners.winners_email', compact('data'));
-//
-//            exit;
-
-//            Mail::send('email.winners.winners_email', $data, function ($message) use ($view) {
-//                // Configure the email and attach the view
-//                $message->to('garenvartanian1992@gmail.com')->subject('Winners Email');
-//                $message->attachData($view->render(), 'winners_email.html', ['mime' => 'text/html']);
-
-            exit;
-//            });
-
             // store them in winners table
-            Winners::create($dataFirstPlace);
-            Winners::create($dataSecondPlace);
-            Winners::create($dataThirdPlace);
+            Winners::create($winnersDataFirstPlace);
+            Winners::create($winnersDataSecondPlace);
+            Winners::create($winnersDataThirdPlace);
 
             // store in legacy winners table
-            LegacyWinners::create($dataFirstPlace);
-            LegacyWinners::create($dataSecondPlace);
-            LegacyWinners::create($dataThirdPlace);
+            LegacyWinners::create($winnersDataFirstPlace);
+            LegacyWinners::create($winnersDataSecondPlace);
+            LegacyWinners::create($winnersDataThirdPlace);
 
             // Truncate the data in the uploads table to make way for the coming week's uploads
             if(Uploads::count() > 0) {
                 Uploads::truncate();
             }
 
-    //        if(Winners::count() > 0) {
-    //            // Delete last week's winner data in the winners table to ensure this week's winners data is in tact
-    //            Winners::whereRaw('timeStamp >= CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) +3 DAY')
-    //                ->whereRaw('timeStamp < CAST(CURDATE() AS DATETIME) - INTERVAL DAYOFWEEK(CAST(CURDATE() as datetime)) -4 DAY')->truncate();
-    //        }
         } catch(\Exception $e) {
             Log::error($e->getMessage());
             throw new \Exception($e->getMessage(), $e->getCode(), $e);
