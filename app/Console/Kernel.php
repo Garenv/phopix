@@ -26,14 +26,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Truncate the winners table every other Wednesday at 12:00am EST
-        $schedule->command('truncate:winners')->timezone('America/New_York')->weeklyOn(3, '0:00')->when(function () {
-            // Carbon's week starts from Monday. So, first Monday of the year is week 1.
-            // If the current week number is even, then it's an "other" week.
-            return Carbon::now()->weekOfYear % 2 == 0;
-        });
+//        $schedule->command('truncate:winners')->timezone('America/New_York')->weeklyOn(3, '0:00')->when(function () {
+//            // Carbon's week starts from Monday. So, first Monday of the year is week 1.
+//            // If the current week number is even, then it's an "other" week.
+//            return Carbon::now()->weekOfYear % 2 == 0;
+//        });
 
         // Execute 'weekly:winners' every Wednesday at 12:00am EST
-        $schedule->command('weekly:winners')->timezone('America/New_York')->weeklyOn(3, '0:00')->appendOutputTo('storage/logs/scheduler.log');
+//        $schedule->command('weekly:winners')->timezone('America/New_York')->weeklyOn(3, '0:00')->appendOutputTo('storage/logs/scheduler.log');
+
+        $schedule->command('weekly:winners')->timezone('America/New_York')->weekly()->appendOutputTo('storage/logs/scheduler.log');
 
     }
 
