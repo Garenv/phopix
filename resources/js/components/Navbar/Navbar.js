@@ -16,7 +16,7 @@ import ApiClient from "../../utilities/ApiClient";
 
 // import {useHistory} from "react-router-dom";
 
-const pages = ['Prize Status', 'Your Prizes', `This Week's Winners`];
+const pages = ['Prize Status', 'Your Prizes', `This Week's Winners`, 'Support'];
 const settings = ['Profile', 'Account', 'Gallery', 'Logout'];
 
 function Navbar() {
@@ -54,6 +54,8 @@ function Navbar() {
                 return "/yourPrizes";
             case "This Week's Winners":
                 return "/thisWeeksWinners"
+            case "Support":
+                return "/support"
             default:
                 return "Not Found";
         }

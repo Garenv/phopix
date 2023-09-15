@@ -30,7 +30,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::post('login',                                    [AuthController::class,       'login']);
 Route::post('register',                                 [AuthController::class,       'register']);
 Route::post('forgot-password',                          [AuthController::class,       'submitForgotPasswordForm']);
-Route::post('support',                                  [SupportController::class,    'support']);
 Route::get('prizes',                                    [PrizesController::class,     'getPrizes']);
 Route::get('get-all-legacy-winners',                    [WinnersController::class,    'getAllWinnersFromLegacyWinnersTable']);
 Route::get('get-faq',                                   [FaqController::class,        'getFaq']);
@@ -53,5 +52,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('update-password',                      [UsersController::class,      'changePassword']);
     Route::post('update-email',                         [UsersController::class,      'updateEmail']);
     Route::post('update-name',                          [UsersController::class,      'updateName']);
+    Route::post('support',                              [SupportController::class,    'support']);
 });
 

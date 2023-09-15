@@ -147,9 +147,9 @@ const LoginRegister = () => {
                             <li className="nav-item">
                                 <a className="nav-link" ><Link to="/faq">FAQ</Link></a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link"><Link to="/support">Support</Link></a>
-                            </li>
+                            {/*<li className="nav-item">*/}
+                            {/*    <a className="nav-link"><Link to="/support">Support</Link></a>*/}
+                            {/*</li>*/}
                             <li className="nav-item">
                                 <a className="nav-link"><Link to="/prizes">Prizes</Link></a>
                             </li>

@@ -35,3 +35,8 @@ function getRealUserIp() {
             return $_SERVER['REMOTE_ADDR'];
     }
 }
+
+function htmlEmail($view, $data)
+{
+    return view($view, $data)->render();
+}

@@ -46,11 +46,6 @@ class WeeklyWinners extends Command
         $this->__winnersRepository      = $winnersRepository;
     }
 
-    protected function winnerHTMLEmail($view, $data)
-    {
-        return view($view, $data)->render();
-    }
-
     /**
      * Execute the console command.
      *
@@ -101,7 +96,7 @@ class WeeklyWinners extends Command
                 'place' => "1st Place",
                 'name' => $firstPlaceName,
                 'subject' => "You're the 1st Place Winner!",
-                'html' => $this->winnerHTMLEmail('email.winners.winners_email', [
+                'html' => htmlEmail('email.winners.winners_email', [
                     'winnerData' => $firstPlaceName,
                     'place' => '1st Place'
                 ])
@@ -113,7 +108,7 @@ class WeeklyWinners extends Command
                 'place' => "2nd Place",
                 'name' => $secondPlaceName,
                 'subject' => "You're the 2nd Place Winner!",
-                'html' => $this->winnerHTMLEmail('email.winners.winners_email', [
+                'html' => htmlEmail('email.winners.winners_email', [
                     'winnerData' => $secondPlaceName,
                     'place' => '2nd Place'
                 ])
@@ -125,7 +120,7 @@ class WeeklyWinners extends Command
                 'place' => "3rd Place",
                 'name' => $thirdPlaceName,
                 'subject' => "You're the 3rd Place Winner!",
-                'html' => $this->winnerHTMLEmail('email.winners.winners_email', [
+                'html' => htmlEmail('email.winners.winners_email', [
                     'winnerData' => $thirdPlaceName,
                     'place' => '3rd Place'
                 ])
